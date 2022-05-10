@@ -1,5 +1,6 @@
 import { Avatar, Popover } from 'antd';
 import { Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const { Title, Link, Text } = Typography;
@@ -49,6 +50,8 @@ const StyledTitle = styled(Title)`
 `;
 
 const WelcomePage = () => {
+  const { t } = useTranslation();
+
   const getAvatar = (member: TeamMember) => {
     const gitHubLink = GitHubUrl + member.gitHubProfile;
     return (
@@ -67,23 +70,18 @@ const WelcomePage = () => {
 
   return (
     <Container>
-      <StyledTitle>Project Management App</StyledTitle>
-      <StyledText italic>
-        This is aimed to facilitate the workflow of a team collaborating on the
-        same project. The software allows to assign and reassign tasks, easily
-        track the deadlines to meet them for sure and control the whole process
-        from the central managing location.
-      </StyledText>
-      <StyledTitle level={2}>Our Team</StyledTitle>
+      <StyledTitle>{t('application-title')}</StyledTitle>
+      <StyledText italic>{t('description1')}</StyledText>
+      <StyledTitle level={2}>{t('our-team')}</StyledTitle>
       <AvatarsBlock>{ourTeam.map(getAvatar)}</AvatarsBlock>
       <StyledText>
-        This app was developed in the course
+        {t('description2.start-text')}
         <Link href="https://rs.school/react/" target="_blank">
-          <span> "React Development Course" </span>
+          {t('description2.course-link')}
         </Link>
-        at
+        {t('description2.middle-text')}
         <Link href="https://rs.school/index.html" target="_blank">
-          <span> The Rolling Scopes School </span>
+          {t('description2.school-link')}
         </Link>
       </StyledText>
     </Container>
