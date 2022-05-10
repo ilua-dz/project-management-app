@@ -5,7 +5,7 @@ const HeaderApp = () => {
   return (
       <header>
         <NavLink to={Links.welcomePage}>Welcome</NavLink>
-        <NavLink to={Links.signPage}>Sign</NavLink>
+        <NavLink to={Links.signInPage}>Sign</NavLink>
         <NavLink to={Links.profilePage}>Profile</NavLink>
         <NavLink to={Links.mainPage}>Main</NavLink>
         <NavLink to={Links.boardPage}>Board</NavLink>

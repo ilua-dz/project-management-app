@@ -1,10 +1,8 @@
 import './App.css';
-import { LayoutApp } from './components/LayoutApp';
+import RoutesWrapper from './components/RoutesWrapper';
 
 function App() {
-  return (
-    <LayoutApp/>
-  );
+  return <RoutesWrapper />;
 }
 
 export default App;

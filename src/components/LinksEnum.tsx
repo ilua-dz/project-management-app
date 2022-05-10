@@ -1,10 +1,11 @@
 enum Links {
-  welcomePage= '/',
-  signPage='sign',
-  profilePage="profile",
-  mainPage= 'main',
-  boardPage= 'board',
-  notFoundPage='*'
+  welcomePage = '/',
+  signInPage = 'sign-in',
+  signUpPage = 'sign-up',
+  profilePage = 'profile',
+  mainPage = 'main',
+  boardPage = 'board',
+  notFoundPage = '*',
 }
 
-export default Links
+export default Links;
