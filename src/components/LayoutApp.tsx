@@ -1,19 +1,17 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import Links from './LinksEnum';
+import { FooterApp } from './FooterApp';
+import { HeaderApp } from './HeaderApp';
+import { RoutesWrapper } from './RoutesWrapper';
 
-function LayoutApp() {
+const LayoutApp= ()=> {
   return (
     <>
-      <header>
-        <NavLink to={Links.welcomePage}>Welcome</NavLink>
-        <NavLink to={Links.signPage}>Sign</NavLink>
-        <NavLink to={Links.mainPage}>Main</NavLink>
-        <NavLink to={Links.boardPage}>Board</NavLink>
-        <NavLink to={Links.notFoundPage}>404</NavLink>
-      </header>
-      <Outlet/>
+      <HeaderApp/>
+      <main>
+        <RoutesWrapper/>
+      </main>
+      <FooterApp/>
     </>
   );
 }
 
-export default LayoutApp;
+export {LayoutApp};
