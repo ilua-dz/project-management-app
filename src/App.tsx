@@ -1,9 +1,9 @@
 import './App.css';
-import RoutesWrapper from './components/RoutesWrapper';
+import { LayoutApp } from './components/LayoutApp';
 
 function App() {
   return (
-    <RoutesWrapper></RoutesWrapper>
+    <LayoutApp/>
   );
 }
 
