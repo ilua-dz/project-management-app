@@ -27,43 +27,21 @@ const ourTeam: TeamMember[] = [
   },
 ];
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 5rem;
-`;
-
-const AvatarsBlock = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-`;
-
-const StyledText = styled(Text)`
-  text-align: center;
-`;
-
-const StyledTitle = styled(Title)`
-  text-align: center;
-`;
-
 const WelcomePage = () => {
   const { t } = useTranslation();
 
   const getAvatar = (member: TeamMember) => {
-    const gitHubLink = GitHubUrl + member.gitHubProfile;
+    const gitHubMemberLink = GitHubUrl + member.gitHubProfile;
     return (
       <Popover
         key={member.name}
         content={
-          <Link href={gitHubLink} target="_blank">
+          <Link href={gitHubMemberLink} target="_blank">
             {member.name}
           </Link>
         }
       >
-        <Avatar size={64} src={gitHubLink + '.png'} />
+        <Avatar size={64} src={gitHubMemberLink + '.png'} />
       </Popover>
     );
   };
@@ -87,5 +65,27 @@ const WelcomePage = () => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5rem;
+`;
+
+const AvatarsBlock = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+const StyledText = styled(Text)`
+  text-align: center;
+`;
+
+const StyledTitle = styled(Title)`
+  text-align: center;
+`;
 
 export { WelcomePage };
