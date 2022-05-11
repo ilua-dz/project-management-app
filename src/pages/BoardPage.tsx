@@ -8,4 +8,4 @@ const BoardPage = () => {
   );
 };
 
-export { BoardPage };
+export default BoardPage;

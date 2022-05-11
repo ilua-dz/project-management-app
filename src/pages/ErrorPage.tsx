@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const NotFoundPage = () => {
+const ErrorPage = () => {
   return (
     <div>
       <h1>404</h1>
@@ -12,4 +12,4 @@ const NotFoundPage = () => {
   );
 };
 
-export { NotFoundPage };
+export default ErrorPage;

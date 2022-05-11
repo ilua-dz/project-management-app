@@ -1,17 +1,30 @@
+import { Outlet } from 'react-router-dom';
+import { Layout } from 'antd';
+import styled from 'styled-components';
 import { FooterApp } from './FooterApp';
-import { HeaderApp } from './HeaderApp';
-import { RoutesWrapper } from './RoutesWrapper';
+import { Content } from 'antd/lib/layout/layout';
+import HeaderApp from './HeaderApp';
 
-const LayoutApp= ()=> {
+const LayoutApp = () => {
   return (
-    <>
-      <HeaderApp/>
-      <main>
-        <RoutesWrapper/>
-      </main>
-      <FooterApp/>
-    </>
+    <StyledLayout>
+      <HeaderApp />
+      <StyledContent>
+        <Outlet />
+      </StyledContent>
+      <FooterApp />
+    </StyledLayout>
   );
-}
+};
 
-export {LayoutApp};
+const StyledContent = styled(Content)`
+  & > div {
+    height: 100%;
+  }
+`;
+
+const StyledLayout = styled(Layout)`
+  min-height: 100vh;
+`;
+
+export default LayoutApp;
