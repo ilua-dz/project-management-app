@@ -1,8 +1,6 @@
 import { baseURL, requestAPI, Methods, IUserData } from "./dependencies";
 
-const usersBaseURL = `${baseURL}users`;
-
-
+const usersBaseURL = `${baseURL}users/`;
 
 export async function getUser(token: string, id?: string){
   const URL = `${usersBaseURL}${id? id: ''}`

@@ -1,5 +1,7 @@
 import { baseURL, requestAPI, Methods, IUserData } from "./dependencies";
-
+type Token = {
+  token: string;
+}
 export async function signUp(body: IUserData){
   const URL = `${baseURL}signup`;
   const options = {
@@ -10,7 +12,7 @@ export async function signUp(body: IUserData){
       },
       body: JSON.stringify(body)
   } as Partial<RequestInit>;
-  const data = await requestAPI({URL, options});
+  const data = await requestAPI<IUserData>({URL, options});
   return data;
 }
 
@@ -24,6 +26,6 @@ export async function signIn(body: IUserData){
     },
     body: JSON.stringify(body),
   } as Partial<RequestInit>
-  const data = await requestAPI({URL, options});
+  const data = await requestAPI<Token>({URL, options});
   return data;
 }
