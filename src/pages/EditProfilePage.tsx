@@ -8,4 +8,4 @@ const EditProfilePage = () => {
   );
 };
 
-export { EditProfilePage };
+export default EditProfilePage;

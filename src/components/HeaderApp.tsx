@@ -1,9 +1,10 @@
-import { Menu, Switch } from 'antd';
+import { Menu } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
+import LangSwitch from './LangSwitch';
 import Links from './LinksEnum';
 
 const getNavMenuItem = (link: Links, title: string): ItemType => {
@@ -15,19 +16,13 @@ const getNavMenuItem = (link: Links, title: string): ItemType => {
 };
 
 const HeaderApp = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { pathname } = useLocation();
 
   const menuItems: ItemType[] = [
     getNavMenuItem(Links.signUpPage, t('buttons.sign-up')),
     getNavMenuItem(Links.signInPage, t('buttons.sign-in')),
   ];
-
-  const changeLanguage = (isLangEN: boolean) => {
-    if (isLangEN) {
-      i18n.changeLanguage('en');
-    } else i18n.changeLanguage('ru');
-  };
 
   return (
     <StyledHeader>
@@ -37,12 +32,7 @@ const HeaderApp = () => {
         selectedKeys={[pathname.slice(1)]}
         items={menuItems}
       />
-      <StyledSwitch
-        checkedChildren="EN"
-        unCheckedChildren="RU"
-        defaultChecked
-        onChange={changeLanguage}
-      />
+      <LangSwitch />
     </StyledHeader>
   );
 };
@@ -56,11 +46,6 @@ const StyledHeader = styled(Header)`
 const StyledMenu = styled(Menu)`
   display: flex;
   align-items: center;
-`;
-
-const StyledSwitch = styled(Switch)`
-  background: #1890ff;
-  margin: 0 0.5rem;
 `;
 
 const navItemStyle: CSSProperties = {

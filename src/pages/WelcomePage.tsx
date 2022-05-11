@@ -88,4 +88,4 @@ const StyledTitle = styled(Title)`
   text-align: center;
 `;
 
-export { WelcomePage };
+export default WelcomePage;

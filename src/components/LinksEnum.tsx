@@ -5,7 +5,6 @@ enum Links {
   profilePage = 'profile',
   mainPage = 'main',
   boardPage = 'board',
-  notFoundPage = '*',
 }
 
 export default Links;
