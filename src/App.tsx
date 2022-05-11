@@ -3,8 +3,13 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import { Button } from 'antd';
 import './App.css';
-
+import {getUser} from './API/users';
 function App() {
+  async function gg(){
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMDYzZGQwZC1hNzk1LTRlYTMtOWI4YS01ZDRkNDE1MTFhMzIiLCJsb2dpbiI6InRlc3Rsb2dpbjEiLCJpYXQiOjE2NTIyNzc2MjJ9.dZTLA0hOySB_-h18XtGZXx9-oAspRh74DKm6_yhHPcs";
+    console.log(await getUser(token));
+  }
+  gg();
   return (
     <div className="App">
       <header className="App-header">

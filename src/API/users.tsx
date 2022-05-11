@@ -1,49 +1,47 @@
-import { baseURL, requestAPI, Methods } from "./dependencies";
+import { baseURL, requestAPI, Methods, IUserData } from "./dependencies";
 
-export interface IUserUpdate{
-  name: string,
-  login: string,
-  password: string
-}
+const usersBaseURL = `${baseURL}users`;
 
-const usersBaseURL = `${baseURL}users/`;
 
-async function getUser(token: string, id?: string){
+
+export async function getUser(token: string, id?: string){
+  const URL = `${usersBaseURL}${id? id: ''}`
   const options = {
-    URL: `${usersBaseURL}${id? id: ''}`,
+    'method': Methods.get,
     headers: {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json',
-    } as Partial<RequestInit>
-  }
-  const data = requestAPI(options);
+    }
+  } as Partial<RequestInit>
+  const data = await requestAPI<IUserData | IUserData[]>({URL, options});
   return data;
 }
 
-async function deleteUser(token: string, id: string){
+export async function deleteUser(token: string, id: string){
+  const URL = `${usersBaseURL}${id}`;
   const options = {
-    URL: `${usersBaseURL}${id}`,
+    'method': Methods.delete,
     headers: {
-      'method': Methods.delete,
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json',
-    } as Partial<RequestInit>
-  }
-  const data = requestAPI(options);
+    }
+  } as Partial<RequestInit>;
+
+  const data = await requestAPI<IUserData>({URL, options});
   return data;
 }
 
-async function updateUser(token: string, id: string, body: IUserUpdate){
+export async function updateUser(token: string, id: string, body: IUserData){
+  const URL = `${usersBaseURL}${id}`;
   const options = {
-    URL: `${usersBaseURL}${id}`,
+    'method': Methods.put,
     headers: {
-      'method': Methods.put,
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      body: JSON.stringify(body),
-    } as Partial<RequestInit>
-  }
-  const data = requestAPI(options);
+    },
+    body: JSON.stringify(body),
+  } as Partial<RequestInit>
+  const data = await requestAPI<IUserData>({URL, options});
   return data;
 }
