@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import { Button } from 'antd';
 import './App.css';
-import {getUser} from './API/users';
 function App() {
   return (
     <div className="App">
