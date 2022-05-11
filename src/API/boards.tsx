@@ -1,11 +1,13 @@
 import { baseURL, requestAPI, Methods } from "./dependencies";
+import { IColumn } from './columns';
 
 interface IBoard{
   id: string;
   title: string;
+  columns: IColumn[]
 }
 
-const boardsBaseURL = `${baseURL}boards/`;
+export const boardsBaseURL = `${baseURL}boards/`;
 
 export async function getBoard(token: string, id?: string){
   const URL = `${boardsBaseURL}${id? id: ''}`;
