@@ -1,0 +1,15 @@
+{
+  "buttons": {
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In"
+  },
+  "application-title": "Project Management App",
+  "description1": "This is aimed to facilitate the workflow of a team collaborating on the same project. The software allows to assign and reassign tasks, easily track the deadlines to meet them for sure and control the whole process from the central managing location. ",
+  "our-team": "Our Team",
+  "description2": {
+    "course-link": " \"React Development Course\" ",
+    "school-link": " The Rolling Scopes School ",
+    "start-text": "This app was developed in the course",
+    "middle-text": "at"
+  }
+}
