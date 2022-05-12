@@ -24,7 +24,6 @@ export async function deleteUser(token: string, id: string){
       'Accept': 'application/json',
     }
   } as Partial<RequestInit>;
-
   const data = await requestAPI<IUserData>({URL, options});
   return data;
 }

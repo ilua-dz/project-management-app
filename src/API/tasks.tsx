@@ -35,7 +35,7 @@ export async function createTask(token: string, boardId: string, columnId: strin
     },
     body: JSON.stringify({task})
   } as Partial<RequestInit>;
-  const data = await requestAPI<ITask>({URL: boardsBaseURL, options});
+  const data = await requestAPI<ITask>({URL, options});
   return data;
 }
 
@@ -48,7 +48,7 @@ export async function deleteTask(token: string, boardId: string, columnId: strin
       'Accept': 'application/json',
     },
   } as Partial<RequestInit>;
-  const data = await requestAPI({URL: boardsBaseURL, options});
+  const data = await requestAPI({URL, options});
   return data;
 }
 
@@ -61,9 +61,9 @@ export async function updateTask(token: string, boardId: string, columnId: strin
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(task);
+    body: JSON.stringify(task)
   } as Partial<RequestInit>;
-  const data = await requestAPI<ITask>({URL: boardsBaseURL, options});
+  const data = await requestAPI<ITask>({URL, options});
   return data;
 }
 

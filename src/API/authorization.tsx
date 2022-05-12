@@ -1,7 +1,9 @@
 import { baseURL, requestAPI, Methods, IUserData } from "./dependencies";
+
 type Token = {
   token: string;
 }
+
 export async function signUp(body: IUserData){
   const URL = `${baseURL}signup`;
   const options = {

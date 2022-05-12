@@ -23,6 +23,7 @@ export async function getBoard(token: string, id?: string){
 }
 
 export async function createBoard(token: string, title: string){
+  const URL = boardsBaseURL;
   const options = {
     method: Methods.post,
     headers: {
@@ -32,7 +33,7 @@ export async function createBoard(token: string, title: string){
     },
     body: JSON.stringify({title})
   } as Partial<RequestInit>;
-  const data = await requestAPI<IBoard>({URL: boardsBaseURL, options});
+  const data = await requestAPI<IBoard>({URL, options});
   return data;
 }
 
@@ -45,7 +46,7 @@ export async function deleteBoard(token: string, id: string){
       'Accept': 'application/json',
     },
   } as Partial<RequestInit>;
-  const data = await requestAPI({URL: boardsBaseURL, options});
+  const data = await requestAPI({URL, options});
   return data;
 }
 
@@ -60,7 +61,7 @@ export async function updateBoard(token: string, title: string, id: string){
     },
     body: JSON.stringify({title})
   } as Partial<RequestInit>;
-  const data = await requestAPI<IBoard>({URL: boardsBaseURL, options});
+  const data = await requestAPI<IBoard>({URL, options});
   return data;
 }
 

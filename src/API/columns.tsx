@@ -33,7 +33,7 @@ export async function createColumn(token: string, boardId: string, column: IColu
     },
     body: JSON.stringify({column})
   } as Partial<RequestInit>;
-  const data = await requestAPI<IColumn>({URL: boardsBaseURL, options});
+  const data = await requestAPI<IColumn>({URL, options});
   return data;
 }
 
@@ -46,7 +46,7 @@ export async function deleteColumn(token: string, boardId: string, columnId: str
       'Accept': 'application/json',
     },
   } as Partial<RequestInit>;
-  const data = await requestAPI({URL: boardsBaseURL, options});
+  const data = await requestAPI({URL, options});
   return data;
 }
 
@@ -61,7 +61,7 @@ export async function updateColumn(token: string, boardId: string, columnId: str
     },
     body: JSON.stringify(column)
   } as Partial<RequestInit>;
-  const data = await requestAPI<IColumn>({URL: boardsBaseURL, options});
+  const data = await requestAPI<IColumn>({URL, options});
   return data;
 }
 
