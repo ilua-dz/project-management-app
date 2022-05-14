@@ -2,14 +2,14 @@ import { Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-const LangSwitch = () => {
+function LangSwitch() {
   const { i18n } = useTranslation();
 
-  const changeLanguage = (isLangEN: boolean) => {
+  function changeLanguage(isLangEN: boolean) {
     if (isLangEN) {
       i18n.changeLanguage('en');
     } else i18n.changeLanguage('ru');
-  };
+  }
 
   return (
     <StyledSwitch
@@ -19,7 +19,7 @@ const LangSwitch = () => {
       onChange={changeLanguage}
     />
   );
-};
+}
 
 const StyledSwitch = styled(Switch)`
   background: #1890ff;

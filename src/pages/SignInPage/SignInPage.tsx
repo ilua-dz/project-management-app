@@ -1,4 +1,4 @@
-const SignInPage = () => {
+function SignInPage() {
   return (
     <>
       <div>
@@ -6,6 +6,6 @@ const SignInPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default SignInPage;

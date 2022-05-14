@@ -27,10 +27,10 @@ const ourTeam: TeamMember[] = [
   },
 ];
 
-const WelcomePage = () => {
+function WelcomePage() {
   const { t } = useTranslation();
 
-  const getAvatar = (member: TeamMember) => {
+  function getAvatar(member: TeamMember) {
     const gitHubMemberLink = GitHubUrl + member.gitHubProfile;
     return (
       <Popover
@@ -44,7 +44,7 @@ const WelcomePage = () => {
         <Avatar size={64} src={gitHubMemberLink + '.png'} />
       </Popover>
     );
-  };
+  }
 
   return (
     <Container>
@@ -64,7 +64,7 @@ const WelcomePage = () => {
       </StyledText>
     </Container>
   );
-};
+}
 
 const Container = styled.div`
   display: flex;

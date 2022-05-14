@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
-import BoardPage from '../pages/BoardPage';
-import MainPage from '../pages/MainPage';
-import ErrorPage from '../pages/ErrorPage';
-import WelcomePage from '../pages/WelcomePage';
-import EditProfilePage from '../pages/EditProfilePage';
-import SignInPage from '../pages/SignInPage';
-import SignUpPage from '../pages/SignUpPage';
-import Links from './LinksEnum';
-import LayoutApp from './LayoutApp';
+import BoardPage from '../../pages/BoardPage';
+import MainPage from '../../pages/MainPage';
+import ErrorPage from '../../pages/ErrorPage';
+import WelcomePage from '../../pages/WelcomePage';
+import EditProfilePage from '../../pages/EditProfilePage';
+import SignInPage from '../../pages/SignInPage';
+import SignUpPage from '../../pages/SignUpPage';
+import Links from '../LinksEnum';
+import LayoutApp from '../LayoutApp';
 
-const RoutesWrapper = () => {
+function RoutesWrapper() {
   return (
     <Routes>
       <Route path={Links.welcomePage} element={<LayoutApp />}>
@@ -23,6 +23,6 @@ const RoutesWrapper = () => {
       </Route>
     </Routes>
   );
-};
+}
 
 export default RoutesWrapper;

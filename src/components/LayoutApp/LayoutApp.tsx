@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import styled from 'styled-components';
-import { FooterApp } from './FooterApp';
+import FooterApp from '../FooterApp';
 import { Content } from 'antd/lib/layout/layout';
-import HeaderApp from './HeaderApp';
+import HeaderApp from '../HeaderApp/HeaderApp';
 
-const LayoutApp = () => {
+function LayoutApp() {
   return (
     <StyledLayout>
       <HeaderApp />
@@ -15,7 +15,7 @@ const LayoutApp = () => {
       <FooterApp />
     </StyledLayout>
   );
-};
+}
 
 const StyledContent = styled(Content)`
   & > div {

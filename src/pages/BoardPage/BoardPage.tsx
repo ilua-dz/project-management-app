@@ -1,4 +1,4 @@
-const BoardPage = () => {
+function BoardPage() {
   return (
     <>
       <div>
@@ -6,6 +6,6 @@ const BoardPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default BoardPage;

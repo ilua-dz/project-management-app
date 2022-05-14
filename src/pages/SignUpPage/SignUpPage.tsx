@@ -1,4 +1,4 @@
-const SignUpPage = () => {
+function SignUpPage() {
   return (
     <>
       <div>
@@ -6,6 +6,6 @@ const SignUpPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default SignUpPage;

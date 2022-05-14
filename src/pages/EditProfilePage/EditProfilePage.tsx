@@ -1,4 +1,4 @@
-const EditProfilePage = () => {
+function EditProfilePage() {
   return (
     <>
       <div>
@@ -6,6 +6,6 @@ const EditProfilePage = () => {
       </div>
     </>
   );
-};
+}
 
 export default EditProfilePage;

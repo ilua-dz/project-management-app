@@ -4,18 +4,18 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
-import LangSwitch from './LangSwitch';
-import Links from './LinksEnum';
+import LangSwitch from '../LangSwitch';
+import Links from '../LinksEnum';
 
-const getNavMenuItem = (link: Links, title: string): ItemType => {
+function getNavMenuItem(link: Links, title: string): ItemType {
   return {
     label: <NavLink to={link}>{title}</NavLink>,
     key: link,
     style: navItemStyle,
   };
-};
+}
 
-const HeaderApp = () => {
+function HeaderApp() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
 
@@ -35,7 +35,7 @@ const HeaderApp = () => {
       <LangSwitch />
     </StyledHeader>
   );
-};
+}
 
 const StyledHeader = styled(Header)`
   display: flex;
