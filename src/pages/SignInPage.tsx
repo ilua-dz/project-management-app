@@ -6,6 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../components/LinksEnum';
+import { useTranslation } from 'react-i18next';
 
 const layout = {
   labelCol: {
@@ -31,6 +32,7 @@ type IdataUser={
 const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const dataApiSignUp = useAppSelector(valueApiSignUp);
   const errorApiSignIn = useAppSelector(errorFromApiSignIn);
@@ -100,11 +102,11 @@ const SignInPage = () => {
       
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+          {t('buttons.Submit')}
           </Button>
           
           <Button type="link" htmlType="button" onClick={onFill}>
-            Fill form
+          {t('buttons.Fill form')}
           </Button>
         </Form.Item>
       </Form>
