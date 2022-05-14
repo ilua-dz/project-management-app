@@ -1,7 +1,8 @@
 {
   "buttons": {
     "sign-up": "Sign Up",
-    "sign-in": "Sign In"
+    "sign-in": "Sign In",
+    "welcome": "Home"
   },
   "application-title": "Project Management App",
   "description1": "This is aimed to facilitate the workflow of a team collaborating on the same project. The software allows to assign and reassign tasks, easily track the deadlines to meet them for sure and control the whole process from the central managing location. ",
