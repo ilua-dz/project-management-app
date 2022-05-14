@@ -4,6 +4,8 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
+import { useAppSelector } from '../app/hooks';
+import { tokenFromApiSignIn } from '../features/authorization/authorizationSlice';
 import LangSwitch from './LangSwitch';
 import Links from './LinksEnum';
 
@@ -18,19 +20,28 @@ const getNavMenuItem = (link: Links, title: string): ItemType => {
 const HeaderApp = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const dataApiSignIn = useAppSelector(tokenFromApiSignIn);
 
-  const menuItems: ItemType[] = [
+  const unauthorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.signUpPage, t('buttons.sign-up')),
     getNavMenuItem(Links.signInPage, t('buttons.sign-in')),
   ];
 
+  const authorizedUserMenuItems: ItemType[] = [
+    getNavMenuItem(Links.mainPage, t('buttons.mainPage'))
+  ];
+
+  function getMenuItems () {
+    return dataApiSignIn.token? authorizedUserMenuItems: unauthorizedUserMenuItems;
+  }
+  
   return (
     <StyledHeader>
       <StyledMenu
         theme="dark"
         mode="horizontal"
         selectedKeys={[pathname.slice(1)]}
-        items={menuItems}
+        items={getMenuItems()}
       />
       <LangSwitch />
     </StyledHeader>
