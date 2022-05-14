@@ -83,7 +83,7 @@ export const authorizationOfUserSlice = createSlice({
 export const { addValuesForFill } = authorizationOfUserSlice.actions;
 
 export const valueApiSignUp = (state: RootState) => state.authorizationOfUser.dataOfSignUp;
-export const tokenFromApiSignIn = (state: RootState) => state.authorizationOfUser.dataOfSignIn;
+export const tokenFromApiSignIn = (state: RootState) => state.authorizationOfUser.dataOfSignIn.token;
 export const statusFromApiSignIn = (state: RootState) => state.authorizationOfUser.status;
 export const errorFromApiSignIn = (state: RootState) => state.authorizationOfUser.errorOfSignIn;
 export const errorFromApiSignUp = (state: RootState) => state.authorizationOfUser.errorOfSignUp;
