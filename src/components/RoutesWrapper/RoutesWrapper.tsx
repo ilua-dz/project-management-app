@@ -6,7 +6,7 @@ import WelcomePage from '../../pages/WelcomePage';
 import EditProfilePage from '../../pages/EditProfilePage';
 import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
-import Links from '../LinksEnum';
+import Links from '../../enumerations/LinksEnum';
 import LayoutApp from '../LayoutApp';
 
 function RoutesWrapper() {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
 import LangSwitch from '../LangSwitch';
-import Links from '../LinksEnum';
+import Links from '../../enumerations/LinksEnum';
 
 function getNavMenuItem(link: Links, title: string): ItemType {
   return {
