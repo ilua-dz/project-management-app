@@ -3,9 +3,14 @@ import { RootState } from '../../app/store';
 import {signIn, signUp} from '../../API/authorization';
 import { IUserData } from '../../API/dependencies';
 
+interface IvalueForFill{
+  name: string;
+  login: string;
+}
+
 export interface authorizationOfUserState {
   dataOfSignUp:{id: string, name: string, login: string};
-  dataOfSignIn:{token:string}
+  dataOfSignIn:{token:string};
   status: 'fulfilled' | 'loading' | 'rejected';
   errorOfSignIn: string;
   errorOfSignUp: string;
@@ -33,6 +38,10 @@ export const authorizationOfUserSlice = createSlice({
   name: 'authorizationOfUser',
   initialState,
   reducers: {
+    addValuesForFill: (state, action: PayloadAction<IvalueForFill>) => {
+      state.dataOfSignUp.login = action.payload.login;
+      state.dataOfSignUp.name = action.payload.name;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,7 +58,6 @@ export const authorizationOfUserSlice = createSlice({
         if (action.error.message){
           state.errorOfSignUp = action.error.message;
         }
-        console.log(action.error.message)
         state.status = 'rejected';
       });
 
@@ -71,6 +79,8 @@ export const authorizationOfUserSlice = createSlice({
       });
   },
 });
+
+export const { addValuesForFill } = authorizationOfUserSlice.actions;
 
 export const valueApiSignUp = (state: RootState) => state.authorizationOfUser.dataOfSignUp;
 export const tokenFromApiSignIn = (state: RootState) => state.authorizationOfUser.dataOfSignIn;
