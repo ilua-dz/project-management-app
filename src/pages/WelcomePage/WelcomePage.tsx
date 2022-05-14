@@ -2,45 +2,24 @@ import { Avatar, Popover } from 'antd';
 import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import OurTeam, { getMemberGitHubLink, TeamMember } from '../../enumerations/OurTeam';
 
 const { Title, Link, Text } = Typography;
-
-const GitHubUrl = 'https://github.com/';
-
-interface TeamMember {
-  name: string;
-  gitHubProfile: string;
-}
-
-const ourTeam: TeamMember[] = [
-  {
-    name: 'Ilya',
-    gitHubProfile: 'ilua-dz'
-  },
-  {
-    name: 'Halina',
-    gitHubProfile: 'alchonokk'
-  },
-  {
-    name: 'Bohdan',
-    gitHubProfile: 'whispermind'
-  }
-];
 
 function WelcomePage() {
   const { t } = useTranslation();
 
   function getAvatar(member: TeamMember) {
-    const gitHubMemberLink = GitHubUrl + member.gitHubProfile;
+    const gitHubLink = getMemberGitHubLink(member.gitHubProfile);
     return (
       <Popover
         key={member.name}
         content={
-          <Link href={gitHubMemberLink} target="_blank">
+          <Link href={gitHubLink} target="_blank">
             {member.name}
           </Link>
         }>
-        <Avatar size={64} src={gitHubMemberLink + '.png'} />
+        <Avatar size={64} src={gitHubLink + '.png'} />
       </Popover>
     );
   }
@@ -50,7 +29,7 @@ function WelcomePage() {
       <StyledTitle>{t('application-title')}</StyledTitle>
       <StyledText italic>{t('description1')}</StyledText>
       <StyledTitle level={2}>{t('our-team')}</StyledTitle>
-      <AvatarsBlock>{ourTeam.map(getAvatar)}</AvatarsBlock>
+      <AvatarsBlock>{OurTeam.map(getAvatar)}</AvatarsBlock>
       <StyledText>
         {t('description2.start-text')}
         <Link href="https://rs.school/react/" target="_blank">
