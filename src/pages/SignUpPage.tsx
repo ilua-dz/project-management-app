@@ -1,7 +1,7 @@
 
 import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { incrementAsync, valueApiSignUp, errorFromApiSignUp } from '../features/authorization/authorizationSlice';
+import { createAsyncSignUp, valueApiSignUp, errorFromApiSignUp } from '../features/authorization/authorizationSlice';
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import Links from '../components/LinksEnum';
@@ -49,7 +49,7 @@ const SignUpPage = () => {
   };
 
   async function doSignUp (dataForSignUp: IdataUser){
-    const dataFromSignUp = await dispatch(incrementAsync(dataForSignUp));
+    const dataFromSignUp = await dispatch(createAsyncSignUp(dataForSignUp));
     const statusRequest=dataFromSignUp.meta.requestStatus;
       if (statusRequest === 'fulfilled'){
         const goMainPage= () => navigate(`/${Links.signInPage}`,{replace:true});

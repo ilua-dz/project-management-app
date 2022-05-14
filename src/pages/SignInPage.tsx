@@ -1,7 +1,7 @@
 
 import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { incrementAsyncSignIN, valueApiSignUp,errorFromApiSignIn } from '../features/authorization/authorizationSlice';
+import { createAsyncSignIn, valueApiSignUp,errorFromApiSignIn } from '../features/authorization/authorizationSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +49,7 @@ const SignInPage = () => {
   };
 
   async function requestSignIN (dataOfUser: IdataUser){
-    const allDatasFromSignIN = await dispatch(incrementAsyncSignIN(dataOfUser))
+    const allDatasFromSignIN = await dispatch(createAsyncSignIn(dataOfUser))
     const statusRequest=allDatasFromSignIN.meta.requestStatus;
 
     if (statusRequest === 'fulfilled'){  
