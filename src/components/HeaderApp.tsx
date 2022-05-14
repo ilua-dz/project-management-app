@@ -20,7 +20,7 @@ const getNavMenuItem = (link: Links, title: string): ItemType => {
 const HeaderApp = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const dataApiSignIn = useAppSelector(tokenFromApiSignIn);
+  const token = useAppSelector(tokenFromApiSignIn);
 
   const unauthorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.signUpPage, t('buttons.sign-up')),
@@ -32,7 +32,7 @@ const HeaderApp = () => {
   ];
 
   function getMenuItems () {
-    return dataApiSignIn.token? authorizedUserMenuItems: unauthorizedUserMenuItems;
+    return token? authorizedUserMenuItems: unauthorizedUserMenuItems;
   }
   
   return (
