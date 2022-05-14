@@ -49,9 +49,8 @@ const SignInPage = () => {
   };
 
   async function requestSignIN (dataOfUser: IdataUser){
-    const allDatasFromSignIN = await dispatch(createAsyncSignIn(dataOfUser))
-    const statusRequest=allDatasFromSignIN.meta.requestStatus;
-
+    const dataFromSignIN = await dispatch(createAsyncSignIn(dataOfUser))
+    const statusRequest=dataFromSignIN.meta.requestStatus;
     if (statusRequest === 'fulfilled'){  
       const goMainPage= () => navigate(`/${Links.mainPage}`,{replace:true});
       goMainPage()
