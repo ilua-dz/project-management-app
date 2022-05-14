@@ -38,9 +38,11 @@ export async function requestAPI<T>({
 }
 
 function statusError(status: number) {
+  console.log(status);
   //undefined logic
 }
 
 export function ErrorHandler(e: Error) {
+  console.log(e);
   //undefined logic
 }
