@@ -1,7 +1,7 @@
 
 import { Form, Input, Button } from 'antd';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignUp, valueApiSignUp, errorFromApiSignUp, addValuesForFill } from '../features/authorization/authorizationSlice';
+import { createAsyncSignUp, valueApiSignUp, errorFromApiSignUp, addValuesForFill } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import Links from '../components/LinksEnum';

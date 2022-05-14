@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
 import { useAppSelector } from '../app/hooks';
-import { tokenFromApiSignIn } from '../features/authorization/authorizationSlice';
+import { tokenFromApiSignIn } from '../reducer/authorization/authorizationSlice';
 import LangSwitch from './LangSwitch';
 import Links from './LinksEnum';
 

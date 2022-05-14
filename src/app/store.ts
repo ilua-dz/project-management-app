@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
-import authorizationOfUserReducer from '../features/authorization/authorizationSlice';
+import authorizationOfUserReducer from '../reducer/authorization/authorizationSlice';
 import { persistStore, persistReducer, 
   FLUSH,
   REHYDRATE,
