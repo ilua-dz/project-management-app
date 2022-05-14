@@ -19,6 +19,8 @@ function RoutesWrapper() {
         <Route path={Links.profilePage} element={<EditProfilePage />} />
         <Route path={Links.mainPage} element={<MainPage />} />
         <Route path={Links.boardPage} element={<BoardPage />} />
+      </Route>
+      <Route path="*" element={<LayoutApp />}>
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

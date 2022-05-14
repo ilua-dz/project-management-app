@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import Backend from 'i18next-http-backend'
+import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
 i18n
@@ -13,11 +13,11 @@ i18n
     // Распознавание и кэширование языковых кук
     detection: {
       order: ['queryString', 'cookie'],
-      cache: ['cookie'],
+      cache: ['cookie']
     },
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false
+    }
   });
 
 export default i18n;

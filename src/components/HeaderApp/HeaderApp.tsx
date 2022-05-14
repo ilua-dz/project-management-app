@@ -11,7 +11,7 @@ function getNavMenuItem(link: Links, title: string): ItemType {
   return {
     label: <NavLink to={link}>{title}</NavLink>,
     key: link,
-    style: navItemStyle,
+    style: navItemStyle
   };
 }
 
@@ -21,7 +21,7 @@ function HeaderApp() {
 
   const menuItems: ItemType[] = [
     getNavMenuItem(Links.signUpPage, t('buttons.sign-up')),
-    getNavMenuItem(Links.signInPage, t('buttons.sign-in')),
+    getNavMenuItem(Links.signInPage, t('buttons.sign-in'))
   ];
 
   return (
@@ -55,7 +55,7 @@ const navItemStyle: CSSProperties = {
   height: '2rem',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
 };
 
 export default HeaderApp;
