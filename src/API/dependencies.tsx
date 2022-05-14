@@ -23,7 +23,8 @@ export async function requestAPI<T>({URL, options}: IRequest): Promise<T | undef
   try{
     const response = await fetch(URL, options);
     if(response.status < 200 || response.status > 299){
-      return new Promise((resolve, reject) => reject(statusError(response.status)));
+      // 
+      return new Promise(async (resolve, reject) => reject((await response.json())));
     }
     const data = await response.json();
     return new Promise((resolve) => resolve(data));
@@ -34,9 +35,9 @@ export async function requestAPI<T>({URL, options}: IRequest): Promise<T | undef
   }
 }
 
-function statusError(status: number){
-  //undefined logic
-}
+// function statusError(status: number){
+//   //undefined logic
+// }
 
 export function ErrorHandler(e: Error){
   //undefined logic
