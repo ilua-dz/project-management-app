@@ -13,7 +13,7 @@ function FooterApp() {
   return (
     <StyledFooter>
       <MembersBlock>{OurTeam.map(MemberTag)}</MembersBlock>
-      <Tag>2021</Tag>
+      <Tag>2022</Tag>
       <StyledTag>
         <Link href="https://rs.school/react/" target="_blank">
           <RSSsvg />
