@@ -2,7 +2,7 @@
 import { Form, Input, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignUp, errorFromApiSignUp, addValuesForFill } from '../reducer/authorization/authorizationSlice';
+import { createAsyncSignUp, errorFromApiSignUp } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import Links from '../components/LinksEnum';
@@ -40,7 +40,6 @@ const SignUpPage = () => {
   const [form] = Form.useForm();
 
   const onFinish = async ({name, login, password }: IdataUser) => {
-    dispatch(addValuesForFill({name, login}))
     toast.promise(
       doSignUp ({name, login, password}),
         {
@@ -61,9 +60,7 @@ const SignUpPage = () => {
       };
       
       if (statusRequest === 'rejected'){
-        toast.error(`But ${errorApiSignUp} Fill in "Sign In"!`, {duration:3000});
-        const signInPage= () => navigate(`/${Links.signInPage}`,{replace:true});
-        signInPage();
+        toast.error(`But ${errorApiSignUp} Change User `, {duration:5000});
       };  
   }
 
