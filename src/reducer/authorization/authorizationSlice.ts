@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import {signIn, signUp} from '../../API/authorization';
-import { IUserData } from '../../API/dependencies';
-
-interface IvalueForFill{
-  name: string;
-  login: string;
-}
 
 export interface authorizationOfUserState {
   dataOfSignUp:{id: string, name: string, login: string};
@@ -24,24 +18,14 @@ const initialState: authorizationOfUserState = {
   errorOfSignUp: 'User login already exists!',
 };
 
-export const createAsyncSignIn = createAsyncThunk(
-  'tokenOfUser/fetchSignIn',
-  async (body: IUserData) => signIn(body)
-);
+export const createAsyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
 
-export const createAsyncSignUp = createAsyncThunk(
-  'tokenOfUser/fetchSignUp',
-  async (body: IUserData) => signUp(body)
-);
+export const createAsyncSignUp = createAsyncThunk('tokenOfUser/fetchSignUp', signUp);
 
 export const authorizationOfUserSlice = createSlice({
   name: 'authorizationOfUser',
   initialState,
   reducers: {
-    addValuesForFill: (state, action: PayloadAction<IvalueForFill>) => {
-      state.dataOfSignUp.login = action.payload.login;
-      state.dataOfSignUp.name = action.payload.name;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -79,8 +63,6 @@ export const authorizationOfUserSlice = createSlice({
       });
   },
 });
-
-export const { addValuesForFill } = authorizationOfUserSlice.actions;
 
 export const valueApiSignUp = (state: RootState) => state.authorizationOfUser.dataOfSignUp;
 export const tokenFromApiSignIn = (state: RootState) => state.authorizationOfUser.dataOfSignIn.token;
