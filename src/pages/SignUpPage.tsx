@@ -52,7 +52,7 @@ const SignUpPage = () => {
       };
       
       if (statusRequest === 'rejected'){
-        message.error(`But ${errorApiSignUp} Change User `, 4)
+        message.error(`${errorApiSignUp} Change User `, 4)
       };  
   }
 
