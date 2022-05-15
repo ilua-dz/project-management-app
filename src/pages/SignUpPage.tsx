@@ -1,10 +1,9 @@
 
-import { Form, Input, Button, AutoComplete } from 'antd';
+import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { createAsyncSignUp, errorFromApiSignUp } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
-import toast, { Toaster } from 'react-hot-toast';
 import Links from '../components/LinksEnum';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -40,14 +39,7 @@ const SignUpPage = () => {
   const [form] = Form.useForm();
 
   const onFinish = async ({name, login, password }: IdataUser) => {
-    toast.promise(
-      doSignUp ({name, login, password}),
-        {
-         loading: 'Loading...',
-         success: <b>Your information have been send...</b>,
-         error: <b>Some problem with server...</b>,
-        }
-     );
+    doSignUp ({name, login, password})
   };
 
   async function doSignUp (dataForSignUp: IdataUser){
@@ -56,17 +48,16 @@ const SignUpPage = () => {
       if (statusRequest === 'fulfilled'){
         const goMainPage= () => navigate(`/${Links.signInPage}`,{replace:true});
         goMainPage()
-        toast.success('You signUp! Fill in form "Sign In"', {duration:3000})
+        message.success('You signUp! Fill this form "Sign In"', 4)
       };
       
       if (statusRequest === 'rejected'){
-        toast.error(`But ${errorApiSignUp} Change User `, {duration:5000});
+        message.error(`But ${errorApiSignUp} Change User `, 4)
       };  
   }
 
   return (
     <Container>
-    <Toaster />
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
       <Form.Item
         name="name"
