@@ -59,7 +59,7 @@ const SignInPage = () => {
       goMainPage()
     } 
     if (statusRequest === 'rejected'){
-      toast.error(`But ${errorApiSignIn}`)
+      toast.error(`But ${errorApiSignIn}`, {duration:3000})
     }     
   }
 

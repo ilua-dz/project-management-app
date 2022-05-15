@@ -61,7 +61,7 @@ const SignUpPage = () => {
       };
       
       if (statusRequest === 'rejected'){
-        toast.error(`But ${errorApiSignUp} Fill in "Sign In"!`);
+        toast.error(`But ${errorApiSignUp} Fill in "Sign In"!`, {duration:3000});
         const signInPage= () => navigate(`/${Links.signInPage}`,{replace:true});
         signInPage();
       };  
