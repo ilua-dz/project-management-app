@@ -105,8 +105,6 @@ const SignInPage = () => {
   )
 };
 
-export default SignInPage;
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -114,3 +112,5 @@ const Container = styled.div`
   flex-direction: column;
   padding: 5rem;
 `;
+
+export default SignInPage;
