@@ -23,13 +23,6 @@ root.render(
         </PersistGate>
       </Provider>
     </Suspense>
-    {/* <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider> */}
   </React.StrictMode>
 );
 
