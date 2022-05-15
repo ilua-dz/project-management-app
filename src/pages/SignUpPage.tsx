@@ -73,31 +73,31 @@ const SignUpPage = () => {
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
       <Form.Item
         name="name"
-        label="Name"
+        label={t('labelOfForms.name')}
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Input placeholder="name"/>
+        <Input placeholder={t('labelOfForms.name')}/>
       </Form.Item>
 
       <Form.Item
         name="login"
-        label="Login"
+        label={t('labelOfForms.login')}
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Input placeholder="login"/>
+        <Input placeholder={t('labelOfForms.login')}/>
       </Form.Item>
 
       <Form.Item
         name="password"
-        label="Password"
+        label={t('labelOfForms.password')}
         rules={[
           {
             required: true,
@@ -105,7 +105,7 @@ const SignUpPage = () => {
         ]}
       >
         <Input.Password
-          placeholder="password"
+          placeholder={t('labelOfForms.password')}
           iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
         />
       </Form.Item>

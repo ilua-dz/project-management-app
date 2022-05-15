@@ -70,19 +70,19 @@ const SignInPage = () => {
       
         <Form.Item
           name="login"
-          label="Login"
+          label={t('labelOfForms.login')}
           rules={[
             {
               required: true,
             },
           ]}
         >
-          <Input placeholder="login" />
+          <Input placeholder={t('labelOfForms.login')} />
         </Form.Item>
 
         <Form.Item
           name="password"
-          label="Password"
+          label={t('labelOfForms.password')}
           rules={[
             {
               required: true,
@@ -90,7 +90,7 @@ const SignInPage = () => {
           ]}
         >
           <Input.Password
-            placeholder="password"
+            placeholder={t('labelOfForms.password')}
             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
