@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
-import authorizationOfUserReducer from '../reducer/authorization/authorizationSlice';
+import userAuthorizationReducer from '../reducer/authorization/authorizationSlice';
 import { persistStore, persistReducer, 
   FLUSH,
   REHYDRATE,
@@ -11,7 +11,7 @@ import { persistStore, persistReducer,
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 const rootReducer = combineReducers({
-  authorizationOfUser: authorizationOfUserReducer,
+  userAuthorization: userAuthorizationReducer,
 })
 
 const persistConfig = {

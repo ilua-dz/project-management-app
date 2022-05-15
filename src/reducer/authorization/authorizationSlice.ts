@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import {signIn, signUp} from '../../API/authorization';
 
-export interface authorizationOfUserState {
-  dataOfSignUp:{id: string, name: string, login: string};
-  dataOfSignIn:{token:string};
+export interface userAuthorizationState {
+  dataOfSignUp: {id: string, name: string, login: string};
+  dataOfSignIn: {token:string};
   status: 'fulfilled' | 'loading' | 'rejected';
   errorOfSignIn: string;
   errorOfSignUp: string;
 }
 
-const initialState: authorizationOfUserState = {
-  dataOfSignUp:{id: '', name: '', login: ''},
-  dataOfSignIn:{token:''},
+const initialState: userAuthorizationState = {
+  dataOfSignUp: {id: '', name: '', login: ''},
+  dataOfSignIn: {token:''},
   status: 'fulfilled',
   errorOfSignIn: 'User was not founded!',
   errorOfSignUp: 'User login already exists!',
@@ -22,8 +22,8 @@ export const createAsyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', sig
 
 export const createAsyncSignUp = createAsyncThunk('tokenOfUser/fetchSignUp', signUp);
 
-export const authorizationOfUserSlice = createSlice({
-  name: 'authorizationOfUser',
+export const userAuthorizationSlice = createSlice({
+  name: 'userAuthorization',
   initialState,
   reducers: {
   },
@@ -64,10 +64,10 @@ export const authorizationOfUserSlice = createSlice({
   },
 });
 
-export const valueApiSignUp = (state: RootState) => state.authorizationOfUser.dataOfSignUp;
-export const tokenFromApiSignIn = (state: RootState) => state.authorizationOfUser.dataOfSignIn.token;
-export const statusFromApiSignIn = (state: RootState) => state.authorizationOfUser.status;
-export const errorFromApiSignIn = (state: RootState) => state.authorizationOfUser.errorOfSignIn;
-export const errorFromApiSignUp = (state: RootState) => state.authorizationOfUser.errorOfSignUp;
+export const valueApiSignUp = (state: RootState) => state.userAuthorization.dataOfSignUp;
+export const tokenFromApiSignIn = (state: RootState) => state.userAuthorization.dataOfSignIn.token;
+export const statusFromApiSignIn = (state: RootState) => state.userAuthorization.status;
+export const errorFromApiSignIn = (state: RootState) => state.userAuthorization.errorOfSignIn;
+export const errorFromApiSignUp = (state: RootState) => state.userAuthorization.errorOfSignUp;
 
-export default authorizationOfUserSlice.reducer;
+export default userAuthorizationSlice.reducer;
