@@ -1,5 +1,5 @@
 
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, AutoComplete } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { createAsyncSignIn, errorFromApiSignIn } from '../reducer/authorization/authorizationSlice';
@@ -90,10 +90,15 @@ const SignInPage = () => {
             },
           ]}
         >
-          <Input.Password
-            placeholder={t('labelOfForms.password')}
-            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-          />
+          <AutoComplete>
+            <Input.Password
+              placeholder={t('labelOfForms.password')}
+              autoComplete='off'
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
+          </AutoComplete>
+          
+          
         </Form.Item>
 
         <Form.Item {...tailLayout}>
