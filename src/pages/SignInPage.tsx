@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../components/LinksEnum';
 import { useTranslation } from 'react-i18next';
+import { IUserData } from '../API/dependencies';
 
 
 const layout = {
@@ -51,7 +52,7 @@ const SignInPage = () => {
      );
   };
 
-  async function requestSignIN (dataOfUser: IdataUser){
+  async function requestSignIN (dataOfUser: Partial<IUserData>){
     const dataFromSignIN = await dispatch(createAsyncSignIn(dataOfUser))
     const statusRequest=dataFromSignIN.meta.requestStatus;
     if (statusRequest === 'fulfilled'){  
@@ -59,7 +60,7 @@ const SignInPage = () => {
       goMainPage()
     } 
     if (statusRequest === 'rejected'){
-      toast.error(`But ${errorApiSignIn}`, {duration:3000})
+      toast.error(`But ${errorApiSignIn}`, {duration:5000})
     }     
   }
 
