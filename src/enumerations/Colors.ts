@@ -22,7 +22,9 @@ enum Colors {
   warningHover = '#ffc53d',
   warningAactive = '#d48806',
   warningOutline = 'rgba(250, 173, 20, 0.2)',
-  info = '#1890ff'
+  info = '#1890ff',
+  tagBG = '#fafafa',
+  headerBG = '#001529'
 }
 
 export default Colors;
