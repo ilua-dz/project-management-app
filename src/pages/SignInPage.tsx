@@ -1,12 +1,14 @@
 
 import { Form, Input, Button } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignIn, valueApiSignUp,errorFromApiSignIn } from '../reducer/authorization/authorizationSlice';
+import { createAsyncSignIn, errorFromApiSignIn } from '../reducer/authorization/authorizationSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../components/LinksEnum';
 import { useTranslation } from 'react-i18next';
+
 
 const layout = {
   labelCol: {
@@ -34,7 +36,6 @@ const SignInPage = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const dataApiSignUp = useAppSelector(valueApiSignUp);
   const errorApiSignIn = useAppSelector(errorFromApiSignIn);
 
   const [form] = Form.useForm();
@@ -62,15 +63,6 @@ const SignInPage = () => {
     }     
   }
 
-  const onFill = () => {
-    /*TO DO*/
-    form.setFieldsValue({
-      name: `${dataApiSignUp.name}`,
-      login: `${dataApiSignUp.login}`,
-      password: ''
-    });
-  };
-
   return (
     <Container>
       <Toaster />
@@ -85,7 +77,7 @@ const SignInPage = () => {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="login" />
         </Form.Item>
 
         <Form.Item
@@ -97,16 +89,15 @@ const SignInPage = () => {
             },
           ]}
         >
-          <Input />
+          <Input.Password
+            placeholder="password"
+            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+          />
         </Form.Item>
-      
+
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
           {t('buttons.Submit')}
-          </Button>
-          
-          <Button type="link" htmlType="button" onClick={onFill}>
-          {t('buttons.Fill form')}
           </Button>
         </Form.Item>
       </Form>

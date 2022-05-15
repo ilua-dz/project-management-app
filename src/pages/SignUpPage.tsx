@@ -1,7 +1,8 @@
 
 import { Form, Input, Button } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignUp, valueApiSignUp, errorFromApiSignUp, addValuesForFill } from '../reducer/authorization/authorizationSlice';
+import { createAsyncSignUp, errorFromApiSignUp, addValuesForFill } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import Links from '../components/LinksEnum';
@@ -34,7 +35,6 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const dataApiSignUp = useAppSelector(valueApiSignUp);
   const errorApiSignUp = useAppSelector(errorFromApiSignUp);
 
   const [form] = Form.useForm();
@@ -67,15 +67,6 @@ const SignUpPage = () => {
       };  
   }
 
-  const onFill = () => {
-    /*TO DO*/
-    form.setFieldsValue({
-      name: `${dataApiSignUp.name}`,
-      login: `${dataApiSignUp.login}`,
-      password: ''
-    });
-  };
-
   return (
     <Container>
     <Toaster />
@@ -89,7 +80,7 @@ const SignUpPage = () => {
           },
         ]}
       >
-      <Input />
+        <Input placeholder="name"/>
       </Form.Item>
 
       <Form.Item
@@ -101,7 +92,7 @@ const SignUpPage = () => {
           },
         ]}
       >
-      <Input />
+        <Input placeholder="login"/>
       </Form.Item>
 
       <Form.Item
@@ -113,15 +104,15 @@ const SignUpPage = () => {
           },
         ]}
       >
-        <Input />
+        <Input.Password
+          placeholder="password"
+          iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+        />
       </Form.Item>
       
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
         {t('buttons.Submit')}
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-        {t('buttons.Fill form')}
         </Button>
       </Form.Item>
     </Form>
