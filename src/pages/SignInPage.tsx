@@ -1,9 +1,8 @@
 
-import { Form, Input, Button, AutoComplete } from 'antd';
+import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { createAsyncSignIn, errorFromApiSignIn } from '../reducer/authorization/authorizationSlice';
-import toast, { Toaster } from 'react-hot-toast';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../components/LinksEnum';
@@ -42,14 +41,7 @@ const SignInPage = () => {
   const [form] = Form.useForm();
 
   const onFinish = ({login, password }: IdataUser) => {
-    toast.promise(
-      requestSignIN ({login, password}),
-        {
-         loading: 'Loading...',
-         success: <b>Your information have been send...</b>,
-         error: <b>Some problem with server...</b>,
-        }
-     );
+    requestSignIN ({login, password});
   };
 
   async function requestSignIN (dataOfUser: Partial<IUserData>){
@@ -60,13 +52,12 @@ const SignInPage = () => {
       goMainPage()
     } 
     if (statusRequest === 'rejected'){
-      toast.error(`But ${errorApiSignIn}`, {duration:5000})
+      message.error(`${errorApiSignIn}`, 4);
     }     
   }
 
   return (
     <Container>
-      <Toaster />
       <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
       
         <Form.Item
