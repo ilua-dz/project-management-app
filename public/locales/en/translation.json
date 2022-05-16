@@ -2,7 +2,8 @@
   "buttons": {
     "sign-up": "Sign Up",
     "sign-in": "Sign In",
-    "mainPage": "Go to Main Page",
+    "sign-out": "Sign Out",
+    "mainPage": "Main Page",
     "Submit": "Submit"
   },
   "labelOfForms": {

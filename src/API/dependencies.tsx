@@ -4,10 +4,10 @@ interface IRequest {
 }
 
 export interface IUserData {
-  name?: string;
-  login?: string;
-  id?: string;
-  password?: string;
+  name: string;
+  login: string;
+  id: string;
+  password: string;
 }
 
 export enum Methods {

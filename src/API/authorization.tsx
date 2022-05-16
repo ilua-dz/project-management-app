@@ -1,10 +1,10 @@
 import { baseURL, requestAPI, Methods, IUserData } from './dependencies';
 
-type Token = {
-  token: string;
-};
+export type Token = { token: string };
+export type SignInData = Pick<IUserData, 'login' | 'password'>;
+export type SignUpData = Pick<IUserData, 'login' | 'name' | 'password'>;
 
-export async function signUp(body: IUserData) {
+export async function signUp(body: SignUpData) {
   const URL = `${baseURL}signup`;
   const options = {
     method: Methods.post,
@@ -18,7 +18,7 @@ export async function signUp(body: IUserData) {
   return data;
 }
 
-export async function signIn(body: IUserData) {
+export async function signIn(body: SignInData) {
   const URL = `${baseURL}signin`;
   const options = {
     method: Methods.post,

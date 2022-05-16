@@ -1,12 +1,12 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignIn, errorFromApiSignIn } from '../reducer/authorization/authorizationSlice';
+import { asyncSignIn, getApiSignInError } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../components/LinksEnum';
 import { useTranslation } from 'react-i18next';
-import { IUserData } from '../API/dependencies';
+import { SignInData } from '../API/authorization';
 
 const layout = {
   labelCol: {
@@ -24,30 +24,24 @@ const tailLayout = {
   }
 };
 
-type IdataUser = {
-  login: string;
-  password: string;
-};
-
 const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const errorApiSignIn = useAppSelector(errorFromApiSignIn);
+  const errorApiSignIn = useAppSelector(getApiSignInError);
 
   const [form] = Form.useForm();
 
-  const onFinish = ({ login, password }: IdataUser) => {
+  const onFinish = ({ login, password }: SignInData) => {
     requestSignIN({ login, password });
   };
 
-  async function requestSignIN(dataOfUser: Partial<IUserData>) {
-    const dataFromSignIN = await dispatch(createAsyncSignIn(dataOfUser));
-    const statusRequest = dataFromSignIN.meta.requestStatus;
+  async function requestSignIN(userData: SignInData) {
+    const signInData = await dispatch(asyncSignIn(userData));
+    const statusRequest = signInData.meta.requestStatus;
     if (statusRequest === 'fulfilled') {
-      const goMainPage = () => navigate(`/${Links.mainPage}`, { replace: true });
-      goMainPage();
+      navigate(`/${Links.mainPage}`);
     }
     if (statusRequest === 'rejected') {
       message.error(`${errorApiSignIn}`, 4);

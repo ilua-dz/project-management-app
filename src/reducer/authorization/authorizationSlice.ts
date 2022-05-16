@@ -1,28 +1,29 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUserData } from './../../API/dependencies';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { signIn, signUp } from '../../API/authorization';
+import { signIn, signUp, Token } from '../../API/authorization';
 
 export interface userAuthorizationState {
-  dataOfSignUp: { id: string; name: string; login: string };
-  dataOfSignIn: { token: string };
-  statusSignUp: string;
-  statusSignIn: string;
-  errorOfSignIn: string;
-  errorOfSignUp: string;
+  signUpData: { id: string; name: string; login: string };
+  signInData: { token: string };
+  signUpStatus: string;
+  signInStatus: string;
+  signInError: string;
+  signUpError: string;
 }
 
 const initialState: userAuthorizationState = {
-  dataOfSignUp: { id: '', name: '', login: '' },
-  dataOfSignIn: { token: '' },
-  statusSignUp: '',
-  statusSignIn: '',
-  errorOfSignIn: 'User was not founded!',
-  errorOfSignUp: 'User login already exists!'
+  signUpData: { id: '', name: '', login: '' },
+  signInData: { token: '' },
+  signUpStatus: '',
+  signInStatus: '',
+  signInError: 'User was not founded!',
+  signUpError: 'User login already exists!'
 };
 
-export const createAsyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
-
-export const createAsyncSignUp = createAsyncThunk('tokenOfUser/fetchSignUp', signUp);
+export const asyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
+export const asyncSignUp = createAsyncThunk('tokenOfUser/fetchSignUp', signUp);
+export const signOut = createAction('signOut');
 
 export const userAuthorizationSlice = createSlice({
   name: 'userAuthorization',
@@ -30,46 +31,50 @@ export const userAuthorizationSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createAsyncSignUp.pending, (state) => {
-        state.statusSignUp = 'loading';
+      .addCase(asyncSignUp.pending, (state) => {
+        state.signUpStatus = 'loading';
       })
-      .addCase(createAsyncSignUp.fulfilled, (state, action: PayloadAction<any>) => {
-        state.statusSignUp = 'fulfilled';
-        if (action.payload) {
-          state.dataOfSignUp = action.payload;
+      .addCase(asyncSignUp.fulfilled, (state, { payload }) => {
+        state.signUpStatus = 'fulfilled';
+        if (payload) {
+          state.signUpData = payload as IUserData;
         }
       })
-      .addCase(createAsyncSignUp.rejected, (state, action) => {
-        if (action.error.message) {
-          state.errorOfSignUp = action.error.message;
+      .addCase(asyncSignUp.rejected, (state, { error }) => {
+        if (error.message) {
+          state.signUpError = error.message;
         }
-        state.statusSignUp = 'rejected';
+        state.signUpStatus = 'rejected';
       });
 
     builder
-      .addCase(createAsyncSignIn.pending, (state) => {
-        state.statusSignIn = 'loading';
+      .addCase(asyncSignIn.pending, (state) => {
+        state.signInStatus = 'loading';
       })
-      .addCase(createAsyncSignIn.fulfilled, (state, action: PayloadAction<any>) => {
-        state.statusSignIn = 'fulfilled';
-        if (action.payload) {
-          state.dataOfSignIn = action.payload;
+      .addCase(asyncSignIn.fulfilled, (state, { payload }) => {
+        state.signInStatus = 'fulfilled';
+        if (payload) {
+          state.signInData = payload as Token;
         }
       })
-      .addCase(createAsyncSignIn.rejected, (state, action) => {
-        if (action.error.message) {
-          state.errorOfSignIn = action.error.message;
+      .addCase(asyncSignIn.rejected, (state, { error }) => {
+        if (error.message) {
+          state.signInError = error.message;
         }
-        state.statusSignIn = 'rejected';
+        state.signInStatus = 'rejected';
       });
+
+    builder.addCase(signOut, (state) => {
+      return { ...state, signInData: { token: '' } };
+    });
   }
 });
 
-export const valueApiSignUp = (state: RootState) => state.userAuthorization.dataOfSignUp;
-export const tokenFromApiSignIn = (state: RootState) => state.userAuthorization.dataOfSignIn.token;
-export const statusFromApiSignIn = (state: RootState) => state.userAuthorization.statusSignIn;
-export const statusFromApiSignUp = (state: RootState) => state.userAuthorization.statusSignUp;
-export const errorFromApiSignIn = (state: RootState) => state.userAuthorization.errorOfSignIn;
-export const errorFromApiSignUp = (state: RootState) => state.userAuthorization.errorOfSignUp;
+export const getApiSignUpData = (state: RootState) => state.userAuthorization.signUpData;
+export const getApiSignInToken = (state: RootState) => state.userAuthorization.signInData.token;
+export const getApiSignInStatus = (state: RootState) => state.userAuthorization.signInStatus;
+export const getApiSignUpStatus = (state: RootState) => state.userAuthorization.signUpStatus;
+export const getApiSignInError = (state: RootState) => state.userAuthorization.signInError;
+export const getApiSignUpError = (state: RootState) => state.userAuthorization.signUpError;
 
 export default userAuthorizationSlice.reducer;

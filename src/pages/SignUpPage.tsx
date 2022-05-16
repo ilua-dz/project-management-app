@@ -1,11 +1,12 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createAsyncSignUp, errorFromApiSignUp } from '../reducer/authorization/authorizationSlice';
+import { asyncSignUp, getApiSignUpError } from '../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import Links from '../components/LinksEnum';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { SignUpData } from '../API/authorization';
 
 const layout = {
   labelCol: {
@@ -22,31 +23,24 @@ const tailLayout = {
   }
 };
 
-type IdataUser = {
-  name: string;
-  login: string;
-  password: string;
-};
-
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const errorApiSignUp = useAppSelector(errorFromApiSignUp);
+  const errorApiSignUp = useAppSelector(getApiSignUpError);
 
   const [form] = Form.useForm();
 
-  const onFinish = async ({ name, login, password }: IdataUser) => {
+  const onFinish = async ({ name, login, password }: SignUpData) => {
     doSignUp({ name, login, password });
   };
 
-  async function doSignUp(dataForSignUp: IdataUser) {
-    const dataFromSignUp = await dispatch(createAsyncSignUp(dataForSignUp));
-    const statusRequest = dataFromSignUp.meta.requestStatus;
+  async function doSignUp(userData: SignUpData) {
+    const signUpData = await dispatch(asyncSignUp(userData));
+    const statusRequest = signUpData.meta.requestStatus;
     if (statusRequest === 'fulfilled') {
-      const goMainPage = () => navigate(`/${Links.signInPage}`, { replace: true });
-      goMainPage();
+      navigate(`/${Links.signInPage}`);
       message.success('You signUp! Fill this form "Sign In"', 4);
     }
 
@@ -107,8 +101,6 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -116,3 +108,5 @@ const Container = styled.div`
   flex-direction: column;
   padding: 5rem;
 `;
+
+export default SignUpPage;
