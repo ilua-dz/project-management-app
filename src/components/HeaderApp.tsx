@@ -31,10 +31,10 @@ const HeaderApp = () => {
     getNavMenuItem(Links.mainPage, t('buttons.mainPage'))
   ];
 
-  function getMenuItems () {
-    return token? authorizedUserMenuItems: unauthorizedUserMenuItems;
+  function getMenuItems() {
+    return token ? authorizedUserMenuItems : unauthorizedUserMenuItems;
   }
-  
+
   return (
     <StyledHeader>
       <StyledMenu
