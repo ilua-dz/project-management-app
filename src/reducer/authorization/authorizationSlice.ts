@@ -17,8 +17,8 @@ const initialState: userAuthorizationState = {
   signInData: { token: '' },
   signUpStatus: '',
   signInStatus: '',
-  signInError: '',
-  signUpError: ''
+  signInError: 'User was not founded!',
+  signUpError: 'User login already exists!'
 };
 
 export const asyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
@@ -58,7 +58,6 @@ export const userAuthorizationSlice = createSlice({
         }
       })
       .addCase(asyncSignIn.rejected, (state, { error }) => {
-        console.log(error.message);
         if (error.message) {
           state.signInError = error.message;
         }
