@@ -2,10 +2,10 @@ import { Menu } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
-import { useAppSelector } from '../app/hooks';
-import { tokenFromApiSignIn } from '../reducer/authorization/authorizationSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { getApiSignInToken, signOut } from '../reducer/authorization/authorizationSlice';
 import LangSwitch from './LangSwitch';
 import Links from './LinksEnum';
 
@@ -17,10 +17,26 @@ const getNavMenuItem = (link: Links, title: string): ItemType => {
   };
 };
 
+const getNavMenuButton = (onClick: () => void, title: string): ItemType => {
+  return {
+    label: title,
+    key: title,
+    style: navItemStyle,
+    onClick
+  };
+};
+
 const HeaderApp = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const token = useAppSelector(tokenFromApiSignIn);
+  const token = useAppSelector(getApiSignInToken);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  function dispatchSignOut() {
+    dispatch(signOut());
+    navigate(Links.welcomePage);
+  }
 
   const unauthorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.signUpPage, t('buttons.sign-up')),
@@ -28,7 +44,8 @@ const HeaderApp = () => {
   ];
 
   const authorizedUserMenuItems: ItemType[] = [
-    getNavMenuItem(Links.mainPage, t('buttons.mainPage'))
+    getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
+    getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
   ];
 
   function getMenuItems() {
