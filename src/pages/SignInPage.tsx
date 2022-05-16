@@ -20,14 +20,11 @@ const SignInPage = () => {
 
   const [form] = Form.useForm();
 
-  const onFinish = ({ login, password }: SignInData) => {
-    requestSignIN({ login, password });
-  };
-
-  async function requestSignIN(userData: SignInData) {
+  async function signInRequest(userData: SignInData) {
     const signInData = await dispatch(asyncSignIn(userData));
     const statusRequest = signInData.meta.requestStatus;
     if (statusRequest === 'fulfilled') {
+      message.success(t('messages.sign-in-done'), 4);
       navigate(`/${Links.mainPage}`);
     }
     if (statusRequest === 'rejected') {
@@ -37,7 +34,7 @@ const SignInPage = () => {
 
   return (
     <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+      <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
         <Form.Item
           name="login"
           label={t('labelOfForms.login')}

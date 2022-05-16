@@ -20,26 +20,22 @@ const SignUpPage = () => {
 
   const [form] = Form.useForm();
 
-  const onFinish = async ({ name, login, password }: SignUpData) => {
-    doSignUp({ name, login, password });
-  };
-
-  async function doSignUp(userData: SignUpData) {
+  async function signUpRequest(userData: SignUpData) {
     const signUpData = await dispatch(asyncSignUp(userData));
     const statusRequest = signUpData.meta.requestStatus;
     if (statusRequest === 'fulfilled') {
+      message.success(t('messages.sign-up-done'), 4);
       navigate(`/${Links.signInPage}`);
-      message.success('You signUp! Fill this form "Sign In"', 4);
     }
 
     if (statusRequest === 'rejected') {
-      message.error(`${errorApiSignUp} Change User `, 4);
+      message.error(`${errorApiSignUp}`, 4);
     }
   }
 
   return (
     <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+      <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
         <Form.Item
           name="name"
           label={t('labelOfForms.name')}
