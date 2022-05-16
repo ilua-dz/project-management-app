@@ -7,21 +7,9 @@ import Links from '../components/LinksEnum';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../API/authorization';
+import formProperties from '../antd/formProperties';
 
-const layout = {
-  labelCol: {
-    span: 8
-  },
-  wrapperCol: {
-    span: 16
-  }
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16
-  }
-};
+const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
