@@ -26,7 +26,7 @@ export async function requestAPI<T>({
   try {
     const response = await fetch(URL, options);
     if (response.status < 200 || response.status > 299) {
-      return Promise.reject(response.json());
+      return Promise.reject(await response.json());
     }
     const data = await response.json();
     return new Promise((resolve) => resolve(data));
