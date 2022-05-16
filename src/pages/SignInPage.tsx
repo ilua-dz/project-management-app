@@ -23,15 +23,14 @@ const SignInPage = () => {
 
   async function signInRequest(userData: SignInData) {
     // To DO Loading
-    // const signInData = await dispatch(asyncSignIn(userData));
-    // const statusRequest = signInData.meta.requestStatus;
-    // if (signInData.type === 'tokenOfUser/fetchSignIn/pending') {
-    //   message.loading('loading...');
-    // }
+    const signInData = await dispatch(asyncSignIn(userData));
 
-    isActionFulfilled(await dispatch(asyncSignIn(userData)))
-      ? (message.success(t('messages.sign-in-done'), 4), navigate(`/${Links.mainPage}`))
-      : message.error(`${errorApiSignIn}`, 4);
+    if (isActionFulfilled(signInData)) {
+      message.success(t('messages.sign-in-done'), 4);
+      navigate(`/${Links.mainPage}`);
+    } else {
+      message.error(`${errorApiSignIn}`, 4);
+    }
   }
 
   return (

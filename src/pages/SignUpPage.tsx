@@ -22,9 +22,14 @@ const SignUpPage = () => {
   const [form] = Form.useForm();
 
   async function signUpRequest(userData: SignUpData) {
-    isActionFulfilled(await dispatch(asyncSignUp(userData)))
-      ? (message.success(t('messages.sign-up-done'), 4), navigate(`/${Links.signInPage}`))
-      : message.error(`${errorApiSignUp}`, 4);
+    const signUpData = await dispatch(asyncSignUp(userData));
+
+    if (isActionFulfilled(signUpData)) {
+      message.success(t('messages.sign-up-done'), 4);
+      navigate(`/${Links.signInPage}`);
+    } else {
+      message.error(`${errorApiSignUp}`, 4);
+    }
   }
 
   return (
