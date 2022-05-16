@@ -1,14 +1,14 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { asyncSignUp, getApiSignUpError } from '../reducer/authorization/authorizationSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { asyncSignUp, getApiSignUpError } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
-import Links from '../components/LinksEnum';
+import Links from '../../enumerations/LinksEnum';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SignUpData } from '../API/authorization';
-import formProperties from '../antd/formProperties';
-import isActionFulfilled from '../app/actionHelper';
+import { SignUpData } from '../../API/authorization';
+import formProperties from '../../antd/formProperties';
+import isActionFulfilled from '../../app/actionHelper';
 
 const { tailLayout, layout } = formProperties;
 
@@ -82,7 +82,7 @@ const SignUpPage = () => {
       </Form>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   display: flex;

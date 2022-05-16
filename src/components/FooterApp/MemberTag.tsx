@@ -7,10 +7,8 @@ const { Link } = Typography;
 
 function MemberTag({ gitHubProfile, name }: TeamMember) {
   return (
-    <Link href={getMemberGitHubLink(gitHubProfile)} target="_blank">
-      <StyledTag key={name} icon={<GithubOutlined />}>
-        {name}
-      </StyledTag>
+    <Link key={name} href={getMemberGitHubLink(gitHubProfile)} target="_blank">
+      <StyledTag icon={<GithubOutlined />}>{name}</StyledTag>
     </Link>
   );
 }

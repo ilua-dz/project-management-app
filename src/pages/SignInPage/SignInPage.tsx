@@ -1,14 +1,14 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { asyncSignIn, getApiSignInError } from '../reducer/authorization/authorizationSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { asyncSignIn, getApiSignInError } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Links from '../components/LinksEnum';
+import Links from '../../enumerations/LinksEnum';
 import { useTranslation } from 'react-i18next';
-import { SignInData } from '../API/authorization';
-import formProperties from '../antd/formProperties';
-import isActionFulfilled from '../app/actionHelper';
+import { SignInData } from '../../API/authorization';
+import formProperties from '../../antd/formProperties';
+import isActionFulfilled from '../../app/actionHelper';
 
 const { tailLayout, layout } = formProperties;
 

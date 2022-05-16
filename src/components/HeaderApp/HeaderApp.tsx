@@ -6,8 +6,8 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
 import LangSwitch from '../LangSwitch';
 import Links from '../../enumerations/LinksEnum';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { getApiSignInToken, signOut } from '../reducer/authorization/authorizationSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getApiSignInToken, signOut } from '../../reducer/authorization/authorizationSlice';
 
 function getNavMenuItem(link: Links, title: string): ItemType {
   return {
