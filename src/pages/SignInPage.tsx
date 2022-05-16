@@ -8,6 +8,7 @@ import Links from '../components/LinksEnum';
 import { useTranslation } from 'react-i18next';
 import { SignInData } from '../API/authorization';
 import formProperties from '../antd/formProperties';
+import isActionFulfilled from '../app/actionHelper';
 
 const { tailLayout, layout } = formProperties;
 
@@ -21,15 +22,16 @@ const SignInPage = () => {
   const [form] = Form.useForm();
 
   async function signInRequest(userData: SignInData) {
-    const signInData = await dispatch(asyncSignIn(userData));
-    const statusRequest = signInData.meta.requestStatus;
-    if (statusRequest === 'fulfilled') {
-      message.success(t('messages.sign-in-done'), 4);
-      navigate(`/${Links.mainPage}`);
-    }
-    if (statusRequest === 'rejected') {
-      message.error(`${errorApiSignIn}`, 4);
-    }
+    // To DO Loading
+    // const signInData = await dispatch(asyncSignIn(userData));
+    // const statusRequest = signInData.meta.requestStatus;
+    // if (signInData.type === 'tokenOfUser/fetchSignIn/pending') {
+    //   message.loading('loading...');
+    // }
+
+    isActionFulfilled(await dispatch(asyncSignIn(userData)))
+      ? (message.success(t('messages.sign-in-done'), 4), navigate(`/${Links.mainPage}`))
+      : message.error(`${errorApiSignIn}`, 4);
   }
 
   return (
