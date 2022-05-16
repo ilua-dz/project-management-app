@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../API/authorization';
 import formProperties from '../antd/formProperties';
+import isActionFulfilled from '../app/actionHelper';
 
 const { tailLayout, layout } = formProperties;
 
@@ -21,16 +22,9 @@ const SignUpPage = () => {
   const [form] = Form.useForm();
 
   async function signUpRequest(userData: SignUpData) {
-    const signUpData = await dispatch(asyncSignUp(userData));
-    const statusRequest = signUpData.meta.requestStatus;
-    if (statusRequest === 'fulfilled') {
-      message.success(t('messages.sign-up-done'), 4);
-      navigate(`/${Links.signInPage}`);
-    }
-
-    if (statusRequest === 'rejected') {
-      message.error(`${errorApiSignUp}`, 4);
-    }
+    isActionFulfilled(await dispatch(asyncSignUp(userData)))
+      ? (message.success(t('messages.sign-up-done'), 4), navigate(`/${Links.signInPage}`))
+      : message.error(`${errorApiSignUp}`, 4);
   }
 
   return (
