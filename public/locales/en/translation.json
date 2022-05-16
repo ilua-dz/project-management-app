@@ -1,7 +1,21 @@
 {
   "buttons": {
     "sign-up": "Sign Up",
-    "sign-in": "Sign In"
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out",
+    "mainPage": "Main Page",
+    "Submit": "Submit"
+  },
+  "messages": {
+    "sign-up-done": "Registration is complete. Sign in with your login and password!",
+    "sign-up-error": "User login already exists!",
+    "sign-in-done": "Successful Sign In!",
+    "sign-in-error": "Login or password is incorrect!"
+  },
+  "labelOfForms": {
+    "password": "Password",
+    "name": "Name",
+    "login": "Login"
   },
   "application-title": "Project Management App",
   "description1": "This is aimed to facilitate the workflow of a team collaborating on the same project. The software allows to assign and reassign tasks, easily track the deadlines to meet them for sure and control the whole process from the central managing location. ",

@@ -4,10 +4,10 @@ interface IRequest {
 }
 
 export interface IUserData {
-  name?: string;
-  login?: string;
-  id?: string;
-  password?: string;
+  name: string;
+  login: string;
+  id: string;
+  password: string;
 }
 
 export enum Methods {
@@ -26,7 +26,7 @@ export async function requestAPI<T>({
   try {
     const response = await fetch(URL, options);
     if (response.status < 200 || response.status > 299) {
-      return new Promise((resolve, reject) => reject(statusError(response.status)));
+      return Promise.reject(await response.json());
     }
     const data = await response.json();
     return new Promise((resolve) => resolve(data));
@@ -37,10 +37,9 @@ export async function requestAPI<T>({
   }
 }
 
-function statusError(status: number) {
-  console.log(status);
-  //undefined logic
-}
+// function statusError(status: number){
+//   //undefined logic
+// }
 
 export function ErrorHandler(e: Error) {
   console.log(e);
