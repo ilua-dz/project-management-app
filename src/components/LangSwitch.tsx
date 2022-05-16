@@ -8,7 +8,9 @@ const LangSwitch = () => {
   const changeLanguage = (isLangEN: boolean) => {
     if (isLangEN) {
       i18n.changeLanguage('en');
-    } else i18n.changeLanguage('ru');
+    } else {
+      i18n.changeLanguage('ru');
+    }
   };
 
   return (

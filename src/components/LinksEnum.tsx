@@ -4,7 +4,7 @@ enum Links {
   signUpPage = 'sign-up',
   profilePage = 'profile',
   mainPage = 'main',
-  boardPage = 'board',
+  boardPage = 'board'
 }
 
 export default Links;

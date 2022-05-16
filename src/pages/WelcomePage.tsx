@@ -15,16 +15,16 @@ interface TeamMember {
 const ourTeam: TeamMember[] = [
   {
     name: 'Ilya',
-    gitHubProfile: 'ilua-dz',
+    gitHubProfile: 'ilua-dz'
   },
   {
     name: 'Halina',
-    gitHubProfile: 'alchonokk',
+    gitHubProfile: 'alchonokk'
   },
   {
     name: 'Bohdan',
-    gitHubProfile: 'whispermind',
-  },
+    gitHubProfile: 'whispermind'
+  }
 ];
 
 const WelcomePage = () => {
@@ -39,8 +39,7 @@ const WelcomePage = () => {
           <Link href={gitHubMemberLink} target="_blank">
             {member.name}
           </Link>
-        }
-      >
+        }>
         <Avatar size={64} src={gitHubMemberLink + '.png'} />
       </Popover>
     );
