@@ -5,11 +5,11 @@ import StyledTag from '../styled/StyledTag';
 
 const { Link } = Typography;
 
-function MemberTag(member: TeamMember) {
+function MemberTag({ gitHubProfile, name }: TeamMember) {
   return (
-    <Link href={getMemberGitHubLink(member.gitHubProfile)} target="_blank">
-      <StyledTag key={member.name} icon={<GithubOutlined />}>
-        {member.name}
+    <Link href={getMemberGitHubLink(gitHubProfile)} target="_blank">
+      <StyledTag key={name} icon={<GithubOutlined />}>
+        {name}
       </StyledTag>
     </Link>
   );

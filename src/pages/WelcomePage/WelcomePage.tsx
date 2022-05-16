@@ -1,35 +1,19 @@
-import { Avatar, Popover } from 'antd';
 import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import OurTeam, { getMemberGitHubLink, TeamMember } from '../../enumerations/OurTeam';
+import OurTeam from '../../enumerations/OurTeam';
+import MemberAvatar from './MemberAvatar';
 
 const { Title, Link, Text } = Typography;
 
 function WelcomePage() {
   const { t } = useTranslation();
-
-  function getAvatar(member: TeamMember) {
-    const gitHubLink = getMemberGitHubLink(member.gitHubProfile);
-    return (
-      <Popover
-        key={member.name}
-        content={
-          <Link href={gitHubLink} target="_blank">
-            {member.name}
-          </Link>
-        }>
-        <Avatar size={64} src={gitHubLink + '.png'} />
-      </Popover>
-    );
-  }
-
   return (
     <Container>
       <StyledTitle>{t('application-title')}</StyledTitle>
       <StyledText italic>{t('description1')}</StyledText>
       <StyledTitle level={2}>{t('our-team')}</StyledTitle>
-      <AvatarsBlock>{OurTeam.map(getAvatar)}</AvatarsBlock>
+      <AvatarsBlock>{OurTeam.map(MemberAvatar)}</AvatarsBlock>
       <StyledText>
         {t('description2.start-text')}
         <Link href="https://rs.school/react/" target="_blank">

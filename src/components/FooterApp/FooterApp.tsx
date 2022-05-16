@@ -8,12 +8,13 @@ import RSSsvg from './RSSsvg';
 import StyledTag from '../styled/StyledTag';
 
 const { Link } = Typography;
+const developmentYear = '2022';
 
 function FooterApp() {
   return (
     <StyledFooter>
       <MembersBlock>{OurTeam.map(MemberTag)}</MembersBlock>
-      <Tag>2022</Tag>
+      <Tag>{developmentYear}</Tag>
       <StyledTag>
         <Link href="https://rs.school/react/" target="_blank">
           <RSSsvg />
