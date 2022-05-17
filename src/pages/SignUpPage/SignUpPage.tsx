@@ -2,7 +2,6 @@ import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '../../app/hooks';
 import { asyncSignUp } from '../../reducer/authorization/authorizationSlice';
-import styled from 'styled-components';
 import Links from '../../enumerations/LinksEnum';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
 import PageTitle from '../../components/styled/PageTitle';
 import { duration, MessageKeys } from '../../antd/messageProperties';
+import FormPageContainer from '../../components/styled/FormPageContainer';
 
 const { tailLayout, layout } = formProperties;
 
@@ -23,7 +23,7 @@ const SignUpPage = () => {
 
   async function signUpRequest(userData: SignUpData) {
     const key = MessageKeys.signUp;
-    message.loading({ content: t('messages.loading'), key });
+    message.loading({ content: t('messages.loading'), key, duration: 0 });
 
     const data = await dispatch(asyncSignUp(userData));
 
@@ -38,7 +38,7 @@ const SignUpPage = () => {
   return (
     <>
       <PageTitle textLink="buttons.sign-up" icon={<UsergroupAddOutlined />} />
-      <Container>
+      <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
           <Form.Item
             name="name"
@@ -85,17 +85,9 @@ const SignUpPage = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Container>
+      </FormPageContainer>
     </>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 5rem;
-`;
 
 export default SignUpPage;

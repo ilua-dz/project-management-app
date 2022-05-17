@@ -2,7 +2,6 @@ import { Form, Input, Button, AutoComplete, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LoginOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '../../app/hooks';
 import { asyncSignIn } from '../../reducer/authorization/authorizationSlice';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
 import PageTitle from '../../components/styled/PageTitle';
 import { MessageKeys, duration } from '../../antd/messageProperties';
+import FormPageContainer from '../../components/styled/FormPageContainer';
 
 const { tailLayout, layout } = formProperties;
 
@@ -23,7 +23,7 @@ const SignInPage = () => {
 
   async function signInRequest(userData: SignInData) {
     const key = MessageKeys.signIn;
-    message.loading({ content: t('messages.loading'), key });
+    message.loading({ content: t('messages.loading'), key, duration: 0 });
 
     const data = await dispatch(asyncSignIn(userData));
 
@@ -38,7 +38,7 @@ const SignInPage = () => {
   return (
     <>
       <PageTitle textLink="buttons.sign-in" icon={<LoginOutlined />} />
-      <Container>
+      <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
           <Form.Item
             name="login"
@@ -74,17 +74,9 @@ const SignInPage = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Container>
+      </FormPageContainer>
     </>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 5rem;
-`;
 
 export default SignInPage;
