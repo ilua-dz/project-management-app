@@ -26,7 +26,7 @@ const getNavMenuButton = (onClick: () => void, title: string): ItemType => {
   };
 };
 
-const HeaderApp = () => {
+function HeaderApp() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const token = useAppSelector(getApiSignInToken);
@@ -59,21 +59,25 @@ const HeaderApp = () => {
         mode="horizontal"
         selectedKeys={[pathname.slice(1)]}
         items={getMenuItems()}
+        triggerSubMenuAction="click"
       />
       <LangSwitch />
     </StyledHeader>
   );
-};
+}
 
 const StyledHeader = styled(Header)`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding: 0 0.5rem;
 `;
 
 const StyledMenu = styled(Menu)`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
+  width: calc(100% - 9rem);
 `;
 
 const navItemStyle: CSSProperties = {

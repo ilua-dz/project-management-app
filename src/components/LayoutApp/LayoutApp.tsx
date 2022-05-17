@@ -9,19 +9,13 @@ function LayoutApp() {
   return (
     <StyledLayout>
       <HeaderApp />
-      <StyledContent>
+      <Content>
         <Outlet />
-      </StyledContent>
+      </Content>
       <FooterApp />
     </StyledLayout>
   );
 }
-
-const StyledContent = styled(Content)`
-  & > div {
-    height: 100%;
-  }
-`;
 
 const StyledLayout = styled(Layout)`
   min-height: 100vh;
