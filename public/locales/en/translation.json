@@ -10,7 +10,8 @@
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
     "sign-up-error": "User login already exists!",
     "sign-in-done": "Successful Sign In!",
-    "sign-in-error": "Login or password is incorrect!"
+    "sign-in-error": "Login or password is incorrect!",
+    "loading": "Loading..."
   },
   "labelOfForms": {
     "password": "Password",
@@ -25,5 +26,8 @@
     "school-link": " The Rolling Scopes School ",
     "start-text": "This app was developed in the course",
     "middle-text": "at"
+  },
+  "titles": {
+    "main-page": "Boards"
   }
 }

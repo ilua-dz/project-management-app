@@ -1,7 +1,7 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { asyncSignIn, getApiSignInError } from '../../reducer/authorization/authorizationSlice';
+import { EyeInvisibleOutlined, EyeTwoTone, LoginOutlined } from '@ant-design/icons';
+import { useAppDispatch } from '../../app/hooks';
+import { asyncSignIn } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { SignInData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
+import PageTitle from '../../components/styled/PageTitle';
+import { MessageKeys, duration } from '../../antd/messageProperties';
 
 const { tailLayout, layout } = formProperties;
 
@@ -17,60 +19,63 @@ const SignInPage = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const errorApiSignIn = useAppSelector(getApiSignInError);
-
   const [form] = Form.useForm();
 
   async function signInRequest(userData: SignInData) {
-    // To DO Loading
-    const signInData = await dispatch(asyncSignIn(userData));
+    const key = MessageKeys.signIn;
+    message.loading({ content: t('messages.loading'), key });
 
-    if (isActionFulfilled(signInData)) {
-      message.success(t('messages.sign-in-done'), 4);
+    const data = await dispatch(asyncSignIn(userData));
+
+    if (isActionFulfilled(data)) {
+      message.success({ content: t(`messages.${key}-done`), key, duration });
       navigate(`/${Links.mainPage}`);
     } else {
-      message.error(`${errorApiSignIn}`, 4);
+      message.error({ content: t(`messages.${key}-error`), key, duration });
     }
   }
 
   return (
-    <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
-        <Form.Item
-          name="login"
-          label={t('labelOfForms.login')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
-          <Input placeholder={t('labelOfForms.login')} />
-        </Form.Item>
+    <>
+      <PageTitle textLink="buttons.sign-in" icon={<LoginOutlined />} />
+      <Container>
+        <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
+          <Form.Item
+            name="login"
+            label={t('labelOfForms.login')}
+            rules={[
+              {
+                required: true
+              }
+            ]}>
+            <Input placeholder={t('labelOfForms.login')} />
+          </Form.Item>
 
-        <Form.Item
-          name="password"
-          label={t('labelOfForms.password')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
-          <AutoComplete>
-            <Input.Password
-              placeholder={t('labelOfForms.password')}
-              autoComplete="off"
-              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-            />
-          </AutoComplete>
-        </Form.Item>
+          <Form.Item
+            name="password"
+            label={t('labelOfForms.password')}
+            rules={[
+              {
+                required: true
+              }
+            ]}>
+            <AutoComplete>
+              <Input.Password
+                placeholder={t('labelOfForms.password')}
+                autoComplete="off"
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
+            </AutoComplete>
+          </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            {t('buttons.Submit')}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Container>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              {t('buttons.Submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Container>
+    </>
   );
 };
 
