@@ -3,7 +3,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { asyncSignIn, getApiSignInError } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
 import { useTranslation } from 'react-i18next';
 import { SignInData } from '../../API/authorization';
@@ -13,7 +13,6 @@ import isActionFulfilled from '../../app/actionHelper';
 const { tailLayout, layout } = formProperties;
 
 const SignInPage = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -27,7 +26,7 @@ const SignInPage = () => {
 
     if (isActionFulfilled(signInData)) {
       message.success(t('messages.sign-in-done'), 4);
-      navigate(`/${Links.mainPage}`);
+      <Navigate to={Links.mainPage} replace />;
     } else {
       message.error(`${errorApiSignIn}`, 4);
     }

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { asyncSignUp, getApiSignUpError } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
 import Links from '../../enumerations/LinksEnum';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
@@ -14,7 +14,6 @@ const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const errorApiSignUp = useAppSelector(getApiSignUpError);
@@ -26,7 +25,7 @@ const SignUpPage = () => {
 
     if (isActionFulfilled(signUpData)) {
       message.success(t('messages.sign-up-done'), 4);
-      navigate(`/${Links.signInPage}`);
+      <Navigate to={Links.signInPage} replace />;
     } else {
       message.error(`${errorApiSignUp}`, 4);
     }
