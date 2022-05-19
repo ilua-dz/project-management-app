@@ -22,7 +22,6 @@ function RequireAuthorization({ children }: Props) {
   const location = useLocation();
 
   if (location.pathname === Links.signUpPage && dataSignUp.id) {
-    console.log(location);
     return <Navigate to={Links.signInPage} replace />;
   }
 
