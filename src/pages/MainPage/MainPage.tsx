@@ -1,18 +1,29 @@
-import styled, { CSSProperties } from 'styled-components';
-import { List, Card } from 'antd';
-import { Typography } from 'antd';
-import { AppstoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { List } from 'antd';
+import { AppstoreOutlined } from '@ant-design/icons';
 import PageTitle from '../../components/styled/PageTitle';
-
-const { Title } = Typography;
-
-const fakeData = [
-  {
-    title: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque, explicabo!'
-  }
-];
+import { asyncGetBoards, asyncRemoveBoard, getBoards } from '../../reducer/boards/boardsSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useCallback, useEffect } from 'react';
+import BoardItem from './BoardItem';
+import { IBoard } from '../../API/boards';
+import styled from 'styled-components';
 
 function MainPage() {
+  const boards = useAppSelector(getBoards);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    async function boardsRequest() {
+      await dispatch(asyncGetBoards());
+    }
+    boardsRequest();
+  }, []);
+
+  const renderBoardItem = useCallback(
+    (item: IBoard) => <BoardItem item={item} onDelete={(id) => dispatch(asyncRemoveBoard(id))} />,
+    []
+  );
+
   return (
     <Container>
       <PageTitle textLink="titles.main-page" icon={<AppstoreOutlined />} />
@@ -26,17 +37,8 @@ function MainPage() {
           xl: 3,
           xxl: 3
         }}
-        dataSource={fakeData}
-        renderItem={(item) => (
-          <List.Item>
-            <Card
-              bodyStyle={cardBodyStyle}
-              hoverable
-              actions={[<EditOutlined key="edit" />, <DeleteOutlined key="delete" />]}>
-              <StyledTitle level={4}>{item.title}</StyledTitle>
-            </Card>
-          </List.Item>
-        )}
+        dataSource={boards}
+        renderItem={renderBoardItem}
       />
     </Container>
   );
@@ -48,17 +50,5 @@ const Container = styled.div`
     justify-content: center;
   }
 `;
-
-const StyledTitle = styled(Title)`
-  text-align: center;
-  margin: 0 !important;
-`;
-
-const cardBodyStyle: CSSProperties = {
-  minHeight: '9rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-};
 
 export default MainPage;
