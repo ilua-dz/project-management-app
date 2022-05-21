@@ -8,7 +8,7 @@ import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
 import Links from '../../enumerations/LinksEnum';
 import LayoutApp from '../LayoutApp';
-import RequireAuthorization from './RequireAuth';
+import RequireAuth from './RequireAuth';
 
 function RoutesWrapper() {
   return (
@@ -17,45 +17,15 @@ function RoutesWrapper() {
         <Route index element={<WelcomePage />} />
         <Route
           path={Links.signInPage}
-          element={
-            <RequireAuthorization needToBeUnauthorized>
-              <SignInPage />
-            </RequireAuthorization>
-          }
+          element={<RequireAuth page={<SignInPage />} needToBeUnauthorized />}
         />
         <Route
           path={Links.signUpPage}
-          element={
-            <RequireAuthorization needToBeUnauthorized>
-              <SignUpPage />
-            </RequireAuthorization>
-          }
+          element={<RequireAuth page={<SignUpPage />} needToBeUnauthorized />}
         />
-
-        <Route
-          path={Links.profilePage}
-          element={
-            <RequireAuthorization>
-              <EditProfilePage />
-            </RequireAuthorization>
-          }
-        />
-        <Route
-          path={Links.mainPage}
-          element={
-            <RequireAuthorization>
-              <MainPage />
-            </RequireAuthorization>
-          }
-        />
-        <Route
-          path={Links.boardPage}
-          element={
-            <RequireAuthorization>
-              <BoardPage />
-            </RequireAuthorization>
-          }
-        />
+        <Route path={Links.profilePage} element={<RequireAuth page={<EditProfilePage />} />} />
+        <Route path={Links.mainPage} element={<RequireAuth page={<MainPage />} />} />
+        <Route path={Links.boardPage} element={<RequireAuth page={<BoardPage />} />} />
       </Route>
       <Route path="*" element={<LayoutApp />}>
         <Route path="*" element={<ErrorPage />} />
