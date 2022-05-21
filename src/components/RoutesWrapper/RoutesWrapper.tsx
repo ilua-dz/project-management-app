@@ -18,7 +18,7 @@ function RoutesWrapper() {
         <Route
           path={Links.signInPage}
           element={
-            <RequireAuthorization needToBeUnauthorized={true}>
+            <RequireAuthorization needToBeUnauthorized>
               <SignInPage />
             </RequireAuthorization>
           }
@@ -26,7 +26,7 @@ function RoutesWrapper() {
         <Route
           path={Links.signUpPage}
           element={
-            <RequireAuthorization needToBeUnauthorized={true}>
+            <RequireAuthorization needToBeUnauthorized>
               <SignUpPage />
             </RequireAuthorization>
           }
@@ -35,7 +35,7 @@ function RoutesWrapper() {
         <Route
           path={Links.profilePage}
           element={
-            <RequireAuthorization needToBeUnauthorized={false}>
+            <RequireAuthorization>
               <EditProfilePage />
             </RequireAuthorization>
           }
@@ -43,7 +43,7 @@ function RoutesWrapper() {
         <Route
           path={Links.mainPage}
           element={
-            <RequireAuthorization needToBeUnauthorized={false}>
+            <RequireAuthorization>
               <MainPage />
             </RequireAuthorization>
           }
@@ -51,7 +51,7 @@ function RoutesWrapper() {
         <Route
           path={Links.boardPage}
           element={
-            <RequireAuthorization needToBeUnauthorized={false}>
+            <RequireAuthorization>
               <BoardPage />
             </RequireAuthorization>
           }
