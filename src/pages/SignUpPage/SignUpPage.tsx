@@ -3,8 +3,6 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { asyncSignUp, getApiSignUpError } from '../../reducer/authorization/authorizationSlice';
 import styled from 'styled-components';
-import Links from '../../enumerations/LinksEnum';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
@@ -14,7 +12,6 @@ const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const errorApiSignUp = useAppSelector(getApiSignUpError);
@@ -23,10 +20,8 @@ const SignUpPage = () => {
 
   async function signUpRequest(userData: SignUpData) {
     const signUpData = await dispatch(asyncSignUp(userData));
-
-    if (isActionFulfilled(signUpData)) {
+    if (isActionFulfilled(signUpData.meta.requestStatus)) {
       message.success(t('messages.sign-up-done'), 4);
-      navigate(`/${Links.signInPage}`);
     } else {
       message.error(`${errorApiSignUp}`, 4);
     }

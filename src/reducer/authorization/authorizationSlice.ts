@@ -65,7 +65,7 @@ export const userAuthorizationSlice = createSlice({
       });
 
     builder.addCase(signOut, (state) => {
-      return { ...state, signInData: { token: '' } };
+      return { ...state, signInData: { token: '' }, signUpData: { id: '', name: '', login: '' } };
     });
   }
 });
