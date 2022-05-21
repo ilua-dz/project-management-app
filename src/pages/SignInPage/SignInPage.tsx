@@ -21,8 +21,7 @@ const SignInPage = () => {
   async function signInRequest(userData: SignInData) {
     // To DO Loading
     const signInData = await dispatch(asyncSignIn(userData));
-
-    if (isActionFulfilled(signInData)) {
+    if (isActionFulfilled(signInData.meta.requestStatus)) {
       message.success(t('messages.sign-in-done'), 4);
     } else {
       message.error(`${errorApiSignIn}`, 4);

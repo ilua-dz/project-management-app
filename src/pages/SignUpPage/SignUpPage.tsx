@@ -20,8 +20,7 @@ const SignUpPage = () => {
 
   async function signUpRequest(userData: SignUpData) {
     const signUpData = await dispatch(asyncSignUp(userData));
-
-    if (isActionFulfilled(signUpData)) {
+    if (isActionFulfilled(signUpData.meta.requestStatus)) {
       message.success(t('messages.sign-up-done'), 4);
     } else {
       message.error(`${errorApiSignUp}`, 4);
