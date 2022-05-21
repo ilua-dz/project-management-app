@@ -10,7 +10,7 @@ export interface IColumn {
 }
 
 export async function getColumn(token: string, boardId: string, columnId?: string) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId ? columnId : ''}`;
+  const URL = `${boardsBaseURL}${boardId}/columns${columnId ? `/${columnId}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {
@@ -23,7 +23,7 @@ export async function getColumn(token: string, boardId: string, columnId?: strin
 }
 
 export async function createColumn(token: string, boardId: string, column: IColumn) {
-  const URL = `${boardsBaseURL}${boardId}/columns/}`;
+  const URL = `${boardsBaseURL}${boardId}/columns}`;
   const options = {
     method: Methods.post,
     headers: {

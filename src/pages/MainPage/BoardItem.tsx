@@ -15,7 +15,6 @@ const BoardItem: React.FC<BoardItemProps> = ({ item, onDelete }: BoardItemProps)
   const deleteBoard = () => {
     onDelete(item.id);
   };
-
   return (
     <List.Item>
       <Card
