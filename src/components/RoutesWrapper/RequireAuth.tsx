@@ -5,11 +5,11 @@ import Links from '../../enumerations/LinksEnum';
 import { getApiSignInToken } from '../../reducer/authorization/authorizationSlice';
 
 type Props = {
-  children: JSX.Element;
+  page: JSX.Element;
   needToBeUnauthorized?: boolean;
 };
 
-function RequireAuthorization({ children, needToBeUnauthorized = false }: Props) {
+function RequireAuth({ page, needToBeUnauthorized = false }: Props) {
   const token = useAppSelector(getApiSignInToken);
 
   if (!token && !needToBeUnauthorized) {
@@ -20,7 +20,7 @@ function RequireAuthorization({ children, needToBeUnauthorized = false }: Props)
     return <Navigate to={Links.mainPage} replace />;
   }
 
-  return children;
+  return page;
 }
 
-export default RequireAuthorization;
+export default RequireAuth;
