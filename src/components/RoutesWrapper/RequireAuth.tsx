@@ -6,10 +6,10 @@ import { getApiSignInToken } from '../../reducer/authorization/authorizationSlic
 
 type Props = {
   children: JSX.Element;
-  needToBeUnauthorized: boolean;
+  needToBeUnauthorized?: boolean;
 };
 
-function RequireAuthorization({ children, needToBeUnauthorized }: Props) {
+function RequireAuthorization({ children, needToBeUnauthorized = false }: Props) {
   const token = useAppSelector(getApiSignInToken);
 
   if (!token && !needToBeUnauthorized) {
