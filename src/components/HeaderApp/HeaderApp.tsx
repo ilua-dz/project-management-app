@@ -1,5 +1,3 @@
-import { Menu } from 'antd';
-import { Header } from 'antd/lib/layout/layout';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -8,6 +6,10 @@ import LangSwitch from '../LangSwitch';
 import Links from '../../enumerations/LinksEnum';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getApiSignInToken, signOut } from '../../reducer/authorization/authorizationSlice';
+import { useState } from 'react';
+import { Menu } from 'antd';
+import { Header } from 'antd/lib/layout/layout';
+import CreateBoardModal from './CreateBoardModal';
 
 function getNavMenuItem(link: Links, title: string): ItemType {
   return {
@@ -32,6 +34,15 @@ function HeaderApp() {
   const token = useAppSelector(getApiSignInToken);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isCreateBoardModalVisible, setIsCreateBoardModalVisible] = useState<boolean>(false);
+
+  function showCreateBoardModal() {
+    setIsCreateBoardModalVisible(true);
+  }
+
+  function hideCreateBoardModal() {
+    setIsCreateBoardModalVisible(false);
+  }
 
   function dispatchSignOut() {
     dispatch(signOut());
@@ -45,7 +56,8 @@ function HeaderApp() {
 
   const authorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
-    getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
+    getNavMenuButton(dispatchSignOut, t('buttons.sign-out')),
+    getNavMenuButton(showCreateBoardModal, t('buttons.new-board'))
   ];
 
   function getMenuItems() {
@@ -62,6 +74,7 @@ function HeaderApp() {
         triggerSubMenuAction="click"
       />
       <LangSwitch />
+      <CreateBoardModal visible={isCreateBoardModalVisible} closeModalFn={hideCreateBoardModal} />
     </StyledHeader>
   );
 }

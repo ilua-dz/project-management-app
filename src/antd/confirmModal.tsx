@@ -11,7 +11,7 @@ function CallConfirm(title: string, onOk: () => void) {
       maskClosable: true,
       title,
       onOk,
-      cancelText: t('confirm-modals.cancel')
+      cancelText: t('modals.cancel')
     });
 }
 

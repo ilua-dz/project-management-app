@@ -1,12 +1,17 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { List, Card, Typography } from 'antd';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import CallConfirm from '../../antd/confirmModal';
 import { IBoard } from '../../API/boards';
 import { useAppDispatch } from '../../app/hooks';
-import { deleteBoardThunk, setUserActiveBoard } from '../../reducer/boards/userBoardsSlice';
+import {
+  deleteBoardThunk,
+  setUserActiveBoard,
+  updateBoardThunk
+} from '../../reducer/boards/userBoardsSlice';
+import UpdateBoards, { UpdateBoardsValues } from './UpdateBoardForm';
 
 const { Title } = Typography;
 
@@ -17,8 +22,22 @@ interface BoardItemProps {
 const BoardItem = ({ item }: BoardItemProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
 
-  const deleteConfirmQuestion = `${t('confirm-modals.delete-board')} ${item.title}?`;
+  function hideModal() {
+    setIsUpdateModalVisible(false);
+  }
+
+  function showModal() {
+    setIsUpdateModalVisible(true);
+  }
+
+  function renameBoard({ newTitle }: UpdateBoardsValues) {
+    dispatch(updateBoardThunk({ id: item.id, title: newTitle }));
+    hideModal();
+  }
+
+  const deleteConfirmQuestion = `${t('modals.delete-board')} ${item.title}?`;
   const deleteItem = () => dispatch(deleteBoardThunk({ id: item.id }));
 
   const setActive = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -34,11 +53,18 @@ const BoardItem = ({ item }: BoardItemProps) => {
         bodyStyle={cardBodyStyle}
         hoverable
         actions={[
-          <EditOutlined key="edit" />,
+          <EditOutlined key="edit" onClick={showModal} />,
           <DeleteOutlined key="delete" onClick={CallConfirm(deleteConfirmQuestion, deleteItem)} />
         ]}>
         <StyledTitle level={4}>{item.title}</StyledTitle>
       </Card>
+      <UpdateBoards
+        actionType="update"
+        visible={isUpdateModalVisible}
+        onCancel={hideModal}
+        onOk={renameBoard}
+        boardTitle={item.title}
+      />
     </List.Item>
   );
 };

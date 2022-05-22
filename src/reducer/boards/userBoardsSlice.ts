@@ -41,7 +41,10 @@ export const deleteBoardThunk = createAsyncThunk(
 
 export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
-  async ({ title, id }: BoardUpdateRequest, { dispatch, getState, rejectWithValue }) => {
+  async (
+    { title, id }: Omit<BoardUpdateRequest, 'token'>,
+    { dispatch, getState, rejectWithValue }
+  ) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
@@ -68,7 +71,7 @@ export const getBoardThunk = createAsyncThunk(
 
 export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
-  async ({ title }: BoardCreateRequest, { dispatch, getState, rejectWithValue }) => {
+  async ({ title }: Omit<BoardCreateRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;

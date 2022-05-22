@@ -4,7 +4,8 @@
     "sign-in": "Вход",
     "sign-out": "Выход",
     "mainPage": "Главная страница",
-    "Submit": "Подтвердить"
+    "Submit": "Подтвердить",
+    "new-board": "Новая доска"
   },
   "messages": {
     "sign-up-done": "Регистрация завершена. Войдите под своим именем",
@@ -13,9 +14,21 @@
     "sign-in-error": "Неправильное имя пользователя или пароль",
     "loading": "Загрузка..."
   },
-  "confirm-modals": {
+  "modals": {
     "cancel": "Отмена",
-    "delete-board": "Удалить доску"
+    "delete-board": "Удалить доску",
+    "update-board": {
+      "title": "Переименование доски",
+      "input-title": "Новое имя",
+      "validate-error": "Введите имя!",
+      "ok-text": "Переименовать"
+    },
+    "create-board": {
+      "title": "Новая доска",
+      "input-title": "Имя",
+      "validate-error": "Введите имя!",
+      "ok-text": "Создать"
+    }
   },
   "labelOfForms": {
     "password": "Пароль",

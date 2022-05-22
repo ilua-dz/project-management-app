@@ -4,7 +4,8 @@
     "sign-in": "Sign In",
     "sign-out": "Sign Out",
     "mainPage": "Main Page",
-    "Submit": "Submit"
+    "Submit": "Submit",
+    "new-board": "New Board"
   },
   "messages": {
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
@@ -13,9 +14,21 @@
     "sign-in-error": "Login or password is incorrect!",
     "loading": "Loading..."
   },
-  "confirm-modals": {
+  "modals": {
     "cancel": "Cancel",
-    "delete-board": "Do you want to delete"
+    "delete-board": "Do you want to delete",
+    "update-board": {
+      "title": "Rename board",
+      "input-title": "New name",
+      "validate-error": "Please input new name!",
+      "ok-text": "Rename"
+    },
+    "create-board": {
+      "title": "New board",
+      "input-title": "Title",
+      "validate-error": "Please input title!",
+      "ok-text": "Create"
+    }
   },
   "labelOfForms": {
     "password": "Password",
