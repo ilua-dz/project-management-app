@@ -1,16 +1,28 @@
 import { baseURL, requestAPI, Methods } from './dependencies';
 import { IColumn } from './columns';
+import { SetOptional } from 'type-fest';
 
-interface IBoard {
+export interface IBoard {
   id: string;
   title: string;
-  columns: IColumn[];
+  columns?: IColumn[];
 }
 
-export const boardsBaseURL = `${baseURL}boards/`;
+export interface IBoardRequest {
+  id: string;
+  title: string;
+  token: string;
+}
 
-export async function getBoard(token: string, id?: string) {
-  const URL = `${boardsBaseURL}${id ? id : ''}`;
+export type BoardUpdateRequest = IBoardRequest;
+export type BoardGetRequest = SetOptional<Omit<IBoardRequest, 'title'>, 'id'>;
+export type BoardDeleteRequest = Omit<IBoardRequest, 'title'>;
+export type BoardCreateRequest = Omit<IBoardRequest, 'id'>;
+
+export const boardsBaseURL = `${baseURL}boards`;
+
+export async function getBoard({ id, token }: BoardGetRequest) {
+  const URL = `${boardsBaseURL}${id ? `$/{id}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {
@@ -22,7 +34,7 @@ export async function getBoard(token: string, id?: string) {
   return data;
 }
 
-export async function createBoard(token: string, title: string) {
+export async function createBoard({ token, title }: BoardCreateRequest) {
   const URL = boardsBaseURL;
   const options = {
     method: Methods.post,
@@ -37,21 +49,20 @@ export async function createBoard(token: string, title: string) {
   return data;
 }
 
-export async function deleteBoard(token: string, id: string) {
-  const URL = `${boardsBaseURL}${id}`;
+export async function deleteBoard({ id, token }: BoardDeleteRequest) {
+  const URL = `${boardsBaseURL}/${id}`;
   const options = {
     method: Methods.delete,
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Authorization: `Bearer ${token}`
     }
   } as Partial<RequestInit>;
   const data = await requestAPI({ URL, options });
   return data;
 }
 
-export async function updateBoard(token: string, title: string, id: string) {
-  const URL = `${boardsBaseURL}${id}`;
+export async function updateBoard({ token, title, id }: BoardUpdateRequest) {
+  const URL = `${boardsBaseURL}/${id}`;
   const options = {
     method: Methods.put,
     headers: {

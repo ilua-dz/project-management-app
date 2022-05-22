@@ -29,6 +29,12 @@ const MembersBlock = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   row-gap: 0.2rem;
+
+  @media (max-width: 430px) {
+    & {
+      width: min-content;
+    }
+  }
 `;
 
 const StyledFooter = styled(Footer)`

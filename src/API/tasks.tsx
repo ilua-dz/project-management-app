@@ -12,7 +12,7 @@ export interface ITask {
 }
 
 export async function getTask(token: string, boardId: string, columnId: string, taskId?: string) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}/${taskId ? taskId : ''}`;
+  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}${taskId ? `/${taskId}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {
