@@ -13,6 +13,10 @@
     "sign-in-error": "Login or password is incorrect!",
     "loading": "Loading..."
   },
+  "confirm-modals": {
+    "cancel": "Cancel",
+    "delete-board": "Do you want to delete"
+  },
   "labelOfForms": {
     "password": "Password",
     "name": "Name",

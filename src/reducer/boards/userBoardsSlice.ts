@@ -11,14 +11,14 @@ import {
   BoardCreateRequest
 } from '../../API/boards';
 
-export interface userBoardsState {
+export interface UserBoardsState {
   boards: IBoard[];
   boardsLoading: boolean;
   boardsError: string;
   activeBoardId: string;
 }
 
-const initialState: userBoardsState = {
+const initialState: UserBoardsState = {
   boards: [],
   boardsLoading: false,
   boardsError: '',
@@ -38,6 +38,7 @@ export const deleteBoardThunk = createAsyncThunk(
     }
   }
 );
+
 export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
   async ({ title, id }: BoardUpdateRequest, { dispatch, getState, rejectWithValue }) => {
@@ -51,6 +52,7 @@ export const updateBoardThunk = createAsyncThunk(
     }
   }
 );
+
 export const getBoardThunk = createAsyncThunk(
   'boards/getBoard',
   async ({ id }: { id?: string }, { getState, rejectWithValue }) => {
@@ -63,6 +65,7 @@ export const getBoardThunk = createAsyncThunk(
     }
   }
 );
+
 export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
   async ({ title }: BoardCreateRequest, { dispatch, getState, rejectWithValue }) => {
@@ -76,6 +79,7 @@ export const createBoardThunk = createAsyncThunk(
     }
   }
 );
+
 export const setUserActiveBoard = createAction('setActiveBoard', (id: string) => {
   return {
     payload: {
@@ -90,15 +94,15 @@ export const userBoardsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(createBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message!;
+      state.boardsError = error.message as string;
     });
 
     builder.addCase(updateBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message!;
+      state.boardsError = error.message as string;
     });
 
     builder.addCase(deleteBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message!;
+      state.boardsError = error.message as string;
     });
 
     builder
@@ -112,7 +116,7 @@ export const userBoardsSlice = createSlice({
       })
       .addCase(getBoardThunk.rejected, (state, { error }) => {
         state.boardsLoading = false;
-        state.boardsError = error.message!;
+        state.boardsError = error.message as string;
       });
 
     builder.addCase(setUserActiveBoard, (state, { payload }) => {

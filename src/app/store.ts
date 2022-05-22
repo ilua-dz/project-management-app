@@ -8,7 +8,7 @@ import {
 import userAuthorizationReducer, {
   userAuthorizationState
 } from '../reducer/authorization/authorizationSlice';
-import boardsReducer, { userBoardsState } from '../reducer/boards/userBoardsSlice';
+import boardsReducer, { UserBoardsState } from '../reducer/boards/userBoardsSlice';
 import {
   persistStore,
   persistReducer,
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
 type PMPersistConfig = PersistConfig<
   CombinedState<{
     userAuthorization: userAuthorizationState;
-    userBoards: userBoardsState;
+    userBoards: UserBoardsState;
   }>
 >;
 
