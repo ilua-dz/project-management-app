@@ -13,7 +13,6 @@ import PageTitle from '../../components/styled/PageTitle';
 import { MessageKeys, duration } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
 
-
 const { tailLayout, layout } = formProperties;
 
 const SignInPage = () => {
@@ -36,22 +35,15 @@ const SignInPage = () => {
   }
 
   return (
-
     <>
       <PageTitle textLink="buttons.sign-in" icon={<LoginOutlined />} />
       <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
-          <Form.Item
-            name="login"
-            label={t('labelOfForms.login')}
-            rules={FieldRegExp()}>
+          <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.login')} />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            label={t('labelOfForms.password')}
-            rules={FieldRegExp()}>
+          <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
             <AutoComplete>
               <Input.Password
                 placeholder={t('labelOfForms.password')}

@@ -26,7 +26,6 @@ const SignUpPage = () => {
   const [form] = Form.useForm();
 
   async function signUpRequest(userData: SignUpData) {
-
     const key = MessageKeys.signUp;
     message.loading({ content: t('messages.loading'), key, duration: 0 });
 
@@ -45,24 +44,15 @@ const SignUpPage = () => {
       <PageTitle textLink="buttons.sign-up" icon={<UsergroupAddOutlined />} />
       <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
-          <Form.Item
-            name="name"
-            label={t('labelOfForms.name')}
-            rules={FieldRegExp()}>
+          <Form.Item name="name" label={t('labelOfForms.name')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.name')} />
           </Form.Item>
 
-          <Form.Item
-            name="login"
-            label={t('labelOfForms.login')}
-            rules={FieldRegExp()}>
+          <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.login')} />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            label={t('labelOfForms.password')}
-            rules={FieldRegExp()}>
+          <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
             <AutoComplete>
               <Input.Password
                 placeholder={t('labelOfForms.password')}
