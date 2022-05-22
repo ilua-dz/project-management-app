@@ -1,1 +1,7 @@
 @import '~antd/dist/antd.css';
+
+.ant-menu-sub {
+  min-width: min-content !important;
+  border-radius: 0.5rem !important;
+  padding: 0.7rem 0 !important;
+}

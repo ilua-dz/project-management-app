@@ -25,14 +25,17 @@ export async function requestAPI<T>({
 }: IRequest): Promise<T | undefined | void | Error> {
   try {
     const response = await fetch(URL, options);
-    if (response.status < 200 || response.status > 299) {
+    if (response.status >= 400) {
       return Promise.reject(await response.json());
     }
+    if (response.status === 204) {
+      return Promise.resolve();
+    }
     const data = await response.json();
-    return new Promise((resolve) => resolve(data));
+    return Promise.resolve(data);
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return new Promise((resolve, reject) => reject(ErrorHandler(e as Error)));
+      return Promise.reject(ErrorHandler(e as Error));
     }
   }
 }

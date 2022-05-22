@@ -1,90 +1,93 @@
 import { Form, Input, Button, AutoComplete, message } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { asyncSignUp, getApiSignUpError } from '../../reducer/authorization/authorizationSlice';
-import styled from 'styled-components';
+import { EyeInvisibleOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
+import { useAppDispatch } from '../../app/hooks';
+import { asyncSignUp } from '../../reducer/authorization/authorizationSlice';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
+import PageTitle from '../../components/styled/PageTitle';
+import { duration, MessageKeys } from '../../antd/messageProperties';
+import FormPageContainer from '../../components/styled/FormPageContainer';
+import { useNavigate } from 'react-router-dom';
+import Links from '../../enumerations/LinksEnum';
 
 const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  const errorApiSignUp = useAppSelector(getApiSignUpError);
+  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
   async function signUpRequest(userData: SignUpData) {
-    const signUpData = await dispatch(asyncSignUp(userData));
-    if (isActionFulfilled(signUpData.meta.requestStatus)) {
-      message.success(t('messages.sign-up-done'), 4);
+    const key = MessageKeys.signUp;
+    message.loading({ content: t('messages.loading'), key, duration: 0 });
+
+    const data = await dispatch(asyncSignUp(userData));
+
+    if (isActionFulfilled(data.meta.requestStatus)) {
+      message.success({ content: t(`messages.${key}-done`), key, duration });
+      navigate(Links.signInPage);
     } else {
-      message.error(`${errorApiSignUp}`, 4);
+      message.error({ content: t(`messages.${key}-error`), key, duration });
     }
   }
 
   return (
-    <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
-        <Form.Item
-          name="name"
-          label={t('labelOfForms.name')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
-          <Input placeholder={t('labelOfForms.name')} />
-        </Form.Item>
+    <>
+      <PageTitle textLink="buttons.sign-up" icon={<UsergroupAddOutlined />} />
+      <FormPageContainer>
+        <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
+          <Form.Item
+            name="name"
+            label={t('labelOfForms.name')}
+            rules={[
+              {
+                required: true
+              }
+            ]}>
+            <Input placeholder={t('labelOfForms.name')} />
+          </Form.Item>
 
-        <Form.Item
-          name="login"
-          label={t('labelOfForms.login')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
-          <Input placeholder={t('labelOfForms.login')} />
-        </Form.Item>
+          <Form.Item
+            name="login"
+            label={t('labelOfForms.login')}
+            rules={[
+              {
+                required: true
+              }
+            ]}>
+            <Input placeholder={t('labelOfForms.login')} />
+          </Form.Item>
 
-        <Form.Item
-          name="password"
-          label={t('labelOfForms.password')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
-          <AutoComplete>
-            <Input.Password
-              placeholder={t('labelOfForms.password')}
-              autoComplete="off"
-              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-            />
-          </AutoComplete>
-        </Form.Item>
+          <Form.Item
+            name="password"
+            label={t('labelOfForms.password')}
+            rules={[
+              {
+                required: true
+              }
+            ]}>
+            <AutoComplete>
+              <Input.Password
+                placeholder={t('labelOfForms.password')}
+                autoComplete="off"
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
+            </AutoComplete>
+          </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            {t('buttons.Submit')}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Container>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              {t('buttons.Submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </FormPageContainer>
+    </>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 5rem;
-`;
 
 export default SignUpPage;
