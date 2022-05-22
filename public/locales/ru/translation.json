@@ -18,7 +18,7 @@
     "login": "Логин"
   },
   "messagesOfAuthForms": {
-    "require":"необходим!",
+    "require":"требуется!",
     "pattern":"должно быть не менее 3 символов (буквы или цифры)!"
   },
   "application-title": "Менеджер проектов",
