@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { SignInData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
-import { fieldRegExp } from '../../components/ValidationAuth/Validate';
+import { FieldRegExp } from '../../components/ValidationAuth/FieldRegExp';
 
 const { tailLayout, layout } = formProperties;
 
@@ -18,13 +18,6 @@ const SignInPage = () => {
   const errorApiSignIn = useAppSelector(getApiSignInError);
 
   const [form] = Form.useForm();
-
-  const validateMessages = {
-    required: "'${label}' " + `${t('messagesOfAuthForms.require')}`,
-    pattern: {
-      mismatch: "'${label}' " + `${t('messagesOfAuthForms.pattern')}`
-    }
-  };
 
   async function signInRequest(userData: SignInData) {
     // To DO Loading
@@ -38,17 +31,12 @@ const SignInPage = () => {
 
   return (
     <Container>
-      <Form
-        {...layout}
-        form={form}
-        name="control-hooks"
-        onFinish={signInRequest}
-        validateMessages={validateMessages}>
-        <Form.Item name="login" label={t('labelOfForms.login')} rules={fieldRegExp()}>
+      <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
+        <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
           <Input placeholder={t('labelOfForms.login')} />
         </Form.Item>
 
-        <Form.Item name="password" label={t('labelOfForms.password')} rules={fieldRegExp()}>
+        <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
           <AutoComplete>
             <Input.Password
               placeholder={t('labelOfForms.password')}

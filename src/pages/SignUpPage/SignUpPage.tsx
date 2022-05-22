@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
-import { fieldRegExp } from '../../components/ValidationAuth/Validate';
+import { FieldRegExp } from '../../components/ValidationAuth/FieldRegExp';
 import { useNavigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
 
@@ -22,13 +22,6 @@ const SignUpPage = () => {
 
   const [form] = Form.useForm();
 
-  const validateMessages = {
-    required: "'${label}' " + `${t('messagesOfAuthForms.require')}`,
-    pattern: {
-      mismatch: "'${label}' " + `${t('messagesOfAuthForms.pattern')}`
-    }
-  };
-
   async function signUpRequest(userData: SignUpData) {
     const signUpData = await dispatch(asyncSignUp(userData));
     if (isActionFulfilled(signUpData.meta.requestStatus)) {
@@ -41,21 +34,16 @@ const SignUpPage = () => {
 
   return (
     <Container>
-      <Form
-        {...layout}
-        form={form}
-        name="control-hooks"
-        onFinish={signUpRequest}
-        validateMessages={validateMessages}>
-        <Form.Item name="name" label={t('labelOfForms.name')} rules={fieldRegExp()}>
+      <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
+        <Form.Item name="name" label={t('labelOfForms.name')} rules={FieldRegExp()}>
           <Input placeholder={t('labelOfForms.name')} />
         </Form.Item>
 
-        <Form.Item name="login" label={t('labelOfForms.login')} rules={fieldRegExp()}>
+        <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
           <Input placeholder={t('labelOfForms.login')} />
         </Form.Item>
 
-        <Form.Item name="password" label={t('labelOfForms.password')} rules={fieldRegExp()}>
+        <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
           <AutoComplete>
             <Input.Password
               placeholder={t('labelOfForms.password')}
