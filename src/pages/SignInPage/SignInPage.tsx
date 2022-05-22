@@ -18,6 +18,20 @@ const SignInPage = () => {
 
   const [form] = Form.useForm();
 
+  // const validateMessages = {
+  //   required: "'${label}' ${t('messagesOfAuthForms.require')}",
+  //   pattern: {
+  //     mismatch: "'${label}' '${t('messagesOfAuthForms.pattern')}'"
+  //   }
+  // };
+
+  const validateMessages = {
+    required: "'${label}' is required!",
+    pattern: {
+      mismatch: "'${label}' must be at least 3 symbols (letters or numbers)"
+    }
+  };
+
   async function signInRequest(userData: SignInData) {
     // To DO Loading
     const signInData = await dispatch(asyncSignIn(userData));
@@ -30,13 +44,19 @@ const SignInPage = () => {
 
   return (
     <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
+      <Form
+        {...layout}
+        form={form}
+        name="control-hooks"
+        onFinish={signInRequest}
+        validateMessages={validateMessages}>
         <Form.Item
           name="login"
           label={t('labelOfForms.login')}
           rules={[
             {
-              required: true
+              required: true,
+              pattern: /^[а-яА-Я-A-Za-z0-9_]{3,}$/
             }
           ]}>
           <Input placeholder={t('labelOfForms.login')} />
@@ -47,7 +67,8 @@ const SignInPage = () => {
           label={t('labelOfForms.password')}
           rules={[
             {
-              required: true
+              required: true,
+              pattern: /^[а-яА-Я-A-Za-z0-9_]{3,}$/
             }
           ]}>
           <AutoComplete>
