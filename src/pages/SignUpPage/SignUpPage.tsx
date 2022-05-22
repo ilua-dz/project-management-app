@@ -7,21 +7,33 @@ import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
+import { fieldRegExp } from '../../components/ValidationAuth/Validate';
+import { useNavigate } from 'react-router-dom';
+import Links from '../../enumerations/LinksEnum';
 
 const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const errorApiSignUp = useAppSelector(getApiSignUpError);
 
   const [form] = Form.useForm();
 
+  const validateMessages = {
+    required: "'${label}' " + `${t('messagesOfAuthForms.require')}`,
+    pattern: {
+      mismatch: "'${label}' " + `${t('messagesOfAuthForms.pattern')}`
+    }
+  };
+
   async function signUpRequest(userData: SignUpData) {
     const signUpData = await dispatch(asyncSignUp(userData));
     if (isActionFulfilled(signUpData.meta.requestStatus)) {
       message.success(t('messages.sign-up-done'), 4);
+      navigate(Links.signInPage);
     } else {
       message.error(`${errorApiSignUp}`, 4);
     }
@@ -29,37 +41,21 @@ const SignUpPage = () => {
 
   return (
     <Container>
-      <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
-        <Form.Item
-          name="name"
-          label={t('labelOfForms.name')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
+      <Form
+        {...layout}
+        form={form}
+        name="control-hooks"
+        onFinish={signUpRequest}
+        validateMessages={validateMessages}>
+        <Form.Item name="name" label={t('labelOfForms.name')} rules={fieldRegExp()}>
           <Input placeholder={t('labelOfForms.name')} />
         </Form.Item>
 
-        <Form.Item
-          name="login"
-          label={t('labelOfForms.login')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
+        <Form.Item name="login" label={t('labelOfForms.login')} rules={fieldRegExp()}>
           <Input placeholder={t('labelOfForms.login')} />
         </Form.Item>
 
-        <Form.Item
-          name="password"
-          label={t('labelOfForms.password')}
-          rules={[
-            {
-              required: true
-            }
-          ]}>
+        <Form.Item name="password" label={t('labelOfForms.password')} rules={fieldRegExp()}>
           <AutoComplete>
             <Input.Password
               placeholder={t('labelOfForms.password')}
