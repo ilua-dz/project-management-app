@@ -1,5 +1,6 @@
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 export interface UpdateBoardsValues {
   newTitle: string;
@@ -23,13 +24,20 @@ const UpdateBoards = ({
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const title = `${t(`modals.${actionType}-board.title`)} ${boardTitle}`;
+  const title = (
+    <div>
+      <span>{t(`modals.${actionType}-board.title`)} </span>
+      {boardTitle && <StyledBoardTag>{boardTitle}</StyledBoardTag>}
+    </div>
+  );
 
   function submitData() {
-    form
-      .validateFields()
-      .then(onOk)
-      .then(() => form.resetFields());
+    form.validateFields().then((values) => {
+      onOk(values);
+      if (actionType === 'create') {
+        form.resetFields();
+      }
+    });
   }
 
   function closeModal() {
@@ -52,8 +60,9 @@ const UpdateBoards = ({
           okText={t(`modals.${actionType}-board.ok-text`)}
           cancelText={t('modals.cancel')}
           onOk={submitData}>
-          <Form form={form} layout="vertical" initialValues={{ newTitle: boardTitle }}>
+          <Form form={form} layout="vertical">
             <Form.Item
+              initialValue={boardTitle}
               name="newTitle"
               label={t(`modals.${actionType}-board.input-title`)}
               rules={[{ required: true, message: t(`modals.${actionType}-board.validate-error`) }]}>
@@ -73,5 +82,9 @@ const UpdateBoards = ({
     </>
   );
 };
+
+const StyledBoardTag = styled(Tag).attrs({ color: 'success' })`
+  font-size: 1rem;
+`;
 
 export default UpdateBoards;
