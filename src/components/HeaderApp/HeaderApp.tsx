@@ -69,7 +69,7 @@ function HeaderApp() {
       <StyledMenu
         theme="dark"
         mode="horizontal"
-        selectedKeys={[pathname.slice(1)]}
+        selectedKeys={[pathname]}
         items={getMenuItems()}
         triggerSubMenuAction="click"
       />
