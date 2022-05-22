@@ -56,8 +56,8 @@ function HeaderApp() {
 
   const authorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
-    getNavMenuButton(dispatchSignOut, t('buttons.sign-out')),
-    getNavMenuButton(showCreateBoardModal, t('buttons.new-board'))
+    getNavMenuButton(showCreateBoardModal, t('buttons.new-board')),
+    getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
   ];
 
   function getMenuItems() {
