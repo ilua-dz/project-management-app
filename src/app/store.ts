@@ -1,5 +1,14 @@
-import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
-import userAuthorizationReducer from '../reducer/authorization/authorizationSlice';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+  CombinedState
+} from '@reduxjs/toolkit';
+import userAuthorizationReducer, {
+  userAuthorizationState
+} from '../reducer/authorization/authorizationSlice';
+import boardsReducer, { UserBoardsState } from '../reducer/boards/userBoardsSlice';
 import {
   persistStore,
   persistReducer,
@@ -8,17 +17,27 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
+  REGISTER,
+  PersistConfig
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 const rootReducer = combineReducers({
-  userAuthorization: userAuthorizationReducer
+  userAuthorization: userAuthorizationReducer,
+  userBoards: boardsReducer
 });
 
-const persistConfig = {
+type PMPersistConfig = PersistConfig<
+  CombinedState<{
+    userAuthorization: userAuthorizationState;
+    userBoards: UserBoardsState;
+  }>
+>;
+
+const persistConfig: PMPersistConfig = {
   key: 'root',
-  storage
+  storage,
+  whitelist: ['userAuthorization']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

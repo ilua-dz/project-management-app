@@ -1,6 +1,8 @@
+import { TeamOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import PageTitle from '../../components/styled/PageTitle';
 import OurTeam from '../../enumerations/OurTeam';
 import MemberAvatar from './MemberAvatar';
 
@@ -10,7 +12,7 @@ function WelcomePage() {
   const { t } = useTranslation();
   return (
     <Container>
-      <StyledTitle>{t('application-title')}</StyledTitle>
+      <PageTitle textLink="application-title" icon={<TeamOutlined />} />
       <StyledText italic>{t('description1')}</StyledText>
       <StyledTitle level={2}>{t('our-team')}</StyledTitle>
       <AvatarsBlock>{OurTeam.map(MemberAvatar)}</AvatarsBlock>
@@ -33,7 +35,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 5rem;
 `;
 
 const AvatarsBlock = styled.div`
@@ -44,6 +45,7 @@ const AvatarsBlock = styled.div`
 
 const StyledText = styled(Text)`
   text-align: center;
+  padding: 0 2rem;
 `;
 
 const StyledTitle = styled(Title)`
