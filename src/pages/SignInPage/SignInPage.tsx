@@ -1,35 +1,25 @@
-import { Form, Input, Button, AutoComplete, message } from 'antd';
+import { Form, Input, Button, AutoComplete } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LoginOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../../app/hooks';
+import { useApiRequestWithUIMessages } from '../../app/useApiRequestWithUIMessages';
 import { asyncSignIn } from '../../reducer/authorization/authorizationSlice';
 import { useTranslation } from 'react-i18next';
-import { SignInData } from '../../API/authorization';
+import { SignInData, Token } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
-import isActionFulfilled from '../../app/actionHelper';
 import PageTitle from '../../components/styled/PageTitle';
-import { MessageKeys, duration } from '../../antd/messageProperties';
+import { MessageKeys } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
 
 const { tailLayout, layout } = formProperties;
 
 const SignInPage = () => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const [form] = Form.useForm();
 
-  async function signInRequest(userData: SignInData) {
-    const key = MessageKeys.signIn;
-    message.loading({ content: t('messages.loading'), key, duration: 0 });
-
-    const data = await dispatch(asyncSignIn(userData));
-
-    if (isActionFulfilled(data.meta.requestStatus)) {
-      message.success({ content: t(`messages.${key}-done`), key, duration });
-    } else {
-      message.error({ content: t(`messages.${key}-error`), key, duration });
-    }
-  }
+  const signInRequest = useApiRequestWithUIMessages<SignInData, Token>({
+    messageKey: MessageKeys.signIn,
+    thunk: asyncSignIn
+  });
 
   return (
     <>

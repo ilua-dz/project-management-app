@@ -12,6 +12,7 @@
     "sign-up-error": "User login already exists!",
     "sign-in-done": "Successful Sign In!",
     "sign-in-error": "Login or password is incorrect!",
+    "-error": "Loading error!",
     "loading": "Loading..."
   },
   "modals": {

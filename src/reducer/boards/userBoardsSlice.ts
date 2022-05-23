@@ -18,6 +18,10 @@ export interface UserBoardsState {
   activeBoardId: string;
 }
 
+export interface BoardRequestData {
+  id?: string;
+}
+
 const initialState: UserBoardsState = {
   boards: [],
   boardsLoading: false,
@@ -58,7 +62,7 @@ export const updateBoardThunk = createAsyncThunk(
 
 export const getBoardThunk = createAsyncThunk(
   'boards/getBoard',
-  async ({ id }: { id?: string }, { getState, rejectWithValue }) => {
+  async ({ id }: BoardRequestData, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;

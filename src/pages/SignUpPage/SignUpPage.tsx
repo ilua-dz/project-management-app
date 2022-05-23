@@ -1,39 +1,40 @@
-import { Form, Input, Button, AutoComplete, message } from 'antd';
+import { Form, Input, Button, AutoComplete } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../../app/hooks';
+import { useApiRequestWithUIMessages } from '../../app/useApiRequestWithUIMessages';
 import { asyncSignUp } from '../../reducer/authorization/authorizationSlice';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
-import isActionFulfilled from '../../app/actionHelper';
 import PageTitle from '../../components/styled/PageTitle';
-import { duration, MessageKeys } from '../../antd/messageProperties';
+import { MessageKeys } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
-import { useNavigate } from 'react-router-dom';
-import Links from '../../enumerations/LinksEnum';
+import { IUserData } from '../../API/dependencies';
 
 const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
-  async function signUpRequest(userData: SignUpData) {
-    const key = MessageKeys.signUp;
-    message.loading({ content: t('messages.loading'), key, duration: 0 });
+  const signUpRequest = useApiRequestWithUIMessages<SignUpData, IUserData>({
+    messageKey: MessageKeys.signIn,
+    thunk: asyncSignUp
+  });
 
-    const data = await dispatch(asyncSignUp(userData));
+  // async function signUpRequest(userData: SignUpData) {
+  //   const key = MessageKeys.signUp;
+  //   message.loading({ ...{ content: t('messages.loading'), key, duration: 0 } });
 
-    if (isActionFulfilled(data.meta.requestStatus)) {
-      message.success({ content: t(`messages.${key}-done`), key, duration });
-      navigate(Links.signInPage);
-    } else {
-      message.error({ content: t(`messages.${key}-error`), key, duration });
-    }
-  }
+  //   const data = await dispatch(asyncSignUp(userData));
+
+  //   if (isActionFulfilled(data.meta.requestStatus)) {
+  //     message.success({ ...{ content: t(`messages.${key}-done`), key, duration } });
+  //     navigate(Links.signInPage);
+  //   } else {
+  //     message.error({ ...{ content: t(`messages.${key}-error`), key, duration } });
+  //   }
+  // }
 
   return (
     <>
