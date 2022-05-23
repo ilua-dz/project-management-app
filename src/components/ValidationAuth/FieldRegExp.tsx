@@ -5,11 +5,11 @@ export function FieldRegExp() {
   return [
     {
       required: true,
-      message: `${t('messagesOfAuthForms.require')}`
+      message: t('messagesOfAuthForms.require')
     },
     {
       pattern: /^[а-яА-Я-A-Za-z0-9_]{3,}$/,
-      message: `${t('messagesOfAuthForms.pattern')}`
+      message: t('messagesOfAuthForms.pattern')
     }
   ];
 }
