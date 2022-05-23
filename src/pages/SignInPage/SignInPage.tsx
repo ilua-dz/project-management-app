@@ -18,7 +18,8 @@ const SignInPage = () => {
 
   const signInRequest = useApiRequestWithUIMessages<SignInData, Token>({
     messageKey: MessageKeys.signIn,
-    thunk: asyncSignIn
+    thunk: asyncSignIn,
+    showOkMessage: true
   });
 
   return (

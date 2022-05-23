@@ -14,7 +14,7 @@ type RequestType<UserDataType, ResponseType> = {
 export function useApiRequestWithUIMessages<UserDataType, ResponseType>({
   messageKey,
   thunk,
-  showOkMessage = true
+  showOkMessage = false
 }: RequestType<UserDataType, ResponseType>) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

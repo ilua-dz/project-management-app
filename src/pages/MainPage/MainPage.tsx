@@ -20,8 +20,7 @@ function MainPage() {
 
   const boardsRequest = useApiRequestWithUIMessages<BoardRequestData, IBoard | IBoard[]>({
     messageKey: MessageKeys.main,
-    thunk: getBoardThunk,
-    showOkMessage: false
+    thunk: getBoardThunk
   });
 
   useEffect(() => {

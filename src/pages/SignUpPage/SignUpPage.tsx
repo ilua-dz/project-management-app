@@ -19,22 +19,9 @@ const SignUpPage = () => {
 
   const signUpRequest = useApiRequestWithUIMessages<SignUpData, IUserData>({
     messageKey: MessageKeys.signIn,
-    thunk: asyncSignUp
+    thunk: asyncSignUp,
+    showOkMessage: true
   });
-
-  // async function signUpRequest(userData: SignUpData) {
-  //   const key = MessageKeys.signUp;
-  //   message.loading({ ...{ content: t('messages.loading'), key, duration: 0 } });
-
-  //   const data = await dispatch(asyncSignUp(userData));
-
-  //   if (isActionFulfilled(data.meta.requestStatus)) {
-  //     message.success({ ...{ content: t(`messages.${key}-done`), key, duration } });
-  //     navigate(Links.signInPage);
-  //   } else {
-  //     message.error({ ...{ content: t(`messages.${key}-error`), key, duration } });
-  //   }
-  // }
 
   return (
     <>
