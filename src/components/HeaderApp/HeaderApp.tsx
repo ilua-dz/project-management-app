@@ -1,6 +1,6 @@
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled, { CSSProperties } from 'styled-components';
 import LangSwitch from '../LangSwitch';
 import Links from '../../enumerations/LinksEnum';
@@ -33,7 +33,6 @@ function HeaderApp() {
   const { pathname } = useLocation();
   const token = useAppSelector(getApiSignInToken);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [isCreateBoardModalVisible, setIsCreateBoardModalVisible] = useState<boolean>(false);
 
   function showCreateBoardModal() {
@@ -46,7 +45,6 @@ function HeaderApp() {
 
   function dispatchSignOut() {
     dispatch(signOut());
-    navigate(Links.welcomePage);
   }
 
   const unauthorizedUserMenuItems: ItemType[] = [
@@ -57,6 +55,7 @@ function HeaderApp() {
   const authorizedUserMenuItems: ItemType[] = [
     getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
     getNavMenuButton(showCreateBoardModal, t('buttons.new-board')),
+    getNavMenuItem(Links.profilePage, t('buttons.profile')),
     getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
   ];
 
