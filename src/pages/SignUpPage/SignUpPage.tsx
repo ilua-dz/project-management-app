@@ -6,9 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
+
+import { FieldRegExp } from '../../components/ValidationAuth/FieldRegExp';
+
 import PageTitle from '../../components/styled/PageTitle';
 import { duration, MessageKeys } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
+
 import { useNavigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
 
@@ -40,36 +44,15 @@ const SignUpPage = () => {
       <PageTitle textLink="buttons.sign-up" icon={<UsergroupAddOutlined />} />
       <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
-          <Form.Item
-            name="name"
-            label={t('labelOfForms.name')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="name" label={t('labelOfForms.name')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.name')} />
           </Form.Item>
 
-          <Form.Item
-            name="login"
-            label={t('labelOfForms.login')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.login')} />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            label={t('labelOfForms.password')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
             <AutoComplete>
               <Input.Password
                 placeholder={t('labelOfForms.password')}

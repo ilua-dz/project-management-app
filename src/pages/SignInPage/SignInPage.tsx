@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { SignInData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
 import isActionFulfilled from '../../app/actionHelper';
+
+import { FieldRegExp } from '../../components/ValidationAuth/FieldRegExp';
+
 import PageTitle from '../../components/styled/PageTitle';
 import { MessageKeys, duration } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
@@ -36,25 +39,11 @@ const SignInPage = () => {
       <PageTitle textLink="buttons.sign-in" icon={<LoginOutlined />} />
       <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signInRequest}>
-          <Form.Item
-            name="login"
-            label={t('labelOfForms.login')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.login')} />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            label={t('labelOfForms.password')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
             <AutoComplete>
               <Input.Password
                 placeholder={t('labelOfForms.password')}

@@ -35,6 +35,10 @@
     "name": "Name",
     "login": "Login"
   },
+  "messagesOfAuthForms": {
+    "require":"It's required",
+    "pattern":"At least 3 symbols"
+  },
   "application-title": "Project Management App",
   "description1": "This is aimed to facilitate the workflow of a team collaborating on the same project. The software allows to assign and reassign tasks, easily track the deadlines to meet them for sure and control the whole process from the central managing location. ",
   "our-team": "Our Team",
