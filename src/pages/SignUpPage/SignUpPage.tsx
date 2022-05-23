@@ -9,18 +9,25 @@ import PageTitle from '../../components/styled/PageTitle';
 import { MessageKeys } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
 import { IUserData } from '../../API/dependencies';
+import { useNavigate } from 'react-router-dom';
+import Links from '../../enumerations/LinksEnum';
 
 const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
+  function goToSignIn() {
+    navigate(Links.signInPage);
+  }
+
   const signUpRequest = useApiRequestWithUIMessages<SignUpData, IUserData>({
-    messageKey: MessageKeys.signIn,
+    messageKey: MessageKeys.signUp,
     thunk: asyncSignUp,
-    showOkMessage: true
+    showOkMessage: true,
+    okAction: goToSignIn
   });
 
   return (

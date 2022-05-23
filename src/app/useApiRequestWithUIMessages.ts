@@ -9,12 +9,14 @@ type RequestType<UserDataType, ResponseType> = {
   messageKey: MessageKeys;
   thunk: AsyncThunk<void | ResponseType | Error | undefined, UserDataType, object>;
   showOkMessage?: boolean;
+  okAction?: () => void;
 };
 
 export function useApiRequestWithUIMessages<UserDataType, ResponseType>({
   messageKey,
   thunk,
-  showOkMessage = false
+  showOkMessage = false,
+  okAction
 }: RequestType<UserDataType, ResponseType>) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -31,6 +33,9 @@ export function useApiRequestWithUIMessages<UserDataType, ResponseType>({
         });
       } else {
         message.destroy(messageKey);
+      }
+      if (okAction) {
+        okAction();
       }
     } else {
       message.error({
