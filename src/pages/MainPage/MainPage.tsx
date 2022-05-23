@@ -1,22 +1,30 @@
 import { List } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import PageTitle from '../../components/styled/PageTitle';
-import { getBoardThunk, getAppBoards } from '../../reducer/boards/userBoardsSlice';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  getBoardThunk,
+  getAppBoards,
+  BoardRequestData
+} from '../../reducer/boards/userBoardsSlice';
+import { useAppSelector } from '../../app/hooks';
+import { useApiRequestWithUIMessages } from '../../app/useApiRequestWithUIMessages';
 import { useCallback, useEffect } from 'react';
 import BoardItem from './BoardItem';
 import { IBoard } from '../../API/boards';
 import styled from 'styled-components';
 import { ListGridType } from 'antd/lib/list';
+import { MessageKeys } from '../../antd/messageProperties';
 
 function MainPage() {
   const boards = useAppSelector(getAppBoards);
-  const dispatch = useAppDispatch();
+
+  const boardsRequest = useApiRequestWithUIMessages<BoardRequestData, IBoard | IBoard[]>({
+    messageKey: MessageKeys.main,
+    thunk: getBoardThunk
+  });
 
   useEffect(() => {
-    (async function boardsRequest() {
-      await dispatch(getBoardThunk({}));
-    })();
+    boardsRequest({});
   }, []);
 
   const renderBoardItem = useCallback((item: IBoard) => <BoardItem item={item} />, []);

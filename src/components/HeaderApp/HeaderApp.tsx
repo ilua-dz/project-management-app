@@ -65,11 +65,11 @@ function HeaderApp() {
   }
 
   return (
-    <StyledHeader>
+    <StyledHeader auth={token ? 1 : 0}>
       <StyledMenu
         theme="dark"
         mode="horizontal"
-        selectedKeys={[pathname.slice(1)]}
+        selectedKeys={[pathname]}
         items={getMenuItems()}
         triggerSubMenuAction="click"
       />
@@ -79,14 +79,26 @@ function HeaderApp() {
   );
 }
 
-const StyledHeader = styled(Header)`
+const StyledHeader = styled(Header)<{ auth: number }>`
+  ${({ auth }) => {
+    if (auth) {
+      return { position: 'sticky', top: '0', zIndex: '100' };
+    }
+  }}
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 0.5rem;
+  height: ${({ auth }) => (auth ? '2rem' : '4rem')};
+  transition: all 0.5s;
+
+  & .ant-menu-item {
+    border-radius: ${({ auth }) => (auth ? '0' : '1rem')};
+  }
 `;
 
 const StyledMenu = styled(Menu)`
+  height: 2rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -94,7 +106,6 @@ const StyledMenu = styled(Menu)`
 `;
 
 const navItemStyle: CSSProperties = {
-  borderRadius: '1rem',
   padding: '0 0.5rem',
   margin: '0 0.5rem',
   height: '2rem',

@@ -2,10 +2,12 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { List, Card, Typography } from 'antd';
 import React, { CSSProperties, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import CallConfirm from '../../antd/confirmModal';
 import { IBoard } from '../../API/boards';
 import { useAppDispatch } from '../../app/hooks';
+import Links from '../../enumerations/LinksEnum';
 import {
   deleteBoardThunk,
   setUserActiveBoard,
@@ -23,6 +25,7 @@ const BoardItem = ({ item }: BoardItemProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   function hideModal() {
     setIsUpdateModalVisible(false);
@@ -40,16 +43,17 @@ const BoardItem = ({ item }: BoardItemProps) => {
   const deleteConfirmQuestion = `${t('modals.delete-board')} ${item.title}?`;
   const deleteItem = () => dispatch(deleteBoardThunk({ id: item.id }));
 
-  const setActive = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const goToBoardPage = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e.target as Element).classList.contains('ant-card-body')) {
       dispatch(setUserActiveBoard(item.id));
+      navigate(Links.boardPage);
     }
   };
 
   return (
     <List.Item>
       <Card
-        onClick={setActive}
+        onClick={goToBoardPage}
         bodyStyle={cardBodyStyle}
         hoverable
         actions={[

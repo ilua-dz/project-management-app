@@ -1,75 +1,50 @@
-import { Form, Input, Button, AutoComplete, message } from 'antd';
+import { Form, Input, Button, AutoComplete } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
-import { useAppDispatch } from '../../app/hooks';
+import { useApiRequestWithUIMessages } from '../../app/useApiRequestWithUIMessages';
 import { asyncSignUp } from '../../reducer/authorization/authorizationSlice';
 import { useTranslation } from 'react-i18next';
 import { SignUpData } from '../../API/authorization';
 import formProperties from '../../antd/formProperties';
-import isActionFulfilled from '../../app/actionHelper';
 import PageTitle from '../../components/styled/PageTitle';
-import { duration, MessageKeys } from '../../antd/messageProperties';
+import { MessageKeys } from '../../antd/messageProperties';
 import FormPageContainer from '../../components/styled/FormPageContainer';
+import { IUserData } from '../../API/dependencies';
 import { useNavigate } from 'react-router-dom';
 import Links from '../../enumerations/LinksEnum';
+import { FieldRegExp } from '../../components/ValidationAuth/FieldRegExp';
 
 const { tailLayout, layout } = formProperties;
 
 const SignUpPage = () => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const [form] = Form.useForm();
 
-  async function signUpRequest(userData: SignUpData) {
-    const key = MessageKeys.signUp;
-    message.loading({ content: t('messages.loading'), key, duration: 0 });
-
-    const data = await dispatch(asyncSignUp(userData));
-
-    if (isActionFulfilled(data.meta.requestStatus)) {
-      message.success({ content: t(`messages.${key}-done`), key, duration });
-      navigate(Links.signInPage);
-    } else {
-      message.error({ content: t(`messages.${key}-error`), key, duration });
-    }
+  function goToSignIn() {
+    navigate(Links.signInPage);
   }
+
+  const signUpRequest = useApiRequestWithUIMessages<SignUpData, IUserData>({
+    messageKey: MessageKeys.signUp,
+    thunk: asyncSignUp,
+    showOkMessage: true,
+    okAction: goToSignIn
+  });
 
   return (
     <>
       <PageTitle textLink="buttons.sign-up" icon={<UsergroupAddOutlined />} />
       <FormPageContainer>
         <Form {...layout} form={form} name="control-hooks" onFinish={signUpRequest}>
-          <Form.Item
-            name="name"
-            label={t('labelOfForms.name')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="name" label={t('labelOfForms.name')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.name')} />
           </Form.Item>
 
-          <Form.Item
-            name="login"
-            label={t('labelOfForms.login')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="login" label={t('labelOfForms.login')} rules={FieldRegExp()}>
             <Input placeholder={t('labelOfForms.login')} />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            label={t('labelOfForms.password')}
-            rules={[
-              {
-                required: true
-              }
-            ]}>
+          <Form.Item name="password" label={t('labelOfForms.password')} rules={FieldRegExp()}>
             <AutoComplete>
               <Input.Password
                 placeholder={t('labelOfForms.password')}
