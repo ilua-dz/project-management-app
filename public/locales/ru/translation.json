@@ -5,7 +5,9 @@
     "sign-out": "Выход",
     "mainPage": "Главная страница",
     "Submit": "Подтвердить",
-    "new-board": "Новая доска"
+    "new-board": "Новая доска",
+    "profile": "Профиль",
+    "delete-user": "Удалить пользователя"
   },
   "messages": {
     "sign-up-done": "Регистрация завершена. Войдите под своим именем",
@@ -29,7 +31,8 @@
       "input-title": "Имя",
       "validate-error": "Введите имя!",
       "ok-text": "Создать"
-    }
+    },
+    "delete-user": "Удалить пользователя?"
   },
   "labelOfForms": {
     "password": "Пароль",

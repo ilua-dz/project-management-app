@@ -5,7 +5,9 @@
     "sign-out": "Sign Out",
     "mainPage": "Main Page",
     "Submit": "Submit",
-    "new-board": "New Board"
+    "new-board": "New Board",
+    "profile": "Profile",
+    "delete-user": "Delete User"
   },
   "messages": {
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
@@ -29,7 +31,8 @@
       "input-title": "Title",
       "validate-error": "Please input title!",
       "ok-text": "Create"
-    }
+    },
+    "delete-user": "Do you want to delete User ?"
   },
   "labelOfForms": {
     "password": "Password",
