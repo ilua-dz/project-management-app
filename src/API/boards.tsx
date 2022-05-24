@@ -22,7 +22,7 @@ export type BoardCreateRequest = Omit<IBoardRequest, 'id'>;
 export const boardsBaseURL = `${baseURL}boards`;
 
 export async function getBoard({ id, token }: BoardGetRequest) {
-  const URL = `${boardsBaseURL}${id ? `$/{id}` : ''}`;
+  const URL = `${boardsBaseURL}${id ? `/${id}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {

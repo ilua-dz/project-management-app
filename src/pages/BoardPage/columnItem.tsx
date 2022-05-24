@@ -1,11 +1,11 @@
-import { IColumn } from "../../API/columns";
+import { IColumn } from '../../API/columns';
 
-interface IColumnProps{
-  data: IColumn
+interface IColumnProps {
+  data: IColumn;
 }
 
-function ColumnItem(props: IColumnProps){
-  return <div>{props.data.title}</div>
+function ColumnItem(props: IColumnProps) {
+  return <div>{props.data.title}</div>;
 }
 
-export default ColumnItem
+export default ColumnItem;

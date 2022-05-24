@@ -16,26 +16,23 @@ export interface UserColumnsState {
 }
 
 const initialState: UserColumnsState = {
-  columns: [],
   columnsLoading: false,
   columnsError: ''
 };
 
 export const getActiveBoardColumnsDataThunk = createAsyncThunk(
   'columns/getActiveBoardColumnsData',
-  async ({},
-    { dispatch, getState, rejectWithValue }
-  ) => {
+  async (novalue: void, { dispatch, getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
       const id = state.userBoards.activeBoardId;
-      return await getBoard({token, id});
+      return await getBoard({ token, id });
     } catch {
       rejectWithValue(`Column can't be deleted`);
     }
   }
-)
+);
 
 export const deleteColumnThunk = createAsyncThunk(
   'columns/deleteColumn',
@@ -121,7 +118,8 @@ export const userBoardsSlice = createSlice({
   }
 });
 
-export const getAppActiveBoardColumnsData = (state: RootState) => state.userColumns.activeBoardColumnsData;
+export const getAppActiveBoardColumnsData = (state: RootState) =>
+  state.userColumns.activeBoardColumnsData;
 export const getAppColumnsError = (state: RootState) => state.userColumns.columnsError;
 export const getAppColumnsLoading = (state: RootState) => state.userColumns.columnsLoading;
 
