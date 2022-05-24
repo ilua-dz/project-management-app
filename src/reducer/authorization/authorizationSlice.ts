@@ -21,8 +21,8 @@ const initialState: userAuthorizationState = {
   signUpError: 'User login already exists!'
 };
 
-function getUserId(token: Token) {
-  return JSON.parse(window.atob(token.token.split('.')[1])).userId;
+function getUserId({ token }: Token) {
+  return JSON.parse(window.atob(token.split('.')[1])).userId;
 }
 
 export const asyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
