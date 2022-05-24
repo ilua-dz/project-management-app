@@ -16,7 +16,7 @@ export interface IColumnRequest {
   body: {
     title: string;
     order: number;
-  }
+  };
   token: string;
 }
 
@@ -25,8 +25,7 @@ export type ColumnCreateRequest = Omit<IColumnRequest, 'columnId'>;
 export type ColumnDeleteRequest = Omit<IColumnRequest, 'body'>;
 export type ColumnUpdateRequest = IColumnRequest;
 
-
-export async function getColumn({boardId, columnId, token}: ColumnGetRequest) {
+export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) {
   const URL = `${boardsBaseURL}${boardId}/columns${columnId ? `/${columnId}` : ''}`;
   const options = {
     method: Methods.get,
@@ -39,7 +38,7 @@ export async function getColumn({boardId, columnId, token}: ColumnGetRequest) {
   return data;
 }
 
-export async function createColumn({token, boardId, body}: ColumnCreateRequest) {
+export async function createColumn({ token, boardId, body }: ColumnCreateRequest) {
   const URL = `${boardsBaseURL}${boardId}/columns}`;
   const options = {
     method: Methods.post,
@@ -54,20 +53,19 @@ export async function createColumn({token, boardId, body}: ColumnCreateRequest) 
   return data;
 }
 
-export async function deleteColumn({columnId, boardId, token}: ColumnDeleteRequest) {
+export async function deleteColumn({ columnId, boardId, token }: ColumnDeleteRequest) {
   const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.delete,
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Authorization: `Bearer ${token}`
     }
   } as Partial<RequestInit>;
   const data = await requestAPI({ URL, options });
   return data;
 }
 
-export async function updateColumn({token, boardId, columnId, body}: ColumnUpdateRequest) {
+export async function updateColumn({ token, boardId, columnId, body }: ColumnUpdateRequest) {
   const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.put,

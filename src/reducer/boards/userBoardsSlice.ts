@@ -1,4 +1,4 @@
-import { RootState } from './../../app/store';
+import { RootState } from '../../app/store';
 import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import {
   IBoard,
