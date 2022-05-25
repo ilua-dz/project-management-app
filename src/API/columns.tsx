@@ -26,7 +26,7 @@ export type ColumnDeleteRequest = Omit<IColumnRequest, 'body'>;
 export type ColumnUpdateRequest = IColumnRequest;
 
 export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns${columnId ? `/${columnId}` : ''}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns${columnId ? `/${columnId}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {
@@ -39,7 +39,7 @@ export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) 
 }
 
 export async function createColumn({ token, boardId, body }: ColumnCreateRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns}`;
   const options = {
     method: Methods.post,
     headers: {
@@ -54,7 +54,7 @@ export async function createColumn({ token, boardId, body }: ColumnCreateRequest
 }
 
 export async function deleteColumn({ columnId, boardId, token }: ColumnDeleteRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.delete,
     headers: {
@@ -66,7 +66,7 @@ export async function deleteColumn({ columnId, boardId, token }: ColumnDeleteReq
 }
 
 export async function updateColumn({ token, boardId, columnId, body }: ColumnUpdateRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.put,
     headers: {

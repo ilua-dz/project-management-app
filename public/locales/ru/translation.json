@@ -52,5 +52,11 @@
   "titles": {
     "main-page": "Доски",
     "board-page": "Колонки"
+  },
+  "tooltips": {
+    "delete": "Удалить"
+  },
+  "confirm": {
+    "delete": "Подтвердите удаление"
   }
 }

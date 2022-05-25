@@ -52,5 +52,11 @@
   "titles": {
     "main-page": "Boards",
     "board-page": "Columns"
+  },
+  "tooltips": {
+    "delete": "Delete"
+  },
+  "confirm": {
+    "delete": "Confirm deletion"
   }
 }

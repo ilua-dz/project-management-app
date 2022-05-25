@@ -9,13 +9,18 @@ function LayoutApp() {
   return (
     <StyledLayout>
       <HeaderApp />
-      <Content>
+      <FlexContent>
         <Outlet />
-      </Content>
+      </FlexContent>
       <FooterApp />
     </StyledLayout>
   );
 }
+
+const FlexContent = styled(Content)`
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledLayout = styled(Layout)`
   min-height: 100vh;
