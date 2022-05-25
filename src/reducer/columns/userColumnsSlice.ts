@@ -1,13 +1,9 @@
 import { getBoard, IBoard } from './../../API/boards';
-import {
-  ColumnDeleteRequest,
-  ColumnUpdateRequest,
-  ColumnGetRequest,
-  ColumnCreateRequest
-} from '../../API/columns';
+import { ColumnDeleteRequest, ColumnUpdateRequest, ColumnCreateRequest } from '../../API/columns';
 import { RootState } from '../../app/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { updateColumn, createColumn, deleteColumn } from '../../API/columns';
+import { deleteTask } from '../../API/tasks';
 
 export interface UserColumnsState {
   columnsLoading: boolean;
@@ -22,7 +18,7 @@ const initialState: UserColumnsState = {
 
 export const getActiveBoardColumnsDataThunk = createAsyncThunk(
   'columns/getActiveBoardColumnsData',
-  async (novalue: void, { dispatch, getState, rejectWithValue }) => {
+  async (novalue: void, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
@@ -43,6 +39,11 @@ export const deleteColumnThunk = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
+      state.userColumns.activeBoardColumnsData?.columns?.forEach((item) => {
+        if (item.id === columnId) {
+          item.tasks?.forEach((task) => deleteTask({ boardId, columnId, taskId: task.id, token }));
+        }
+      });
       await deleteColumn({ boardId, columnId, token });
       dispatch(getActiveBoardColumnsDataThunk());
     } catch {

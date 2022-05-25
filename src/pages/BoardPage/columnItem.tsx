@@ -9,6 +9,7 @@ import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/user
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
 import { getAppBoardsActiveId } from '../../reducer/boards/userBoardsSlice';
+import Task from './Task/Task';
 const { Paragraph } = Typography;
 
 interface IColumnProps {
@@ -16,11 +17,11 @@ interface IColumnProps {
 }
 
 function ColumnItem(props: IColumnProps) {
-  const { title, order, id, tasks } = props.data;
+  const { title, order, id } = props.data;
   const boardId = useAppSelector(getAppBoardsActiveId);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const confirmMessage = t('confirm.delete');
+  const dispatch = useAppDispatch();
   const updateColumn = useCallback((title: string) => {
     const body = { title, order };
     const columnId = id;
@@ -51,18 +52,10 @@ function ColumnItem(props: IColumnProps) {
         }
         bordered={false}>
         <CardsContainer>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
+          {props.data.tasks?.map((taskData) => (
+            <Task key={taskData.id} {...taskData} />
+          ))}
+          ;
         </CardsContainer>
       </Card>
     </div>
