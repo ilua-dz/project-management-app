@@ -20,7 +20,8 @@ import {
   REGISTER,
   PersistConfig
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage';
+import { getPersistConfig } from 'redux-deep-persist';
 
 const rootReducer = combineReducers({
   userAuthorization: userAuthorizationReducer,
@@ -34,11 +35,12 @@ type PMPersistConfig = PersistConfig<
   }>
 >;
 
-const persistConfig: PMPersistConfig = {
+const persistConfig: PMPersistConfig = getPersistConfig({
   key: 'root',
   storage,
-  whitelist: ['userAuthorization']
-};
+  whitelist: ['userAuthorization', 'userBoards.activeBoardId'],
+  rootReducer
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
