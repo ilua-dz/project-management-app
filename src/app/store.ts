@@ -9,6 +9,7 @@ import userAuthorizationReducer, {
   userAuthorizationState
 } from '../reducer/authorization/authorizationSlice';
 import boardsReducer, { UserBoardsState } from '../reducer/boards/userBoardsSlice';
+import profileReducer, { profileState } from '../reducer/editProfile/userProfileSlice';
 import {
   persistStore,
   persistReducer,
@@ -24,13 +25,15 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 
 const rootReducer = combineReducers({
   userAuthorization: userAuthorizationReducer,
-  userBoards: boardsReducer
+  userBoards: boardsReducer,
+  userProfile: profileReducer
 });
 
 type PMPersistConfig = PersistConfig<
   CombinedState<{
     userAuthorization: userAuthorizationState;
     userBoards: UserBoardsState;
+    userProfile: profileState;
   }>
 >;
 
