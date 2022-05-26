@@ -1,7 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
-import { t } from 'i18next';
-import { title } from 'process';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
