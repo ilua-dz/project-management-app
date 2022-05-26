@@ -15,7 +15,12 @@
     "sign-in-done": "Успешный вход в систему!",
     "sign-in-error": "Неправильное имя пользователя или пароль",
     "-error": "Ошибка загрузки!",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "profile-done": "Пользователь удален!",
+    "profile-error": "Пользователь  не удален!",
+    "profile-update": "Вы уверенны?",
+    "updateProfile-done": "Данные изменены!",
+    "updateProfile-error": "Пользователь с такими данными уже существует, измените данные!"
   },
   "modals": {
     "cancel": "Отмена",
@@ -37,7 +42,10 @@
   "labelOfForms": {
     "password": "Пароль",
     "name": "Имя",
-    "login": "Логин"
+    "login": "Логин",
+    "newPassword": "Новый пароль",
+    "newName": "Новое имя",
+    "newLogin": "Новый логин"
   },
   "messagesOfAuthForms": {
     "require":"Необходимо заполнить",
@@ -53,6 +61,7 @@
     "middle-text": "в школе"
   },
   "titles": {
-    "main-page": "Доски"
+    "main-page": "Доски",
+    "title-update-profile": "Измени свои данные..."
   }
 }

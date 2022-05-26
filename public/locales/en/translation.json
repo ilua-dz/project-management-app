@@ -15,7 +15,12 @@
     "sign-in-done": "Successful Sign In!",
     "sign-in-error": "Login or password is incorrect!",
     "-error": "Loading error!",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "profile-done": "User's been deleted!",
+    "profile-error": "User hasn't been deleted!",
+    "profile-update": "Are you sure?",
+    "updateProfile-done": "Information's been changed!",
+    "updateProfile-error": "This user already exists, change information!"
   },
   "modals": {
     "cancel": "Cancel",
@@ -37,7 +42,10 @@
   "labelOfForms": {
     "password": "Password",
     "name": "Name",
-    "login": "Login"
+    "login": "Login",
+    "newPassword": "New Password",
+    "newName": "New Name",
+    "newLogin": "New Login"
   },
   "messagesOfAuthForms": {
     "require":"It's required",
@@ -53,6 +61,7 @@
     "middle-text": "at"
   },
   "titles": {
-    "main-page": "Boards"
+    "main-page": "Boards",
+    "title-update-profile": "Change your information..."
   }
 }
