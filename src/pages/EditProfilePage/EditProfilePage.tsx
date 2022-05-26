@@ -40,8 +40,10 @@ function EditProfilePage() {
     dispatch(signOut());
   }
 
+  const id = useAppSelector(getApiSignUpData).id;
+
   const deleteItem = () => {
-    deleteUserRequest(useAppSelector(getApiSignUpData).id);
+    deleteUserRequest(id);
   };
 
   return (
