@@ -21,6 +21,10 @@ const initialState: userAuthorizationState = {
   signUpError: 'User login already exists!'
 };
 
+function getUserId({ token }: Token) {
+  return JSON.parse(window.atob(token.split('.')[1])).userId;
+}
+
 export const asyncSignIn = createAsyncThunk('tokenOfUser/fetchSignIn', signIn);
 export const asyncSignUp = createAsyncThunk('tokenOfUser/fetchSignUp', signUp);
 export const signOut = createAction('signOut');
@@ -54,7 +58,9 @@ export const userAuthorizationSlice = createSlice({
       .addCase(asyncSignIn.fulfilled, (state, { payload }) => {
         state.signInStatus = 'fulfilled';
         if (payload) {
-          state.signInData = payload as Token;
+          const token = payload as Token;
+          state.signInData = token;
+          state.signUpData.id = getUserId(token);
         }
       })
       .addCase(asyncSignIn.rejected, (state, { error }) => {
@@ -76,5 +82,6 @@ export const getApiSignInStatus = (state: RootState) => state.userAuthorization.
 export const getApiSignUpStatus = (state: RootState) => state.userAuthorization.signUpStatus;
 export const getApiSignInError = (state: RootState) => state.userAuthorization.signInError;
 export const getApiSignUpError = (state: RootState) => state.userAuthorization.signUpError;
+export const getApiUserId = (state: RootState) => state.userAuthorization.signUpData.id;
 
 export default userAuthorizationSlice.reducer;

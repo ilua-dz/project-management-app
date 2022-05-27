@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../app/hooks';
-import UpdateBoards, { UpdateBoardsValues } from '../../pages/MainPage/UpdateBoardForm';
+import UpdateBoardsModal, { UpdateBoardsValues } from '../../pages/MainPage/UpdateBoardsModal';
 import { createBoardThunk } from '../../reducer/boards/userBoardsSlice';
 
 interface IProps {
@@ -10,13 +10,13 @@ interface IProps {
 function CreateBoardModal({ visible, closeModalFn: closeModal }: IProps) {
   const dispatch = useAppDispatch();
 
-  function dispatchCreateBoard({ newTitle }: UpdateBoardsValues) {
-    dispatch(createBoardThunk({ title: newTitle }));
+  function dispatchCreateBoard({ title, description }: UpdateBoardsValues) {
+    dispatch(createBoardThunk({ title, description }));
     closeModal();
   }
 
   return (
-    <UpdateBoards
+    <UpdateBoardsModal
       actionType="create"
       visible={visible}
       onCancel={closeModal}
