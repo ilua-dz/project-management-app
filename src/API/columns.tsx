@@ -13,16 +13,14 @@ export interface IColumn {
 export interface IColumnRequest {
   boardId: string;
   columnId: string;
-  body: {
-    title: string;
-    order: number;
-  };
+  title: string;
+  order: number;
   token: string;
 }
 
 export type ColumnGetRequest = SetOptional<Omit<IColumnRequest, 'body'>, 'columnId'>;
-export type ColumnCreateRequest = Omit<IColumnRequest, 'columnId'>;
-export type ColumnDeleteRequest = Omit<IColumnRequest, 'body'>;
+export type ColumnCreateRequest = Omit<IColumnRequest, 'columnId' | 'order'>;
+export type ColumnDeleteRequest = Omit<IColumnRequest, 'title' | 'order'>;
 export type ColumnUpdateRequest = IColumnRequest;
 
 export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) {
@@ -38,7 +36,7 @@ export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) 
   return data;
 }
 
-export async function createColumn(token: string, boardId: string, title: string) {
+export async function createColumn({ token, boardId, title }: ColumnCreateRequest) {
   const URL = `${boardsBaseURL}/${boardId}/columns`;
   const options = {
     method: Methods.post,
@@ -65,7 +63,13 @@ export async function deleteColumn({ columnId, boardId, token }: ColumnDeleteReq
   return data;
 }
 
-export async function updateColumn({ token, boardId, columnId, body }: ColumnUpdateRequest) {
+export async function updateColumn({
+  token,
+  boardId,
+  columnId,
+  title,
+  order
+}: ColumnUpdateRequest) {
   const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.put,
@@ -74,7 +78,7 @@ export async function updateColumn({ token, boardId, columnId, body }: ColumnUpd
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify({ title, order })
   } as Partial<RequestInit>;
   const data = await requestAPI<IColumn>({ URL, options });
   return data;

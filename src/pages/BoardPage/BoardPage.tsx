@@ -9,11 +9,11 @@ import { useApiRequestWithUIMessages } from '../../app/useApiRequestWithUIMessag
 import { IBoard } from '../../API/boards';
 import { Empty } from 'antd';
 import {
-  getAppActiveBoardColumnsData,
-  getActiveBoardColumnsDataThunk
+  getActiveBoardColumnsDataThunk,
+  getAppActiveBoardColumnsData
 } from '../../reducer/columns/userColumnsSlice';
 
-function MainPage() {
+function BoardPage() {
   const activeBoardColumnsData = useAppSelector(getAppActiveBoardColumnsData);
   const columnsRequest = useApiRequestWithUIMessages<void, IBoard | IBoard[]>({
     messageKey: MessageKeys.board,
@@ -55,4 +55,4 @@ const Container = styled.div`
   padding: 0 30px;
 `;
 
-export default MainPage;
+export default BoardPage;

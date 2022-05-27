@@ -1,6 +1,6 @@
 import { BoardGetRequest } from './../../API/boards';
 import { RootState } from '../../app/store';
-import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   IBoard,
   getBoard,
@@ -19,7 +19,6 @@ export interface UserBoardsState {
   boards: IBoard[];
   boardsLoading: boolean;
   boardsError: string;
-  activeBoardId: string;
 }
 
 export interface BoardRequestData {
@@ -29,8 +28,7 @@ export interface BoardRequestData {
 const initialState: UserBoardsState = {
   boards: [],
   boardsLoading: false,
-  boardsError: '',
-  activeBoardId: ''
+  boardsError: ''
 };
 
 export const deleteBoardThunk = createAsyncThunk(
@@ -117,14 +115,6 @@ export const createBoardThunk = createAsyncThunk(
   }
 );
 
-export const setUserActiveBoard = createAction('setActiveBoard', (id: string) => {
-  return {
-    payload: {
-      id
-    }
-  };
-});
-
 export const userBoardsSlice = createSlice({
   name: 'userBoards',
   initialState,
@@ -149,10 +139,6 @@ export const userBoardsSlice = createSlice({
         state.boardsLoading = false;
         state.boardsError = error.message as string;
       });
-
-    builder.addCase(setUserActiveBoard, (state, { payload }) => {
-      state.activeBoardId = payload.id;
-    });
   }
 });
 
@@ -164,8 +150,6 @@ function setBoardError(
 }
 
 export const getAppBoards = (state: RootState) => state.userBoards.boards;
-export const getAppBoardsError = (state: RootState) => state.userBoards.boardsError;
 export const getAppBoardsLoading = (state: RootState) => state.userBoards.boardsLoading;
-export const getAppBoardsActiveId = (state: RootState) => state.userBoards.activeBoardId;
 
 export default userBoardsSlice.reducer;

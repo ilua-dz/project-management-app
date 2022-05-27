@@ -5,24 +5,22 @@ import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
-import { getAppBoardsActiveId } from '../../reducer/boards/userBoardsSlice';
 import Task from './Task/Task';
+import { useParams } from 'react-router-dom';
 const { Paragraph } = Typography;
 
 function ColumnItem({ title, order, id, tasks }: IColumn) {
-  const boardId = useAppSelector(getAppBoardsActiveId);
+  const { boardId } = useParams();
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
   const updateColumnHandler = (title: string) => {
-    const body = { title, order };
-    const columnId = id;
-    dispatch(updateColumnThunk({ body, columnId, boardId }));
+    dispatch(updateColumnThunk({ title, order, columnId: id, boardId: `${boardId}` }));
   };
   const deleteButtonHandler = CallConfirm(confirmMessage, () =>
-    dispatch(deleteColumnThunk({ columnId: id, boardId }))
+    dispatch(deleteColumnThunk({ columnId: id, boardId: `${boardId}` }))
   );
 
   return (
@@ -48,7 +46,6 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
           {tasks?.map((taskData) => (
             <Task key={taskData.id} {...taskData} />
           ))}
-          ;
         </CardsContainer>
       </Card>
     </div>

@@ -1,5 +1,3 @@
-import { useAppSelector } from '../app/hooks';
-import { getApiSignInToken } from '../reducer/authorization/authorizationSlice';
 import { RootState } from '../app/store';
 
 function applyToken<RequestType, responseType>(

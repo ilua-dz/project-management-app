@@ -16,7 +16,7 @@ function CreateBoardModal({ visible, closeModalFn }: IProps) {
   const dispatch = useAppDispatch();
 
   async function createColumnRequest({ title }: UpdateBoardsValues) {
-    await createColumn(token, boardId as string, title);
+    await createColumn({ token, boardId: `${boardId}`, title });
     dispatch(getBoardThunk({ id: boardId }));
     closeModalFn();
   }

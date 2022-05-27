@@ -9,11 +9,7 @@ import { IBoard } from '../../API/boards';
 import { useAppDispatch } from '../../app/hooks';
 import StyledBoardTag from '../../components/styled/StyledBoardTag';
 import Links from '../../enumerations/LinksEnum';
-import {
-  deleteBoardThunk,
-  setUserActiveBoard,
-  updateBoardThunk
-} from '../../reducer/boards/userBoardsSlice';
+import { deleteBoardThunk, updateBoardThunk } from '../../reducer/boards/userBoardsSlice';
 import UpdateBoardsModal, { UpdateBoardsValues } from './UpdateBoardsModal';
 
 const { Title, Paragraph } = Typography;
@@ -47,8 +43,7 @@ const BoardItem = ({ id, title, description }: IBoard) => {
 
   const goToBoardPage = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e.target as Element).classList.contains('ant-card-body')) {
-      dispatch(setUserActiveBoard(id));
-      navigate(Links.boardPage);
+      navigate(`${Links.boardPage}/${id}`);
     }
   };
 

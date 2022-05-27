@@ -23,9 +23,9 @@ const initialState: UserColumnsState = {
 export const getActiveBoardColumnsDataThunk = createAsyncThunk(
   'columns/getActiveBoardColumnsData',
   async (_: void, { getState, rejectWithValue }) => {
+    const url = location.href;
+    const id = url.slice(url.lastIndexOf('/') + 1);
     try {
-      const state = getState() as RootState;
-      const id = state.userBoards.activeBoardId;
       return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(
         getBoard,
         {
@@ -87,7 +87,7 @@ export const deleteColumnThunk = createAsyncThunk(
 export const updateColumnThunk = createAsyncThunk(
   'columns/updateColumn',
   async (
-    { boardId, columnId, body }: Omit<ColumnUpdateRequest, 'token'>,
+    { boardId, columnId, title, order }: Omit<ColumnUpdateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
@@ -96,7 +96,8 @@ export const updateColumnThunk = createAsyncThunk(
         {
           boardId,
           columnId,
-          body,
+          title,
+          order,
           token: ''
         },
         getState() as RootState
@@ -111,7 +112,7 @@ export const updateColumnThunk = createAsyncThunk(
 export const createColumnThunk = createAsyncThunk(
   'columns/createColumn',
   async (
-    { boardId, body }: Omit<ColumnCreateRequest, 'token'>,
+    { boardId, title }: Omit<ColumnCreateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
@@ -120,7 +121,7 @@ export const createColumnThunk = createAsyncThunk(
         {
           token: '',
           boardId,
-          body
+          title
         },
         getState() as RootState
       );
