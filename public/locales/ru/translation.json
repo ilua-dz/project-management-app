@@ -3,9 +3,10 @@
     "sign-up": "Регистрация",
     "sign-in": "Вход",
     "sign-out": "Выход",
-    "mainPage": "Главная страница",
+    "mainPage": "Главная",
     "Submit": "Подтвердить",
-    "new-board": "Новая доска"
+    "new-board": "Новая доска",
+    "new-column": "Новая колонка"
   },
   "messages": {
     "sign-up-done": "Регистрация завершена. Войдите под своим именем",
@@ -27,6 +28,12 @@
     },
     "create-board": {
       "title": "Новая доска",
+      "input-title": "Имя",
+      "validate-error": "Введите имя!",
+      "ok-text": "Создать"
+    },
+    "create-column": {
+      "title": "Новая колонка",
       "input-title": "Имя",
       "validate-error": "Введите имя!",
       "ok-text": "Создать"

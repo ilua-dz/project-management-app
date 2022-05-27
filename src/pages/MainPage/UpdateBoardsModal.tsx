@@ -3,22 +3,24 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 export interface UpdateBoardsValues {
-  newTitle: string;
+  title: string;
 }
 
 interface UpdateBoardsProps {
   actionType: 'update' | 'create';
+  target?: 'board' | 'column';
   boardTitle?: string;
   visible: boolean;
   onOk: (values: UpdateBoardsValues) => void;
   onCancel: () => void;
 }
 
-const UpdateBoards = ({
+const UpdateBoardsModal = ({
   actionType,
   visible,
   onOk,
   onCancel,
+  target = 'board',
   boardTitle = ''
 }: UpdateBoardsProps) => {
   const { t } = useTranslation();
@@ -26,18 +28,21 @@ const UpdateBoards = ({
 
   const title = (
     <div>
-      <span>{t(`modals.${actionType}-board.title`)} </span>
+      <span>{t(`modals.${actionType}-${target}.title`)} </span>
       {boardTitle && <StyledBoardTag>{boardTitle}</StyledBoardTag>}
     </div>
   );
 
   function submitData() {
-    form.validateFields().then((values) => {
-      onOk(values);
-      if (actionType === 'create') {
-        form.resetFields();
-      }
-    });
+    form
+      .validateFields()
+      .then((values) => {
+        onOk(values);
+        if (actionType === 'create') {
+          form.resetFields();
+        }
+      })
+      .catch((_) => _);
   }
 
   function closeModal() {
@@ -57,15 +62,17 @@ const UpdateBoards = ({
         <Modal
           {...{ visible, title }}
           onCancel={closeModal}
-          okText={t(`modals.${actionType}-board.ok-text`)}
+          okText={t(`modals.${actionType}-${target}.ok-text`)}
           cancelText={t('modals.cancel')}
           onOk={submitData}>
           <Form form={form} layout="vertical">
             <Form.Item
               initialValue={boardTitle}
-              name="newTitle"
-              label={t(`modals.${actionType}-board.input-title`)}
-              rules={[{ required: true, message: t(`modals.${actionType}-board.validate-error`) }]}>
+              name="title"
+              label={t(`modals.${actionType}-${target}.input-title`)}
+              rules={[
+                { required: true, message: t(`modals.${actionType}-${target}.validate-error`) }
+              ]}>
               <Input
                 autoComplete="off"
                 ref={(input) =>
@@ -87,4 +94,4 @@ const StyledBoardTag = styled(Tag).attrs({ color: 'success' })`
   font-size: 1rem;
 `;
 
-export default UpdateBoards;
+export default UpdateBoardsModal;

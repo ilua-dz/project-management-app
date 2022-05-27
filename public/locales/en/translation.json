@@ -5,7 +5,8 @@
     "sign-out": "Sign Out",
     "mainPage": "Main Page",
     "Submit": "Submit",
-    "new-board": "New Board"
+    "new-board": "New Board",
+    "new-column": "New Column"
   },
   "messages": {
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
@@ -27,6 +28,12 @@
     },
     "create-board": {
       "title": "New board",
+      "input-title": "Title",
+      "validate-error": "Please input title!",
+      "ok-text": "Create"
+    },
+    "create-column": {
+      "title": "New column",
       "input-title": "Title",
       "validate-error": "Please input title!",
       "ok-text": "Create"

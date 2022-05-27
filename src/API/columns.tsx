@@ -22,8 +22,8 @@ export async function getColumn(token: string, boardId: string, columnId?: strin
   return data;
 }
 
-export async function createColumn(token: string, boardId: string, column: IColumn) {
-  const URL = `${boardsBaseURL}${boardId}/columns}`;
+export async function createColumn(token: string, boardId: string, title: string) {
+  const URL = `${boardsBaseURL}/${boardId}/columns`;
   const options = {
     method: Methods.post,
     headers: {
@@ -31,7 +31,7 @@ export async function createColumn(token: string, boardId: string, column: IColu
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ column })
+    body: JSON.stringify({ title })
   } as Partial<RequestInit>;
   const data = await requestAPI<IColumn>({ URL, options });
   return data;

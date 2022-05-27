@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { Menu } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import CreateBoardModal from './CreateBoardModal';
+import CreateColumnModal from './CreateColumnModal';
 
 function getNavMenuItem(link: Links, title: string): ItemType {
   return {
@@ -35,6 +36,7 @@ function HeaderApp() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isCreateBoardModalVisible, setIsCreateBoardModalVisible] = useState<boolean>(false);
+  const [isCreateColumnModalVisible, setIsCreateColumnModalVisible] = useState<boolean>(false);
 
   function showCreateBoardModal() {
     setIsCreateBoardModalVisible(true);
@@ -42,6 +44,14 @@ function HeaderApp() {
 
   function hideCreateBoardModal() {
     setIsCreateBoardModalVisible(false);
+  }
+
+  function showCreateColumnModal() {
+    setIsCreateColumnModalVisible(true);
+  }
+
+  function hideCreateColumnModal() {
+    setIsCreateColumnModalVisible(false);
   }
 
   function dispatchSignOut() {
@@ -54,14 +64,22 @@ function HeaderApp() {
     getNavMenuItem(Links.signInPage, t('buttons.sign-in'))
   ];
 
-  const authorizedUserMenuItems: ItemType[] = [
-    getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
-    getNavMenuButton(showCreateBoardModal, t('buttons.new-board')),
-    getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
-  ];
+  const getAuthorizedUserMenuItems = (): ItemType[] => {
+    const items = [
+      getNavMenuItem(Links.mainPage, t('buttons.mainPage')),
+      getNavMenuButton(dispatchSignOut, t('buttons.sign-out'))
+    ];
+    if (pathname === Links.mainPage) {
+      items.push(getNavMenuButton(showCreateBoardModal, t('buttons.new-board')));
+    }
+    if (pathname.includes(Links.boardPage)) {
+      items.push(getNavMenuButton(showCreateColumnModal, t('buttons.new-column')));
+    }
+    return items;
+  };
 
   function getMenuItems() {
-    return token ? authorizedUserMenuItems : unauthorizedUserMenuItems;
+    return token ? getAuthorizedUserMenuItems() : unauthorizedUserMenuItems;
   }
 
   return (
@@ -75,6 +93,10 @@ function HeaderApp() {
       />
       <LangSwitch />
       <CreateBoardModal visible={isCreateBoardModalVisible} closeModalFn={hideCreateBoardModal} />
+      <CreateColumnModal
+        visible={isCreateColumnModalVisible}
+        closeModalFn={hideCreateColumnModal}
+      />
     </StyledHeader>
   );
 }

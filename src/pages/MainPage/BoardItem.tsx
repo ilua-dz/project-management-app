@@ -13,7 +13,7 @@ import {
   setUserActiveBoard,
   updateBoardThunk
 } from '../../reducer/boards/userBoardsSlice';
-import UpdateBoards, { UpdateBoardsValues } from './UpdateBoardForm';
+import UpdateBoardsModal, { UpdateBoardsValues } from './UpdateBoardsModal';
 
 const { Title } = Typography;
 
@@ -35,8 +35,8 @@ const BoardItem = ({ item }: BoardItemProps) => {
     setIsUpdateModalVisible(true);
   }
 
-  function renameBoard({ newTitle }: UpdateBoardsValues) {
-    dispatch(updateBoardThunk({ id: item.id, title: newTitle }));
+  function renameBoard({ title }: UpdateBoardsValues) {
+    dispatch(updateBoardThunk({ id: item.id, title }));
     hideModal();
   }
 
@@ -62,7 +62,7 @@ const BoardItem = ({ item }: BoardItemProps) => {
         ]}>
         <StyledTitle level={4}>{item.title}</StyledTitle>
       </Card>
-      <UpdateBoards
+      <UpdateBoardsModal
         actionType="update"
         visible={isUpdateModalVisible}
         onCancel={hideModal}
