@@ -18,7 +18,7 @@ export const deleteUserThunk = createAsyncThunk(
   async (id: string, { getState }) => {
     const state = getState() as RootState;
     const token = state.userAuthorization.signInData.token;
-    await deleteUser(token, id);
+    return await deleteUser(token, id);
   }
 );
 
@@ -28,7 +28,7 @@ export const updateUserThunk = createAsyncThunk(
     const state = getState() as RootState;
     const token = state.userAuthorization.signInData.token;
     const id = state.userAuthorization.signUpData.id;
-    await updateUser(token, id, body);
+    return await updateUser(token, id, body);
   }
 );
 

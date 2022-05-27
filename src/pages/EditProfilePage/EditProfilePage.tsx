@@ -20,16 +20,14 @@ function EditProfilePage() {
   const [form] = Form.useForm();
   const { tailLayout, layout } = formProperties;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateSignUpData = useApiRequestWithUIMessages<SignUpData, any>({
+  const updateSignUpData = useApiRequestWithUIMessages<SignUpData>({
     messageKey: MessageKeys.updateProfile,
     thunk: updateUserThunk,
     showOkMessage: true
   });
 
   const deleteConfirmQuestion = t('modals.delete-user');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deleteUserRequest = useApiRequestWithUIMessages<string, any>({
+  const deleteUserRequest = useApiRequestWithUIMessages<string>({
     messageKey: MessageKeys.profile,
     thunk: deleteUserThunk,
     showOkMessage: true,
@@ -87,13 +85,11 @@ function EditProfilePage() {
 }
 
 const Container = styled.div`
-   {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
 const FormPageContainer = styled.div`
