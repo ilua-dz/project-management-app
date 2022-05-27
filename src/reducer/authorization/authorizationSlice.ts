@@ -82,5 +82,6 @@ export const getApiSignInStatus = (state: RootState) => state.userAuthorization.
 export const getApiSignUpStatus = (state: RootState) => state.userAuthorization.signUpStatus;
 export const getApiSignInError = (state: RootState) => state.userAuthorization.signInError;
 export const getApiSignUpError = (state: RootState) => state.userAuthorization.signUpError;
+export const getApiUserId = (state: RootState) => state.userAuthorization.signUpData.id;
 
 export default userAuthorizationSlice.reducer;

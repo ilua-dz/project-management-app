@@ -1,6 +1,5 @@
-import { Modal, Form, Input, Tag } from 'antd';
+import { Modal, Form, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import StyledBoardTag from '../../components/styled/StyledBoardTag';
 
 export interface UpdateBoardsValues {
@@ -85,12 +84,14 @@ const UpdateBoardsModal = ({
               rules={getValidationRules('title')}>
               {getInput()}
             </Form.Item>
-            <Form.Item
-              name="description"
-              label={getText('input-description')}
-              rules={getValidationRules('description')}>
-              {getInput()}
-            </Form.Item>
+            {target !== 'column' && (
+              <Form.Item
+                name="description"
+                label={getText('input-description')}
+                rules={getValidationRules('description')}>
+                {getInput()}
+              </Form.Item>
+            )}
           </Form>
         </Modal>
       )}

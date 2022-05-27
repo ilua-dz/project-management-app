@@ -24,8 +24,13 @@ export async function getTask(token: string, boardId: string, columnId: string, 
   return data;
 }
 
-export async function createTask(token: string, boardId: string, columnId: string, task: ITask) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}/tasks}`;
+export async function createTask(
+  token: string,
+  boardId: string,
+  columnId: string,
+  task: Pick<ITask, 'description' | 'title' | 'userId'>
+) {
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}/tasks`;
   const options = {
     method: Methods.post,
     headers: {
@@ -33,7 +38,7 @@ export async function createTask(token: string, boardId: string, columnId: strin
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ task })
+    body: JSON.stringify({ ...task })
   } as Partial<RequestInit>;
   const data = await requestAPI<ITask>({ URL, options });
   return data;
