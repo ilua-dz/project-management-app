@@ -4,7 +4,6 @@ import { Card } from 'antd';
 import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { useCallback } from 'react';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
@@ -12,25 +11,17 @@ import { getAppBoardsActiveId } from '../../reducer/boards/userBoardsSlice';
 import Task from './Task/Task';
 const { Paragraph } = Typography;
 
-interface IColumnProps {
-  data: IColumn;
-}
-
-function ColumnItem(props: IColumnProps) {
-  const { title, order, id } = props.data;
+function ColumnItem({title, order, id, tasks}: IColumn) {
   const boardId = useAppSelector(getAppBoardsActiveId);
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
-  const updateColumn = useCallback((title: string) => {
+  const updateColumnHandler = (title: string) => {
     const body = { title, order };
     const columnId = id;
     dispatch(updateColumnThunk({ body, columnId, boardId }));
-  }, []);
-  const deleteColumn = useCallback(
-    CallConfirm(confirmMessage, () => dispatch(deleteColumnThunk({ columnId: id, boardId }))),
-    [confirmMessage]
-  );
+  };
+  const deleteButtonHandler = CallConfirm(confirmMessage, () => dispatch(deleteColumnThunk({ columnId: id, boardId })));
 
   return (
     <div className="site-card-border-less-wrapper">
@@ -41,18 +32,18 @@ function ColumnItem(props: IColumnProps) {
             <Paragraph
               editable={{
                 triggerType: ['text'],
-                onChange: updateColumn
+                onChange: updateColumnHandler
               }}>
               {title}
             </Paragraph>
             <Tooltip title={t('tooltips.delete')}>
-              <Button shape="circle" icon={<CloseOutlined />} onClick={deleteColumn} />
+              <Button shape="circle" icon={<CloseOutlined />} onClick={deleteButtonHandler} />
             </Tooltip>
           </TitleContainer>
         }
         bordered={false}>
         <CardsContainer>
-          {props.data.tasks?.map((taskData) => (
+          {tasks?.map((taskData) => (
             <Task key={taskData.id} {...taskData} />
           ))}
           ;

@@ -1,3 +1,4 @@
+import { BoardGetRequest } from './../../API/boards';
 import { RootState } from '../../app/store';
 import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import {
@@ -10,6 +11,9 @@ import {
   BoardDeleteRequest,
   BoardCreateRequest
 } from '../../API/boards';
+import { SerializedError } from '@reduxjs/toolkit';
+import { WritableDraft } from 'immer/dist/internal';
+import applyToken from '../applyToken';
 
 export interface UserBoardsState {
   boards: IBoard[];
@@ -31,11 +35,9 @@ const initialState: UserBoardsState = {
 
 export const deleteBoardThunk = createAsyncThunk(
   'boards/deleteBoard',
-  async ({ id }: Omit<BoardDeleteRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
+  async ({ id }: Omit<BoardDeleteRequest, 'token'>, { dispatch, rejectWithValue }) => {
     try {
-      const state = getState() as RootState;
-      const token = state.userAuthorization.signInData.token;
-      await deleteBoard({ token, id });
+      await applyToken<BoardDeleteRequest, ReturnType<typeof deleteBoard>>(deleteBoard, { token: '', id });
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be deleted`);
@@ -47,12 +49,10 @@ export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
   async (
     { title, id }: Omit<BoardUpdateRequest, 'token'>,
-    { dispatch, getState, rejectWithValue }
+    { dispatch, rejectWithValue }
   ) => {
     try {
-      const state = getState() as RootState;
-      const token = state.userAuthorization.signInData.token;
-      await updateBoard({ token, title, id });
+      await applyToken<BoardUpdateRequest, ReturnType<typeof updateBoard>>(updateBoard, { token: '', title, id });
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be updated`);
@@ -62,11 +62,9 @@ export const updateBoardThunk = createAsyncThunk(
 
 export const getBoardThunk = createAsyncThunk(
   'boards/getBoard',
-  async ({ id }: BoardRequestData, { getState, rejectWithValue }) => {
+  async ({ id }: BoardRequestData, { rejectWithValue }) => {
     try {
-      const state = getState() as RootState;
-      const token = state.userAuthorization.signInData.token;
-      return await getBoard({ token, id });
+      return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(getBoard, { token: '', id });
     } catch {
       rejectWithValue(`Boards can't be loaded`);
     }
@@ -77,9 +75,7 @@ export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
   async ({ title }: Omit<BoardCreateRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
     try {
-      const state = getState() as RootState;
-      const token = state.userAuthorization.signInData.token;
-      await createBoard({ token, title });
+      await applyToken<BoardCreateRequest, ReturnType<typeof createBoard>>(createBoard, { token: '', title });
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be created`);
@@ -100,17 +96,11 @@ export const userBoardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message as string;
-    });
+    builder.addCase(createBoardThunk.rejected, setBoardError);
 
-    builder.addCase(updateBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message as string;
-    });
+    builder.addCase(updateBoardThunk.rejected, setBoardError);
 
-    builder.addCase(deleteBoardThunk.rejected, (state, { error }) => {
-      state.boardsError = error.message as string;
-    });
+    builder.addCase(deleteBoardThunk.rejected, setBoardError);
 
     builder
       .addCase(getBoardThunk.pending, (state) => {
@@ -131,6 +121,10 @@ export const userBoardsSlice = createSlice({
     });
   }
 });
+
+function setBoardError(state: WritableDraft<UserBoardsState>, {error}: {error: SerializedError}){
+  state.boardsError = error.message as string;
+}
 
 export const getAppBoards = (state: RootState) => state.userBoards.boards;
 export const getAppBoardsError = (state: RootState) => state.userBoards.boardsError;

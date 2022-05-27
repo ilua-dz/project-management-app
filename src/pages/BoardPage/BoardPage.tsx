@@ -22,8 +22,8 @@ function MainPage() {
   const isEmpty = !!activeBoardColumnsData && !activeBoardColumnsData.columns;
 
   useEffect(() => {
-    (async () => {
-      await columnsRequest();
+    (() => {
+      columnsRequest();
     })();
   }, []);
 
@@ -32,7 +32,7 @@ function MainPage() {
       <PageTitle textLink="titles.board-page" icon={<AppstoreOutlined />} />
       <Container>
         {activeBoardColumnsData?.columns?.map((columnData) => (
-          <ColumnItem key={columnData.id} data={columnData} />
+          <ColumnItem key={columnData.id} {...columnData} />
         ))}
         {isEmpty && <CentredEmpty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </Container>
