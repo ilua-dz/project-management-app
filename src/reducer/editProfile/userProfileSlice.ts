@@ -43,7 +43,6 @@ export const userProfileSlice = createSlice({
 
     builder.addCase(updateUserThunk.rejected, (state, { error }) => {
       state.profileUpdateError = error.message as string;
-      console.log(state.profileUpdateError);
     });
   }
 });
