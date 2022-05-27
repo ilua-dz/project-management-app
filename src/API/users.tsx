@@ -20,8 +20,7 @@ export async function deleteUser(token: string, id: string) {
   const options = {
     method: Methods.delete,
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Authorization: `Bearer ${token}`
     }
   } as Partial<RequestInit>;
   const data = await requestAPI<IUserData>({ URL, options });

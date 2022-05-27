@@ -1,16 +1,32 @@
 import { requestAPI, Methods } from './dependencies';
 import { boardsBaseURL } from './boards';
 import { ITask } from './tasks';
+import { SetOptional } from 'type-fest';
 
 export interface IColumn {
-  id?: string;
+  id: string;
   title: string;
   order: number;
-  tasks: ITask[];
+  tasks?: ITask[];
 }
 
-export async function getColumn(token: string, boardId: string, columnId?: string) {
-  const URL = `${boardsBaseURL}${boardId}/columns${columnId ? `/${columnId}` : ''}`;
+export interface IColumnRequest {
+  boardId: string;
+  columnId: string;
+  body: {
+    title: string;
+    order: number;
+  };
+  token: string;
+}
+
+export type ColumnGetRequest = SetOptional<Omit<IColumnRequest, 'body'>, 'columnId'>;
+export type ColumnCreateRequest = Omit<IColumnRequest, 'columnId'>;
+export type ColumnDeleteRequest = Omit<IColumnRequest, 'body'>;
+export type ColumnUpdateRequest = IColumnRequest;
+
+export async function getColumn({ boardId, columnId, token }: ColumnGetRequest) {
+  const URL = `${boardsBaseURL}/${boardId}/columns${columnId ? `/${columnId}` : ''}`;
   const options = {
     method: Methods.get,
     headers: {
@@ -22,8 +38,8 @@ export async function getColumn(token: string, boardId: string, columnId?: strin
   return data;
 }
 
-export async function createColumn(token: string, boardId: string, column: IColumn) {
-  const URL = `${boardsBaseURL}${boardId}/columns}`;
+export async function createColumn({ token, boardId, body }: ColumnCreateRequest) {
+  const URL = `${boardsBaseURL}/${boardId}/columns}`;
   const options = {
     method: Methods.post,
     headers: {
@@ -31,32 +47,26 @@ export async function createColumn(token: string, boardId: string, column: IColu
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ column })
+    body: JSON.stringify(body)
   } as Partial<RequestInit>;
   const data = await requestAPI<IColumn>({ URL, options });
   return data;
 }
 
-export async function deleteColumn(token: string, boardId: string, columnId: string) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
+export async function deleteColumn({ columnId, boardId, token }: ColumnDeleteRequest) {
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.delete,
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json'
+      Authorization: `Bearer ${token}`
     }
   } as Partial<RequestInit>;
   const data = await requestAPI({ URL, options });
   return data;
 }
 
-export async function updateColumn(
-  token: string,
-  boardId: string,
-  columnId: string,
-  column: IColumn
-) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}`;
+export async function updateColumn({ token, boardId, columnId, body }: ColumnUpdateRequest) {
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}`;
   const options = {
     method: Methods.put,
     headers: {
@@ -64,7 +74,7 @@ export async function updateColumn(
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(column)
+    body: JSON.stringify(body)
   } as Partial<RequestInit>;
   const data = await requestAPI<IColumn>({ URL, options });
   return data;

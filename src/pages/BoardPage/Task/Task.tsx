@@ -12,8 +12,9 @@ import EditTaskModal from './EditTaskModal';
 type TaskType = Required<ITask>;
 
 function Task(props: TaskType) {
+  const { description, title, id, boardId, columnId, userId } = props;
   const token = useAppSelector(getApiSignInToken);
-  const { description, title, id, boardId, columnId } = props;
+
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 
@@ -31,11 +32,22 @@ function Task(props: TaskType) {
   }
 
   function deleteTaskRequest() {
-    deleteTask(token, boardId, columnId, id);
+    deleteTask({ token, boardId, columnId, taskId: id });
   }
 
   function updateTaskRequest(newText: string) {
-    updateTask(token, boardId, columnId, id, { ...props, description: newText });
+    updateTask({
+      token,
+      boardId,
+      columnId,
+      taskId: id,
+      body: {
+        title,
+        order: props.order.toString(),
+        description: newText,
+        userID: userId
+      }
+    });
   }
 
   const deleteTaskTitle = `${t('modals.delete-task')} ${title}?`;

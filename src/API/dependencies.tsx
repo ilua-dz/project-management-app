@@ -17,7 +17,7 @@ export enum Methods {
   delete = 'DELETE'
 }
 
-export const baseURL = `https://pm-app-serv.herokuapp.com/`;
+export const baseURL = `https://pm-app-serv-1.herokuapp.com/`;
 
 export async function requestAPI<T>({
   URL,
