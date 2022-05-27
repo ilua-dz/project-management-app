@@ -5,18 +5,20 @@ import { SetOptional } from 'type-fest';
 export interface IBoard {
   id: string;
   title: string;
+  description: string;
   columns?: IColumn[];
 }
 
 export interface IBoardRequest {
   id: string;
   title: string;
+  description: string;
   token: string;
 }
 
 export type BoardUpdateRequest = IBoardRequest;
-export type BoardGetRequest = SetOptional<Omit<IBoardRequest, 'title'>, 'id'>;
-export type BoardDeleteRequest = Omit<IBoardRequest, 'title'>;
+export type BoardGetRequest = SetOptional<Omit<IBoardRequest, 'title' | 'description'>, 'id'>;
+export type BoardDeleteRequest = Omit<IBoardRequest, 'title' | 'description'>;
 export type BoardCreateRequest = Omit<IBoardRequest, 'id'>;
 
 export const boardsBaseURL = `${baseURL}boards`;
@@ -34,7 +36,7 @@ export async function getBoard({ id, token }: BoardGetRequest) {
   return data;
 }
 
-export async function createBoard({ token, title }: BoardCreateRequest) {
+export async function createBoard({ token, title, description }: BoardCreateRequest) {
   const URL = boardsBaseURL;
   const options = {
     method: Methods.post,
@@ -43,7 +45,7 @@ export async function createBoard({ token, title }: BoardCreateRequest) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ title })
+    body: JSON.stringify({ title, description })
   } as Partial<RequestInit>;
   const data = await requestAPI<IBoard>({ URL, options });
   return data;
@@ -61,7 +63,7 @@ export async function deleteBoard({ id, token }: BoardDeleteRequest) {
   return data;
 }
 
-export async function updateBoard({ token, title, id }: BoardUpdateRequest) {
+export async function updateBoard({ token, title, description, id }: BoardUpdateRequest) {
   const URL = `${boardsBaseURL}/${id}`;
   const options = {
     method: Methods.put,
@@ -70,7 +72,7 @@ export async function updateBoard({ token, title, id }: BoardUpdateRequest) {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ title })
+    body: JSON.stringify({ title, description })
   } as Partial<RequestInit>;
   const data = await requestAPI<IBoard>({ URL, options });
   return data;

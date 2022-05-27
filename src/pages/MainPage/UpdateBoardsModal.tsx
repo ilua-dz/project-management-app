@@ -1,15 +1,17 @@
 import { Modal, Form, Input, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import StyledBoardTag from '../../components/styled/StyledBoardTag';
 
 export interface UpdateBoardsValues {
   title: string;
+  description: string;
 }
 
 interface UpdateBoardsProps {
   actionType: 'update' | 'create';
   target?: 'board' | 'column';
-  boardTitle?: string;
+  initialValues?: { title: string; description: string };
   visible: boolean;
   onOk: (values: UpdateBoardsValues) => void;
   onCancel: () => void;
@@ -21,15 +23,16 @@ const UpdateBoardsModal = ({
   onOk,
   onCancel,
   target = 'board',
-  boardTitle = ''
+  initialValues = { title: '', description: '' }
 }: UpdateBoardsProps) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const { title } = initialValues;
 
-  const title = (
+  const modalHeader = (
     <div>
       <span>{t(`modals.${actionType}-${target}.title`)} </span>
-      {boardTitle && <StyledBoardTag>{boardTitle}</StyledBoardTag>}
+      {title && <StyledBoardTag>{title}</StyledBoardTag>}
     </div>
   );
 
@@ -50,38 +53,43 @@ const UpdateBoardsModal = ({
     onCancel();
   }
 
-  function submitOnPressEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+  function submitOnPressEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.code === 'Enter') {
       submitData();
     }
   }
 
+  function getInput() {
+    return <Input.TextArea autoSize autoComplete="off" onKeyDown={submitOnPressEnter} />;
+  }
+
+  const getText = (key: string) => t(`modals.${actionType}-${target}.${key}`);
+
+  const getValidationRules = (key: string) => [
+    { required: true, message: getText(`validate-error-${key}`) }
+  ];
+
   return (
     <>
       {visible && (
         <Modal
-          {...{ visible, title }}
+          {...{ visible, title: modalHeader }}
           onCancel={closeModal}
-          okText={t(`modals.${actionType}-${target}.ok-text`)}
+          okText={getText('ok-text')}
           cancelText={t('modals.cancel')}
           onOk={submitData}>
-          <Form form={form} layout="vertical">
+          <Form {...{ form, initialValues }} layout="vertical">
             <Form.Item
-              initialValue={boardTitle}
               name="title"
-              label={t(`modals.${actionType}-${target}.input-title`)}
-              rules={[
-                { required: true, message: t(`modals.${actionType}-${target}.validate-error`) }
-              ]}>
-              <Input
-                autoComplete="off"
-                ref={(input) =>
-                  setTimeout(() => {
-                    input && input.focus();
-                  })
-                }
-                onKeyDown={submitOnPressEnter}
-              />
+              label={getText('input-title')}
+              rules={getValidationRules('title')}>
+              {getInput()}
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label={getText('input-description')}
+              rules={getValidationRules('description')}>
+              {getInput()}
             </Form.Item>
           </Form>
         </Modal>
@@ -89,9 +97,5 @@ const UpdateBoardsModal = ({
     </>
   );
 };
-
-const StyledBoardTag = styled(Tag).attrs({ color: 'success' })`
-  font-size: 1rem;
-`;
 
 export default UpdateBoardsModal;

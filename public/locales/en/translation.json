@@ -21,15 +21,19 @@
     "delete-board": "Do you want to delete",
     "delete-task": "Do you want to delete task",
     "update-board": {
-      "title": "Rename board",
-      "input-title": "New name",
-      "validate-error": "Please input new name!",
-      "ok-text": "Rename"
+      "title": "Update board",
+      "input-title": "Title",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
+      "ok-text": "OK"
     },
     "create-board": {
       "title": "New board",
       "input-title": "Title",
-      "validate-error": "Please input title!",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
       "ok-text": "Create"
     },
     "create-column": {

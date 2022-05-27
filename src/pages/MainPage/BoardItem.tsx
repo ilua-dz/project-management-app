@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import CallConfirm from '../../antd/confirmModal';
 import { IBoard } from '../../API/boards';
 import { useAppDispatch } from '../../app/hooks';
+import StyledBoardTag from '../../components/styled/StyledBoardTag';
 import Links from '../../enumerations/LinksEnum';
 import {
   deleteBoardThunk,
@@ -15,13 +16,9 @@ import {
 } from '../../reducer/boards/userBoardsSlice';
 import UpdateBoardsModal, { UpdateBoardsValues } from './UpdateBoardsModal';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
-interface BoardItemProps {
-  item: IBoard;
-}
-
-const BoardItem = ({ item }: BoardItemProps) => {
+const BoardItem = ({ id, title, description }: IBoard) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
@@ -35,17 +32,22 @@ const BoardItem = ({ item }: BoardItemProps) => {
     setIsUpdateModalVisible(true);
   }
 
-  function renameBoard({ title }: UpdateBoardsValues) {
-    dispatch(updateBoardThunk({ id: item.id, title }));
+  function renameBoard({ title, description }: UpdateBoardsValues) {
+    dispatch(updateBoardThunk({ id, title, description }));
     hideModal();
   }
 
-  const deleteConfirmQuestion = `${t('modals.delete-board')} ${item.title}?`;
-  const deleteItem = () => dispatch(deleteBoardThunk({ id: item.id }));
+  const deleteConfirmQuestion = (
+    <>
+      <span>{t('modals.delete-board')} </span>
+      <StyledBoardTag>{title}</StyledBoardTag>
+    </>
+  );
+  const deleteItem = () => dispatch(deleteBoardThunk({ id }));
 
   const goToBoardPage = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e.target as Element).classList.contains('ant-card-body')) {
-      dispatch(setUserActiveBoard(item.id));
+      dispatch(setUserActiveBoard(id));
       navigate(Links.boardPage);
     }
   };
@@ -53,6 +55,7 @@ const BoardItem = ({ item }: BoardItemProps) => {
   return (
     <List.Item>
       <Card
+        title={<StyledTitle level={4}>{title}</StyledTitle>}
         onClick={goToBoardPage}
         bodyStyle={cardBodyStyle}
         hoverable
@@ -60,14 +63,14 @@ const BoardItem = ({ item }: BoardItemProps) => {
           <EditOutlined key="edit" onClick={showModal} />,
           <DeleteOutlined key="delete" onClick={CallConfirm(deleteConfirmQuestion, deleteItem)} />
         ]}>
-        <StyledTitle level={4}>{item.title}</StyledTitle>
+        <Paragraph ellipsis={{ rows: 3, tooltip: description }}>{description}</Paragraph>
       </Card>
       <UpdateBoardsModal
         actionType="update"
         visible={isUpdateModalVisible}
         onCancel={hideModal}
         onOk={renameBoard}
-        boardTitle={item.title}
+        initialValues={{ title, description }}
       />
     </List.Item>
   );
@@ -78,7 +81,7 @@ const StyledTitle = styled(Title).attrs({ style: { margin: '0' } })`
 `;
 
 const cardBodyStyle: CSSProperties = {
-  minHeight: '9rem',
+  minHeight: '8rem',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'

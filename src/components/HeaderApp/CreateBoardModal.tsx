@@ -10,8 +10,8 @@ interface IProps {
 function CreateBoardModal({ visible, closeModalFn: closeModal }: IProps) {
   const dispatch = useAppDispatch();
 
-  function dispatchCreateBoard({ title }: UpdateBoardsValues) {
-    dispatch(createBoardThunk({ title }));
+  function dispatchCreateBoard({ title, description }: UpdateBoardsValues) {
+    dispatch(createBoardThunk({ title, description }));
     closeModal();
   }
 

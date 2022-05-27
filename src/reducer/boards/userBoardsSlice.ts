@@ -46,13 +46,13 @@ export const deleteBoardThunk = createAsyncThunk(
 export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
   async (
-    { title, id }: Omit<BoardUpdateRequest, 'token'>,
+    { title, description, id }: Omit<BoardUpdateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
-      await updateBoard({ token, title, id });
+      await updateBoard({ token, title, id, description });
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be updated`);
@@ -75,11 +75,14 @@ export const getBoardThunk = createAsyncThunk(
 
 export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
-  async ({ title }: Omit<BoardCreateRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
+  async (
+    { title, description }: Omit<BoardCreateRequest, 'token'>,
+    { dispatch, getState, rejectWithValue }
+  ) => {
     try {
       const state = getState() as RootState;
       const token = state.userAuthorization.signInData.token;
-      await createBoard({ token, title });
+      await createBoard({ token, title, description });
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be created`);

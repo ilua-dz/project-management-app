@@ -21,15 +21,19 @@
     "delete-board": "Удалить доску",
     "delete-task": "Удалить задачу",
     "update-board": {
-      "title": "Переименование доски",
-      "input-title": "Новое имя",
-      "validate-error": "Введите имя!",
-      "ok-text": "Переименовать"
+      "title": "Редактирование доски",
+      "input-title": "Имя",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
+      "ok-text": "ОК"
     },
     "create-board": {
       "title": "Новая доска",
       "input-title": "Имя",
-      "validate-error": "Введите имя!",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
       "ok-text": "Создать"
     },
     "create-column": {

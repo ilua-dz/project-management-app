@@ -27,7 +27,7 @@ function MainPage() {
     boardsRequest({});
   }, []);
 
-  const renderBoardItem = useCallback((item: IBoard) => <BoardItem item={item} />, []);
+  const renderBoardItem = useCallback((item: IBoard) => <BoardItem {...item} />, []);
 
   return (
     <Container>
