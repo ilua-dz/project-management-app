@@ -13,7 +13,7 @@ import {
 } from '../../API/boards';
 import { SerializedError } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import applyToken from '../applyToken';
+import applyToken from '../../API/applyToken';
 
 export interface UserBoardsState {
   boards: IBoard[];
@@ -35,9 +35,16 @@ const initialState: UserBoardsState = {
 
 export const deleteBoardThunk = createAsyncThunk(
   'boards/deleteBoard',
-  async ({ id }: Omit<BoardDeleteRequest, 'token'>, { dispatch, rejectWithValue }) => {
+  async ({ id }: Omit<BoardDeleteRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
     try {
-      await applyToken<BoardDeleteRequest, ReturnType<typeof deleteBoard>>(deleteBoard, { token: '', id });
+      await applyToken<BoardDeleteRequest, ReturnType<typeof deleteBoard>>(
+        deleteBoard,
+        {
+          token: '',
+          id
+        },
+        getState() as RootState
+      );
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be deleted`);
@@ -49,10 +56,18 @@ export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
   async (
     { title, id }: Omit<BoardUpdateRequest, 'token'>,
-    { dispatch, rejectWithValue }
+    { dispatch, getState, rejectWithValue }
   ) => {
     try {
-      await applyToken<BoardUpdateRequest, ReturnType<typeof updateBoard>>(updateBoard, { token: '', title, id });
+      await applyToken<BoardUpdateRequest, ReturnType<typeof updateBoard>>(
+        updateBoard,
+        {
+          token: '',
+          title,
+          id
+        },
+        getState() as RootState
+      );
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be updated`);
@@ -62,9 +77,16 @@ export const updateBoardThunk = createAsyncThunk(
 
 export const getBoardThunk = createAsyncThunk(
   'boards/getBoard',
-  async ({ id }: BoardRequestData, { rejectWithValue }) => {
+  async ({ id }: BoardRequestData, { rejectWithValue, getState }) => {
     try {
-      return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(getBoard, { token: '', id });
+      return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(
+        getBoard,
+        {
+          token: '',
+          id
+        },
+        getState() as RootState
+      );
     } catch {
       rejectWithValue(`Boards can't be loaded`);
     }
@@ -75,7 +97,14 @@ export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
   async ({ title }: Omit<BoardCreateRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
     try {
-      await applyToken<BoardCreateRequest, ReturnType<typeof createBoard>>(createBoard, { token: '', title });
+      await applyToken<BoardCreateRequest, ReturnType<typeof createBoard>>(
+        createBoard,
+        {
+          token: '',
+          title
+        },
+        getState() as RootState
+      );
       dispatch(getBoardThunk({}));
     } catch {
       rejectWithValue(`Board can't be created`);
@@ -122,7 +151,10 @@ export const userBoardsSlice = createSlice({
   }
 });
 
-function setBoardError(state: WritableDraft<UserBoardsState>, {error}: {error: SerializedError}){
+function setBoardError(
+  state: WritableDraft<UserBoardsState>,
+  { error }: { error: SerializedError }
+) {
   state.boardsError = error.message as string;
 }
 

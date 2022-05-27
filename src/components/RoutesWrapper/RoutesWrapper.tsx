@@ -25,7 +25,9 @@ function RoutesWrapper() {
         />
         <Route path={Links.profilePage} element={<RequireAuth page={<EditProfilePage />} />} />
         <Route path={Links.mainPage} element={<RequireAuth page={<MainPage />} />} />
-        <Route path={Links.boardPage} element={<RequireAuth page={<BoardPage />} />} />
+        <Route path={Links.boardPage}>
+          <Route path=":id" element={<RequireAuth page={<BoardPage />} />} />
+        </Route>
       </Route>
       <Route path="*" element={<LayoutApp />}>
         <Route path="*" element={<ErrorPage />} />

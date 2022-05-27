@@ -11,7 +11,7 @@ import { getAppBoardsActiveId } from '../../reducer/boards/userBoardsSlice';
 import Task from './Task/Task';
 const { Paragraph } = Typography;
 
-function ColumnItem({title, order, id, tasks}: IColumn) {
+function ColumnItem({ title, order, id, tasks }: IColumn) {
   const boardId = useAppSelector(getAppBoardsActiveId);
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
@@ -21,7 +21,9 @@ function ColumnItem({title, order, id, tasks}: IColumn) {
     const columnId = id;
     dispatch(updateColumnThunk({ body, columnId, boardId }));
   };
-  const deleteButtonHandler = CallConfirm(confirmMessage, () => dispatch(deleteColumnThunk({ columnId: id, boardId })));
+  const deleteButtonHandler = CallConfirm(confirmMessage, () =>
+    dispatch(deleteColumnThunk({ columnId: id, boardId }))
+  );
 
   return (
     <div className="site-card-border-less-wrapper">

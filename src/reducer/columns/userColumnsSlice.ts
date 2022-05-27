@@ -2,10 +2,10 @@ import { taskDeleteRequest } from './../../API/tasks';
 import { getBoard, IBoard, BoardGetRequest } from './../../API/boards';
 import { ColumnDeleteRequest, ColumnUpdateRequest, ColumnCreateRequest } from '../../API/columns';
 import { RootState } from '../../app/store';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { updateColumn, createColumn, deleteColumn } from '../../API/columns';
 import { deleteTask } from '../../API/tasks';
-import applyToken from '../applyToken';
+import applyToken from '../../API/applyToken';
 import { WritableDraft } from 'immer/dist/internal';
 import { SerializedError } from '@reduxjs/toolkit';
 
@@ -26,7 +26,14 @@ export const getActiveBoardColumnsDataThunk = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const id = state.userBoards.activeBoardId;
-      return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(getBoard, { token: '', id });
+      return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(
+        getBoard,
+        {
+          token: '',
+          id
+        },
+        getState() as RootState
+      );
     } catch {
       rejectWithValue(`Column can't be deleted`);
     }
@@ -41,16 +48,35 @@ export const deleteColumnThunk = createAsyncThunk(
   ) => {
     try {
       const state = getState() as RootState;
-      const columns = state.userColumns.activeBoardColumnsData?.columns;
-      for(const column of columns!){
+      const columns = state.userColumns.activeBoardColumnsData?.columns || [];
+      for (const column of columns) {
         if (column.id === columnId) {
           const tasks = column.tasks;
-          tasks?.forEach((task) => applyToken<taskDeleteRequest, void>(deleteTask, {token: '', boardId, columnId, taskId: task.id}));
+          tasks?.forEach((task) =>
+            applyToken<taskDeleteRequest, void>(
+              deleteTask,
+              {
+                token: '',
+                boardId,
+                columnId,
+                taskId: task.id
+              },
+              getState() as RootState
+            )
+          );
         }
         break;
       }
 
-      await applyToken<ColumnDeleteRequest, ReturnType<typeof deleteColumn>>(deleteColumn, {boardId, columnId, token: ''});
+      await applyToken<ColumnDeleteRequest, ReturnType<typeof deleteColumn>>(
+        deleteColumn,
+        {
+          boardId,
+          columnId,
+          token: ''
+        },
+        getState() as RootState
+      );
       dispatch(getActiveBoardColumnsDataThunk());
     } catch {
       rejectWithValue(`Column can't be deleted`);
@@ -62,10 +88,19 @@ export const updateColumnThunk = createAsyncThunk(
   'columns/updateColumn',
   async (
     { boardId, columnId, body }: Omit<ColumnUpdateRequest, 'token'>,
-    { dispatch, rejectWithValue }
+    { dispatch, getState, rejectWithValue }
   ) => {
     try {
-      await applyToken<ColumnUpdateRequest, ReturnType<typeof updateColumn>>(updateColumn, { boardId, columnId, body, token: '' });
+      await applyToken<ColumnUpdateRequest, ReturnType<typeof updateColumn>>(
+        updateColumn,
+        {
+          boardId,
+          columnId,
+          body,
+          token: ''
+        },
+        getState() as RootState
+      );
       dispatch(getActiveBoardColumnsDataThunk());
     } catch {
       rejectWithValue(`Column can't be updated`);
@@ -77,10 +112,18 @@ export const createColumnThunk = createAsyncThunk(
   'columns/createColumn',
   async (
     { boardId, body }: Omit<ColumnCreateRequest, 'token'>,
-    { dispatch, rejectWithValue }
+    { dispatch, getState, rejectWithValue }
   ) => {
     try {
-      await applyToken<ColumnCreateRequest, ReturnType<typeof createColumn>>(createColumn, { token: '', boardId, body });
+      await applyToken<ColumnCreateRequest, ReturnType<typeof createColumn>>(
+        createColumn,
+        {
+          token: '',
+          boardId,
+          body
+        },
+        getState() as RootState
+      );
       dispatch(getActiveBoardColumnsDataThunk());
     } catch {
       rejectWithValue(`Column can't be created`);
@@ -112,7 +155,10 @@ export const userBoardsSlice = createSlice({
   }
 });
 
-function setColumnError(state: WritableDraft<UserColumnsState>, {error}: {error: SerializedError}){
+function setColumnError(
+  state: WritableDraft<UserColumnsState>,
+  { error }: { error: SerializedError }
+) {
   state.columnsError = error.message as string;
 }
 
