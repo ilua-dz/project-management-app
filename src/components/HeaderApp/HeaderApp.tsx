@@ -11,6 +11,9 @@ import { Menu } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import CreateBoardModal from './CreateBoardModal';
 import CreateColumnModal from './CreateColumnModal';
+import { ReloadOutlined } from '@ant-design/icons';
+import { useBoardsRequest } from '../../pages/MainPage/MainPage';
+import { useColumnsRequest } from '../../pages/BoardPage/BoardPage';
 
 function getNavMenuItem(link: Links, title: string): ItemType {
   return {
@@ -20,10 +23,10 @@ function getNavMenuItem(link: Links, title: string): ItemType {
   };
 }
 
-const getNavMenuButton = (onClick: () => void, title: string): ItemType => {
+const getNavMenuButton = (onClick: () => void, title: string | JSX.Element): ItemType => {
   return {
     label: title,
-    key: title,
+    key: title.toString(),
     style: navItemStyle,
     onClick
   };
@@ -37,6 +40,12 @@ function HeaderApp() {
   const navigate = useNavigate();
   const [isCreateBoardModalVisible, setIsCreateBoardModalVisible] = useState<boolean>(false);
   const [isCreateColumnModalVisible, setIsCreateColumnModalVisible] = useState<boolean>(false);
+  const boardsRequest = useBoardsRequest();
+  const refreshColumns = useColumnsRequest();
+
+  function refreshBoards() {
+    boardsRequest({});
+  }
 
   function showCreateBoardModal() {
     setIsCreateBoardModalVisible(true);
@@ -71,9 +80,11 @@ function HeaderApp() {
     ];
     if (pathname === Links.mainPage) {
       items.push(getNavMenuButton(showCreateBoardModal, t('buttons.new-board')));
+      items.unshift(getNavMenuButton(refreshBoards, <ReloadOutlined />));
     }
     if (pathname.includes(Links.boardPage)) {
       items.push(getNavMenuButton(showCreateColumnModal, t('buttons.new-column')));
+      items.unshift(getNavMenuButton(refreshColumns, <ReloadOutlined />));
     }
     return items;
   };

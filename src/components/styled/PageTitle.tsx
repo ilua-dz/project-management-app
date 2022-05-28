@@ -1,18 +1,19 @@
 import { Tag } from 'antd';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 interface IProps {
-  textLink: string;
+  textLink?: string;
+  text?: string;
   icon?: ReactNode;
 }
 
-function PageTitle({ textLink, icon }: IProps) {
+function PageTitle({ textLink, text, icon }: IProps) {
   const { t } = useTranslation();
   return (
     <StyledTitleTag color="blue" icon={icon}>
-      {t(textLink)}
+      {textLink ? t(textLink) : text}
     </StyledTitleTag>
   );
 }

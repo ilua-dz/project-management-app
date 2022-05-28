@@ -9,7 +9,7 @@ export interface UpdateBoardsValues {
 
 interface UpdateBoardsProps {
   actionType: 'update' | 'create';
-  target?: 'board' | 'column';
+  target?: 'board' | 'column' | 'task';
   initialValues?: { title: string; description: string };
   visible: boolean;
   onOk: (values: UpdateBoardsValues) => void;
@@ -52,14 +52,10 @@ const UpdateBoardsModal = ({
     onCancel();
   }
 
-  function submitOnPressEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function submitOnPressEnter(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.code === 'Enter') {
       submitData();
     }
-  }
-
-  function getInput() {
-    return <Input.TextArea autoSize autoComplete="off" onKeyDown={submitOnPressEnter} />;
   }
 
   const getText = (key: string) => t(`modals.${actionType}-${target}.${key}`);
@@ -82,14 +78,14 @@ const UpdateBoardsModal = ({
               name="title"
               label={getText('input-title')}
               rules={getValidationRules('title')}>
-              {getInput()}
+              <Input onKeyDown={submitOnPressEnter} autoComplete="off" />
             </Form.Item>
             {target !== 'column' && (
               <Form.Item
                 name="description"
                 label={getText('input-description')}
                 rules={getValidationRules('description')}>
-                {getInput()}
+                <Input.TextArea autoSize autoComplete="off" />
               </Form.Item>
             )}
           </Form>

@@ -13,23 +13,25 @@ import {
   getAppActiveBoardColumnsData
 } from '../../reducer/columns/userColumnsSlice';
 
-function BoardPage() {
-  const activeBoardColumnsData = useAppSelector(getAppActiveBoardColumnsData);
-  const columnsRequest = useApiRequestWithUIMessages<void, IBoard | IBoard[]>({
+export function useColumnsRequest() {
+  return useApiRequestWithUIMessages<void, IBoard | IBoard[]>({
     messageKey: MessageKeys.board,
     thunk: getActiveBoardColumnsDataThunk
   });
+}
+
+function BoardPage() {
+  const activeBoardColumnsData = useAppSelector(getAppActiveBoardColumnsData);
+  const columnsRequest = useColumnsRequest();
   const isEmpty = !!activeBoardColumnsData && !activeBoardColumnsData.columns;
 
   useEffect(() => {
-    (() => {
-      columnsRequest();
-    })();
+    columnsRequest();
   }, []);
 
   return (
     <>
-      <PageTitle textLink="titles.board-page" icon={<AppstoreOutlined />} />
+      <PageTitle text={activeBoardColumnsData?.title} icon={<AppstoreOutlined />} />
       <Container>
         {activeBoardColumnsData?.columns?.map((columnData) => (
           <ColumnItem key={columnData.id} {...columnData} />

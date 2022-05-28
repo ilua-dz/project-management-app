@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ITask } from '../../../API/tasks';
-import { useAppDispatch } from '../../../app/hooks';
+import InvisibleInput from '../../../components/styled/InvisibleInput';
 import Colors from '../../../enumerations/Colors';
 import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
-import { getActiveBoardColumnsDataThunk } from '../../../reducer/columns/userColumnsSlice';
 
 interface IProps extends ITask {
   visible: boolean;
@@ -39,7 +38,7 @@ function EditTaskModal({ title, description, visible, closeAction, okAction }: I
     closeAction();
   }
 
-  function updateTitle(e: React.ChangeEvent<HTMLInputElement>) {
+  function updateTitle(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setEditableTitle(e.target.value);
   }
 
@@ -53,7 +52,7 @@ function EditTaskModal({ title, description, visible, closeAction, okAction }: I
     <Modal
       destroyOnClose
       {...{ visible, onCancel }}
-      title={<StyledInput onChange={updateTitle} value={editableTitle} />}
+      title={<InvisibleInput onChange={updateTitle} value={editableTitle} />}
       bodyStyle={{ padding: '0 0.5rem' }}
       onOk={setNewDescription}
       maskClosable
@@ -73,17 +72,6 @@ function EditTaskModal({ title, description, visible, closeAction, okAction }: I
 const StyledArea = styled(Input.TextArea)`
   overflow: hidden;
   border: 1px solid transparent;
-
-  &:hover {
-    border: 1px solid ${Colors.primary};
-  }
-`;
-
-const StyledInput = styled(Input)`
-  border: 1px solid transparent;
-  font-size: 1.5rem;
-  font-weight: 600;
-  width: 90%;
 
   &:hover {
     border: 1px solid ${Colors.primary};

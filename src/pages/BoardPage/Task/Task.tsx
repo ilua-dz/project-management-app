@@ -6,11 +6,10 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CallConfirm from '../../../antd/confirmModal';
 import { deleteTask, ITask, updateTask } from '../../../API/tasks';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../app/hooks';
 import Colors from '../../../enumerations/Colors';
 import { getApiSignInToken } from '../../../reducer/authorization/authorizationSlice';
 import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
-import { getActiveBoardColumnsDataThunk } from '../../../reducer/columns/userColumnsSlice';
 import EditTaskModal from './EditTaskModal';
 
 const { Text } = Typography;
@@ -63,8 +62,8 @@ function Task(props: TaskType) {
   const deleteTaskTitle = `${t('modals.delete-task')} ${title}?`;
 
   function getDescription() {
-    return description.split('\n').map((line) => (
-      <Text key={line}>
+    return description.split('\n').map((line, idx) => (
+      <Text key={idx}>
         {line}
         <br />
       </Text>
@@ -98,6 +97,7 @@ const StyledTask = styled(Card)`
   border: #389e0d solid 1px;
   background-color: #ddfdd0;
   border-radius: 0.5rem;
+  cursor: pointer;
 
   & * {
     color: #1c5c00;

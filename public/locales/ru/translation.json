@@ -39,7 +39,15 @@
     "create-column": {
       "title": "Новая колонка",
       "input-title": "Имя",
-      "validate-error": "Введите имя!",
+      "validate-error-title": "Введите имя!",
+      "ok-text": "Создать"
+    },
+    "create-task": {
+      "title": "Новая задача",
+      "input-title": "Имя",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
       "ok-text": "Создать"
     }
   },
@@ -66,7 +74,8 @@
     "board-page": "Колонки"
   },
   "tooltips": {
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "create-task": "Добавить задачу"
   },
   "confirm": {
     "delete": "Подтвердите удаление"

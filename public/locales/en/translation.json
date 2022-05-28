@@ -39,7 +39,15 @@
     "create-column": {
       "title": "New column",
       "input-title": "Title",
-      "validate-error": "Please input title!",
+      "validate-error-title": "Please input title!",
+      "ok-text": "Create"
+    },
+    "create-task": {
+      "title": "New task",
+      "input-title": "Title",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
       "ok-text": "Create"
     }
   },
@@ -66,7 +74,8 @@
     "board-page": "Columns"
   },
   "tooltips": {
-    "delete": "Delete"
+    "delete": "Delete",
+    "create-task": "Add task"
   },
   "confirm": {
     "delete": "Confirm deletion"

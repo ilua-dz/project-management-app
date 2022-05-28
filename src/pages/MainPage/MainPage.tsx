@@ -15,13 +15,16 @@ import styled from 'styled-components';
 import { ListGridType } from 'antd/lib/list';
 import { MessageKeys } from '../../antd/messageProperties';
 
-function MainPage() {
-  const boards = useAppSelector(getAppBoards);
-
-  const boardsRequest = useApiRequestWithUIMessages<BoardRequestData, IBoard | IBoard[]>({
+export function useBoardsRequest() {
+  return useApiRequestWithUIMessages<BoardRequestData, IBoard | IBoard[]>({
     messageKey: MessageKeys.main,
     thunk: getBoardThunk
   });
+}
+
+function MainPage() {
+  const boards = useAppSelector(getAppBoards);
+  const boardsRequest = useBoardsRequest();
 
   useEffect(() => {
     boardsRequest({});
