@@ -5,10 +5,12 @@ import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
 import Task from './Task/Task';
 import { useParams } from 'react-router-dom';
+import { getApiUserId } from '../../reducer/authorization/authorizationSlice';
+import Colors from '../../enumerations/Colors';
 const { Paragraph } = Typography;
 
 function ColumnItem({ title, order, id, tasks }: IColumn) {
@@ -16,17 +18,20 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
+  const userId = useAppSelector(getApiUserId);
+
   const updateColumnHandler = (title: string) => {
     dispatch(updateColumnThunk({ title, order, columnId: id, boardId: `${boardId}` }));
   };
+
   const deleteButtonHandler = CallConfirm(confirmMessage, () =>
     dispatch(deleteColumnThunk({ columnId: id, boardId: `${boardId}` }))
   );
 
   return (
     <div className="site-card-border-less-wrapper">
-      <Card
-        style={{ maxHeight: 600, width: 350 }}
+      <StyledColumn
+        bodyStyle={{ padding: '0.5rem' }}
         title={
           <TitleContainer>
             <Paragraph
@@ -44,19 +49,31 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
         bordered={false}>
         <CardsContainer>
           {tasks?.map((taskData) => (
-            <Task key={taskData.id} {...taskData} />
+            <Task key={taskData.id} {...{ ...taskData, columnId: id, userId }} />
           ))}
         </CardsContainer>
-      </Card>
+      </StyledColumn>
     </div>
   );
 }
 
 const CardsContainer = styled.div`
   overflow-y: auto;
-  max-height: 300px;
-  padding: 10px 15px;
-  margin-right: 12px;
+  max-height: 69vh;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+`;
+
+const StyledColumn = styled(Card)`
+  width: calc(320px - 1rem);
+  border-radius: 0.5rem;
+  border: ${Colors.success} solid 1px;
+  background-color: ${Colors.column};
+
+  & .ant-card-head {
+    border-bottom-color: ${Colors.columnDivider};
+  }
 `;
 
 const TitleContainer = styled.div`

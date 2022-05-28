@@ -1,18 +1,24 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Card, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CallConfirm from '../../../antd/confirmModal';
 import { deleteTask, ITask, updateTask } from '../../../API/tasks';
 import { useAppSelector } from '../../../app/hooks';
+import Colors from '../../../enumerations/Colors';
 import { getApiSignInToken } from '../../../reducer/authorization/authorizationSlice';
 import EditTaskModal from './EditTaskModal';
 
-type TaskType = Required<ITask>;
+const { Text } = Typography;
+interface TaskType extends ITask {
+  columnId: string;
+}
 
 function Task(props: TaskType) {
-  const { description, title, id, boardId, columnId, userId } = props;
+  const { boardId } = useParams();
+  const { description, title, id, userId, columnId } = props;
   const token = useAppSelector(getApiSignInToken);
 
   const { t } = useTranslation();
@@ -32,25 +38,34 @@ function Task(props: TaskType) {
   }
 
   function deleteTaskRequest() {
-    deleteTask({ token, boardId, columnId, taskId: id });
+    deleteTask({ token, boardId: boardId as string, columnId, taskId: id });
   }
 
-  function updateTaskRequest(newText: string) {
-    updateTask({
+  async function updateTaskRequest(text: string, title: string) {
+    await updateTask({
       token,
-      boardId,
+      boardId: boardId as string,
       columnId,
       taskId: id,
       body: {
         title,
-        order: props.order.toString(),
-        description: newText,
-        userID: userId
+        order: props.order,
+        description: text,
+        userId
       }
     });
   }
 
   const deleteTaskTitle = `${t('modals.delete-task')} ${title}?`;
+
+  function getDescription() {
+    return description.split('\n').map((line) => (
+      <Text key={line}>
+        {line}
+        <br />
+      </Text>
+    ));
+  }
 
   return (
     <>
@@ -58,21 +73,27 @@ function Task(props: TaskType) {
         title={title}
         extra={<DeleteOutlined onClick={CallConfirm(deleteTaskTitle, deleteTaskRequest)} />}
         onClick={showEditModal}>
-        {description}
+        {getDescription()}
       </StyledTask>
       <EditTaskModal
         {...props}
         visible={isEditModalVisible}
-        cancelAction={hideEditModal}
+        closeAction={hideEditModal}
         okAction={updateTaskRequest}
       />
     </>
   );
 }
 
-const StyledTask = styled(Card).attrs({ hoverable: true })`
+const StyledTask = styled(Card)`
   padding: 0;
-  margin: 0.2rem;
+  border: #389e0d solid 1px;
+  background-color: #ddfdd0;
+  border-radius: 0.5rem;
+
+  & * {
+    color: #1c5c00;
+  }
 
   & .ant-card-body {
     padding: 0.5rem 1rem;
@@ -80,6 +101,7 @@ const StyledTask = styled(Card).attrs({ hoverable: true })`
 
   & .ant-card-head {
     min-height: unset;
+    border-bottom-color: ${Colors.columnDivider};
   }
 
   & .ant-card-head-wrapper,

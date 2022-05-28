@@ -8,8 +8,6 @@ export interface ITask {
   order: number;
   description: string;
   userId: string;
-  boardId: string;
-  columnId: string;
 }
 
 interface ITasksRequest {
@@ -19,9 +17,9 @@ interface ITasksRequest {
   taskId: string;
   body: {
     title: string;
-    order: string;
+    order: number;
     description: string;
-    userID: string;
+    userId: string;
   };
 }
 
@@ -76,7 +74,7 @@ export async function deleteTask({ token, boardId, columnId, taskId }: taskDelet
 }
 
 export async function updateTask({ token, boardId, columnId, taskId, body }: taskUpdateRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}/tasks/${taskId}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}/tasks/${taskId}`;
   const options = {
     method: Methods.put,
     headers: {
@@ -84,7 +82,7 @@ export async function updateTask({ token, boardId, columnId, taskId, body }: tas
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify({ ...{ ...body, boardId } })
   } as Partial<RequestInit>;
   const data = await requestAPI<ITask>({ URL, options });
   return data;

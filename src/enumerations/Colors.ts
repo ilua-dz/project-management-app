@@ -24,7 +24,9 @@ enum Colors {
   warningOutline = 'rgba(250, 173, 20, 0.2)',
   info = '#1890ff',
   tagBG = '#fafafa',
-  headerBG = '#001529'
+  headerBG = '#001529',
+  column = '#f8fff6',
+  columnDivider = '#a9c49d'
 }
 
 export default Colors;

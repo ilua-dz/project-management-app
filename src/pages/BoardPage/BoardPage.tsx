@@ -48,11 +48,9 @@ const Container = styled.div`
   display: flex;
   flex-wrap: nowrap;
   flex-grow: 1;
-  margin-top: 100px;
-  padding-top: 50px;
-  column-gap: 50px;
+  column-gap: 0.5rem;
   overflow-x: scroll;
-  padding: 0 30px;
+  padding: 0 0.5rem;
 `;
 
 export default BoardPage;
