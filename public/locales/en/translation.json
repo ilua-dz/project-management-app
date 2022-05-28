@@ -6,7 +6,9 @@
     "mainPage": "Main Page",
     "Submit": "Submit",
     "new-board": "New Board",
-    "new-column": "New Column"
+    "new-column": "New Column",
+    "profile": "Profile",
+    "delete-user": "Delete User"
   },
   "messages": {
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
@@ -14,7 +16,12 @@
     "sign-in-done": "Successful Sign In!",
     "sign-in-error": "Login or password is incorrect!",
     "-error": "Loading error!",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "profile-done": "User's been deleted!",
+    "profile-error": "User hasn't been deleted!",
+    "profile-update": "Are you sure?",
+    "updateProfile-done": "Information's been changed!",
+    "updateProfile-error": "This user already exists, change information!"
   },
   "modals": {
     "cancel": "Cancel",
@@ -49,12 +56,16 @@
       "validate-error-title": "Please input title!",
       "validate-error-description": "Please input description!",
       "ok-text": "Create"
-    }
+    },
+    "delete-user": "Do you want to delete User ?"
   },
   "labelOfForms": {
     "password": "Password",
     "name": "Name",
-    "login": "Login"
+    "login": "Login",
+    "newPassword": "New Password",
+    "newName": "New Name",
+    "newLogin": "New Login"
   },
   "messagesOfAuthForms": {
     "require": "It's required",
@@ -71,7 +82,8 @@
   },
   "titles": {
     "main-page": "Boards",
-    "board-page": "Columns"
+    "board-page": "Columns",
+    "title-update-profile": "Change your information..."
   },
   "tooltips": {
     "delete": "Delete",

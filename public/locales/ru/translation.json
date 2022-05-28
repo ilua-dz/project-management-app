@@ -6,7 +6,9 @@
     "mainPage": "Главная",
     "Submit": "Подтвердить",
     "new-board": "Новая доска",
-    "new-column": "Новая колонка"
+    "new-column": "Новая колонка",
+    "profile": "Профиль",
+    "delete-user": "Удалить пользователя"
   },
   "messages": {
     "sign-up-done": "Регистрация завершена. Войдите под своим именем",
@@ -14,7 +16,12 @@
     "sign-in-done": "Успешный вход в систему!",
     "sign-in-error": "Неправильное имя пользователя или пароль",
     "-error": "Ошибка загрузки!",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "profile-done": "Пользователь удален!",
+    "profile-error": "Пользователь  не удален!",
+    "profile-update": "Вы уверенны?",
+    "updateProfile-done": "Данные изменены!",
+    "updateProfile-error": "Пользователь с такими данными уже существует, измените данные!"
   },
   "modals": {
     "cancel": "Отмена",
@@ -49,12 +56,16 @@
       "validate-error-title": "Введите имя!",
       "validate-error-description": "Введите описание!",
       "ok-text": "Создать"
-    }
+    },
+    "delete-user": "Удалить пользователя?"
   },
   "labelOfForms": {
     "password": "Пароль",
     "name": "Имя",
-    "login": "Логин"
+    "login": "Логин",
+    "newPassword": "Новый пароль",
+    "newName": "Новое имя",
+    "newLogin": "Новый логин"
   },
   "messagesOfAuthForms": {
     "require": "Необходимо заполнить",
@@ -71,7 +82,8 @@
   },
   "titles": {
     "main-page": "Доски",
-    "board-page": "Колонки"
+    "board-page": "Колонки",
+    "title-update-profile": "Измени свои данные..."
   },
   "tooltips": {
     "delete": "Удалить",

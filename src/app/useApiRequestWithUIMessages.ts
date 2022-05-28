@@ -12,7 +12,7 @@ type RequestType<UserDataType, ResponseType> = {
   okAction?: () => void;
 };
 
-export function useApiRequestWithUIMessages<UserDataType, ResponseType>({
+export function useApiRequestWithUIMessages<UserDataType, ResponseType = object>({
   messageKey,
   thunk,
   showOkMessage = false,
