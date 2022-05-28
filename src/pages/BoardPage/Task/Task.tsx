@@ -1,14 +1,16 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Card, Typography } from 'antd';
+import { Card, Tooltip, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CallConfirm from '../../../antd/confirmModal';
 import { deleteTask, ITask, updateTask } from '../../../API/tasks';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import Colors from '../../../enumerations/Colors';
 import { getApiSignInToken } from '../../../reducer/authorization/authorizationSlice';
+import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
+import { getActiveBoardColumnsDataThunk } from '../../../reducer/columns/userColumnsSlice';
 import EditTaskModal from './EditTaskModal';
 
 const { Text } = Typography;
@@ -20,6 +22,7 @@ function Task(props: TaskType) {
   const { boardId } = useParams();
   const { description, title, id, userId, columnId } = props;
   const token = useAppSelector(getApiSignInToken);
+  const updateBoard = useUpdateActiveBoard();
 
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
@@ -37,8 +40,9 @@ function Task(props: TaskType) {
     setIsEditModalVisible(false);
   }
 
-  function deleteTaskRequest() {
-    deleteTask({ token, boardId: boardId as string, columnId, taskId: id });
+  async function deleteTaskRequest() {
+    await deleteTask({ token, boardId: boardId as string, columnId, taskId: id });
+    updateBoard();
   }
 
   async function updateTaskRequest(text: string, title: string) {
@@ -71,7 +75,11 @@ function Task(props: TaskType) {
     <>
       <StyledTask
         title={title}
-        extra={<DeleteOutlined onClick={CallConfirm(deleteTaskTitle, deleteTaskRequest)} />}
+        extra={
+          <Tooltip title={t('tooltips.delete')}>
+            <DeleteOutlined onClick={CallConfirm(deleteTaskTitle, deleteTaskRequest)} />
+          </Tooltip>
+        }
         onClick={showEditModal}>
         {getDescription()}
       </StyledTask>

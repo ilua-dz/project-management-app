@@ -1,3 +1,4 @@
+import { useAppDispatch } from './../../app/hooks';
 import { BoardGetRequest } from './../../API/boards';
 import { RootState } from '../../app/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -14,6 +15,7 @@ import {
 import { SerializedError } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import applyToken from '../../API/applyToken';
+import { getActiveBoardColumnsDataThunk } from '../columns/userColumnsSlice';
 
 export interface UserBoardsState {
   boards: IBoard[];
@@ -151,5 +153,13 @@ function setBoardError(
 
 export const getAppBoards = (state: RootState) => state.userBoards.boards;
 export const getAppBoardsLoading = (state: RootState) => state.userBoards.boardsLoading;
+
+export function useUpdateActiveBoard() {
+  const dispatch = useAppDispatch();
+
+  return async function () {
+    await dispatch(getActiveBoardColumnsDataThunk());
+  };
+}
 
 export default userBoardsSlice.reducer;

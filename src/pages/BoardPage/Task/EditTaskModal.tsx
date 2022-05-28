@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ITask } from '../../../API/tasks';
 import { useAppDispatch } from '../../../app/hooks';
 import Colors from '../../../enumerations/Colors';
+import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import { getActiveBoardColumnsDataThunk } from '../../../reducer/columns/userColumnsSlice';
 
 interface IProps extends ITask {
@@ -17,7 +18,7 @@ function EditTaskModal({ title, description, visible, closeAction, okAction }: I
   const [text, setText] = useState(description);
   const [editableTitle, setEditableTitle] = useState(title);
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const dispatch = useAppDispatch();
+  const updateBoard = useUpdateActiveBoard();
   const { t } = useTranslation();
 
   function highlightInput() {
@@ -44,7 +45,7 @@ function EditTaskModal({ title, description, visible, closeAction, okAction }: I
 
   async function setNewDescription() {
     await okAction(text, editableTitle);
-    dispatch(getActiveBoardColumnsDataThunk());
+    updateBoard();
     closeAction();
   }
 

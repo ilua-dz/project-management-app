@@ -62,7 +62,7 @@ export async function createTask(
 }
 
 export async function deleteTask({ token, boardId, columnId, taskId }: taskDeleteRequest) {
-  const URL = `${boardsBaseURL}${boardId}/columns/${columnId}/tasks/${taskId}`;
+  const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}/tasks/${taskId}`;
   const options = {
     method: Methods.delete,
     headers: {
