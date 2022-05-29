@@ -11,6 +11,10 @@ import Colors from '../../../enumerations/Colors';
 import { getApiSignInToken } from '../../../reducer/authorization/authorizationSlice';
 import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import EditTaskModal from './EditTaskModal';
+import { useDrag, useDrop } from 'react-dnd';
+import DragTypes from '../../../enumerations/DragTypes';
+import { updateColumnTaskThunk } from '../../../reducer/columns/userColumnsSlice';
+import { useAppDispatch } from '../../../app/hooks';
 
 const { Text } = Typography;
 interface TaskType extends ITask {
@@ -19,12 +23,40 @@ interface TaskType extends ITask {
 
 function Task(props: TaskType) {
   const { boardId } = useParams();
-  const { description, title, id, userId, columnId } = props;
+  const dispatch = useAppDispatch();
+  const { description, title, id, userId, columnId, order } = props;
   const token = useAppSelector(getApiSignInToken);
   const updateBoard = useUpdateActiveBoard();
-
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: DragTypes.card,
+      item: {id, columnId, title, description, userId},
+      collect: (monitor) => ({isDragging: monitor.isDragging()}),
+    })
+  );
+  const [, drop] = useDrop(() => ({
+    accept: DragTypes.card,
+    hover({id: draggableId, columnId, title, description, userId}:Omit<TaskType, 'order'>){
+      console.log('hovered', id, draggableId);
+      if(id !== draggableId){
+        const requestData = {
+          columnId,
+          taskId: draggableId,
+          boardId: `${boardId}`,
+          body:{
+            description,
+            title,
+            userId,
+            order
+          }
+        };
+        dispatch(updateColumnTaskThunk(requestData));
+      }
+    }
+  }));
+  const opacity = isDragging ? 0 : 1;
 
   function showEditModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (
@@ -69,9 +101,9 @@ function Task(props: TaskType) {
       </Text>
     ));
   }
-
+  
   return (
-    <>
+    <div ref={(node) => drag(drop(node))}>
       <StyledTask
         title={title}
         extra={
@@ -79,6 +111,7 @@ function Task(props: TaskType) {
             <DeleteOutlined onClick={CallConfirm(deleteTaskTitle, deleteTaskRequest)} />
           </Tooltip>
         }
+        opacity={opacity}
         onClick={showEditModal}>
         {getDescription()}
       </StyledTask>
@@ -88,17 +121,17 @@ function Task(props: TaskType) {
         closeAction={hideEditModal}
         okAction={updateTaskRequest}
       />
-    </>
+    </div>
   );
 }
 
-const StyledTask = styled(Card)`
+const StyledTask = styled(Card)<{opacity: number}>`
   padding: 0;
   border: #389e0d solid 1px;
   background-color: #ddfdd0;
   border-radius: 0.5rem;
   cursor: pointer;
-
+  opacity: ${props => props.opacity}
   & * {
     color: #1c5c00;
   }

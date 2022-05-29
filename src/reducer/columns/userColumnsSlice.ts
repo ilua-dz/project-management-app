@@ -1,4 +1,4 @@
-import { taskDeleteRequest } from './../../API/tasks';
+import { taskDeleteRequest, taskUpdateRequest, updateTask } from './../../API/tasks';
 import { getBoard, IBoard, BoardGetRequest } from './../../API/boards';
 import { ColumnDeleteRequest, ColumnUpdateRequest, ColumnCreateRequest } from '../../API/columns';
 import { RootState } from '../../app/store';
@@ -87,17 +87,14 @@ export const deleteColumnThunk = createAsyncThunk(
 export const updateColumnThunk = createAsyncThunk(
   'columns/updateColumn',
   async (
-    { boardId, columnId, title, order }: Omit<ColumnUpdateRequest, 'token'>,
+    requestData: Omit<ColumnUpdateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
       await applyToken<ColumnUpdateRequest, ReturnType<typeof updateColumn>>(
         updateColumn,
         {
-          boardId,
-          columnId,
-          title,
-          order,
+          ...requestData,
           token: ''
         },
         getState() as RootState
@@ -112,16 +109,15 @@ export const updateColumnThunk = createAsyncThunk(
 export const createColumnThunk = createAsyncThunk(
   'columns/createColumn',
   async (
-    { boardId, title }: Omit<ColumnCreateRequest, 'token'>,
+    requestData: Omit<ColumnCreateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
       await applyToken<ColumnCreateRequest, ReturnType<typeof createColumn>>(
         createColumn,
         {
+          ...requestData,
           token: '',
-          boardId,
-          title
         },
         getState() as RootState
       );
@@ -131,6 +127,26 @@ export const createColumnThunk = createAsyncThunk(
     }
   }
 );
+
+export const updateColumnTaskThunk = createAsyncThunk(
+  'columns/updateTask',
+  async (
+    requestData: Omit<taskUpdateRequest, 'token'>,
+    { dispatch, getState, rejectWithValue }
+  ) => {
+    try {
+      // await applyToken<taskUpdateRequest, ReturnType<typeof updateTask>>(
+      //   updateTask,
+      //   {
+      //     ...requestData,
+      //     token: '',
+      //   },
+      //   getState() as RootState
+      // );
+      // dispatch(getActiveBoardColumnsDataThunk());
+    } catch {
+      rejectWithValue(`Column task can't be updated`);
+  }});
 
 export const userBoardsSlice = createSlice({
   name: 'userBoards',
@@ -142,6 +158,8 @@ export const userBoardsSlice = createSlice({
     builder.addCase(updateColumnThunk.rejected, setColumnError);
 
     builder.addCase(deleteColumnThunk.rejected, setColumnError);
+
+    builder.addCase(updateColumnTaskThunk.rejected, setColumnError);
 
     builder
       .addCase(getActiveBoardColumnsDataThunk.pending, (state) => {

@@ -23,6 +23,7 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
   const userId = useAppSelector(getApiUserId);
   const [isCreateTaskModalVisible, setIsCreateTaskModalVisible] = useState(false);
 
+
   function closeCreateTaskModal() {
     setIsCreateTaskModalVisible(false);
   }

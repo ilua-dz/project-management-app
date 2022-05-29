@@ -35,13 +35,13 @@ const initialState: UserBoardsState = {
 
 export const deleteBoardThunk = createAsyncThunk(
   'boards/deleteBoard',
-  async ({ id }: Omit<BoardDeleteRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
+  async (requestData: Omit<BoardDeleteRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
     try {
       await applyToken<BoardDeleteRequest, ReturnType<typeof deleteBoard>>(
         deleteBoard,
         {
-          token: '',
-          id
+          ...requestData,
+          token: ''
         },
         getState() as RootState
       );
@@ -55,17 +55,15 @@ export const deleteBoardThunk = createAsyncThunk(
 export const updateBoardThunk = createAsyncThunk(
   'boards/updateBoard',
   async (
-    { title, description, id }: Omit<BoardUpdateRequest, 'token'>,
+    requestData: Omit<BoardUpdateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
       await applyToken<BoardUpdateRequest, ReturnType<typeof updateBoard>>(
         updateBoard,
         {
-          token: '',
-          description,
-          title,
-          id
+          ...requestData,
+          token: ''
         },
         getState() as RootState
       );
@@ -78,13 +76,13 @@ export const updateBoardThunk = createAsyncThunk(
 
 export const getBoardThunk = createAsyncThunk(
   'boards/getBoard',
-  async ({ id }: BoardRequestData, { rejectWithValue, getState }) => {
+  async (requestData: BoardRequestData, { rejectWithValue, getState }) => {
     try {
       return await applyToken<BoardGetRequest, ReturnType<typeof getBoard>>(
         getBoard,
         {
-          token: '',
-          id
+          ...requestData,
+          token: ''
         },
         getState() as RootState
       );
@@ -97,16 +95,15 @@ export const getBoardThunk = createAsyncThunk(
 export const createBoardThunk = createAsyncThunk(
   'boards/createBoard',
   async (
-    { title, description }: Omit<BoardCreateRequest, 'token'>,
+    requestData: Omit<BoardCreateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
       await applyToken<BoardCreateRequest, ReturnType<typeof createBoard>>(
         createBoard,
         {
-          token: '',
-          description,
-          title
+          ...requestData,
+          token: ''
         },
         getState() as RootState
       );
