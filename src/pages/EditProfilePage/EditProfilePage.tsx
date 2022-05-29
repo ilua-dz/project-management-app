@@ -45,42 +45,40 @@ function EditProfilePage() {
   };
 
   return (
-    <>
-      <Container>
-        <PageTitle textLink="buttons.profile" icon={<ProfileFilled />} />
-        <Button danger onClick={CallConfirm(deleteConfirmQuestion, deleteItem)}>
-          {t('buttons.delete-user')}
-        </Button>
-        <FormPageContainer>
-          <Title level={5}>{t('titles.title-update-profile')}</Title>
-          <Form {...layout} form={form} name="control-hooks" onFinish={updateSignUpData}>
-            <Form.Item name="name" label={t('labelOfForms.newName')} rules={FieldRegExp()}>
-              <Input placeholder={t('labelOfForms.newName')} />
-            </Form.Item>
+    <Container>
+      <PageTitle textLink="buttons.profile" icon={<ProfileFilled />} />
+      <Button danger onClick={CallConfirm(deleteConfirmQuestion, deleteItem)}>
+        {t('buttons.delete-user')}
+      </Button>
+      <FormPageContainer>
+        <Title level={5}>{t('titles.title-update-profile')}</Title>
+        <Form {...layout} form={form} name="control-hooks" onFinish={updateSignUpData}>
+          <Form.Item name="name" label={t('labelOfForms.newName')} rules={FieldRegExp()}>
+            <Input placeholder={t('labelOfForms.newName')} />
+          </Form.Item>
 
-            <Form.Item name="login" label={t('labelOfForms.newLogin')} rules={FieldRegExp()}>
-              <Input placeholder={t('labelOfForms.newLogin')} />
-            </Form.Item>
+          <Form.Item name="login" label={t('labelOfForms.newLogin')} rules={FieldRegExp()}>
+            <Input placeholder={t('labelOfForms.newLogin')} />
+          </Form.Item>
 
-            <Form.Item name="password" label={t('labelOfForms.newPassword')} rules={FieldRegExp()}>
-              <AutoComplete>
-                <Input.Password
-                  placeholder={t('labelOfForms.newPassword')}
-                  autoComplete="off"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              </AutoComplete>
-            </Form.Item>
+          <Form.Item name="password" label={t('labelOfForms.newPassword')} rules={FieldRegExp()}>
+            <AutoComplete>
+              <Input.Password
+                placeholder={t('labelOfForms.newPassword')}
+                autoComplete="off"
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
+            </AutoComplete>
+          </Form.Item>
 
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
-                {t('buttons.Submit')}
-              </Button>
-            </Form.Item>
-          </Form>
-        </FormPageContainer>
-      </Container>
-    </>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              {t('buttons.Submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </FormPageContainer>
+    </Container>
   );
 }
 
@@ -98,7 +96,7 @@ const FormPageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   overflow: hidden;
-  padding-top: 3rem;
+  padding-top: 1rem;
 `;
 
 export default EditProfilePage;

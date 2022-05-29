@@ -1,7 +1,7 @@
 const formProperties = {
   layout: {
     labelCol: {
-      span: 8
+      span: 9
     },
     wrapperCol: {
       span: 16

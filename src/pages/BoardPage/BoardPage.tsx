@@ -1,7 +1,7 @@
 import { AppstoreOutlined } from '@ant-design/icons';
 import PageTitle from '../../components/styled/PageTitle';
 import { useAppSelector } from '../../app/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ColumnItem from './columnItem';
 import { MessageKeys } from '../../antd/messageProperties';
@@ -23,19 +23,23 @@ export function useColumnsRequest() {
 function BoardPage() {
   const activeBoardColumnsData = useAppSelector(getAppActiveBoardColumnsData);
   const columnsRequest = useColumnsRequest();
-  const isEmpty = !!activeBoardColumnsData && !activeBoardColumnsData.columns;
+  const isEmpty = !!activeBoardColumnsData && !activeBoardColumnsData.columns?.length;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    columnsRequest();
+    columnsRequest().then(() => setLoading(false));
   }, []);
 
   return (
     <>
       <PageTitle text={activeBoardColumnsData?.title} icon={<AppstoreOutlined />} />
       <Container>
-        {activeBoardColumnsData?.columns?.map((columnData) => (
-          <ColumnItem key={columnData.id} {...columnData} />
-        ))}
+        {!loading &&
+          activeBoardColumnsData &&
+          activeBoardColumnsData.columns &&
+          [...activeBoardColumnsData.columns]
+            .sort((a, b) => a.order - b.order)
+            .map((columnData) => <ColumnItem key={columnData.id} {...columnData} />)}
         {isEmpty && <CentredEmpty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </Container>
     </>

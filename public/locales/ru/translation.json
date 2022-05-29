@@ -8,7 +8,7 @@
     "new-board": "Новая доска",
     "new-column": "Новая колонка",
     "profile": "Профиль",
-    "delete-user": "Удалить пользователя"
+    "delete-user": "Удалить профиль"
   },
   "messages": {
     "sign-up-done": "Регистрация завершена. Войдите под своим именем",
@@ -17,9 +17,9 @@
     "sign-in-error": "Неправильное имя пользователя или пароль",
     "-error": "Ошибка загрузки!",
     "loading": "Загрузка...",
-    "profile-done": "Пользователь удален!",
-    "profile-error": "Пользователь  не удален!",
-    "profile-update": "Вы уверенны?",
+    "profile-done": "Профиль удален!",
+    "profile-error": "Профиль не удален!",
+    "profile-update": "Вы уверены?",
     "updateProfile-done": "Данные изменены!",
     "updateProfile-error": "Пользователь с такими данными уже существует, измените данные!"
   },
@@ -57,7 +57,8 @@
       "validate-error-description": "Введите описание!",
       "ok-text": "Создать"
     },
-    "delete-user": "Удалить пользователя?"
+    "delete-user": "Удалить профиль?",
+    "author": "автор"
   },
   "labelOfForms": {
     "password": "Пароль",
@@ -83,7 +84,7 @@
   "titles": {
     "main-page": "Доски",
     "board-page": "Колонки",
-    "title-update-profile": "Измени свои данные..."
+    "title-update-profile": "Редактирование профиля"
   },
   "tooltips": {
     "delete": "Удалить",

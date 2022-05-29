@@ -5,22 +5,20 @@ import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
 import Task from './Task/Task';
 import { useParams } from 'react-router-dom';
-import { getApiUserId } from '../../reducer/authorization/authorizationSlice';
 import Colors from '../../enumerations/Colors';
-import InvisibleInput from '../../components/styled/InvisibleInput';
 import { useState } from 'react';
 import CreateTaskModal from './Task/CreateTaskModal';
+import EditableTitle from './EditableTitle';
 
 function ColumnItem({ title, order, id, tasks }: IColumn) {
   const { boardId } = useParams();
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getApiUserId);
   const [isCreateTaskModalVisible, setIsCreateTaskModalVisible] = useState(false);
 
 
@@ -32,11 +30,10 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
     setIsCreateTaskModalVisible(true);
   }
 
-  const updateColumnHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.target.value = e.target.value.replace('\n', '');
+  const updateColumnHandler = (value: string) => {
     dispatch(
       updateColumnThunk({
-        title: e.target.value,
+        title: value,
         order,
         columnId: id,
         boardId: `${boardId}`
@@ -64,11 +61,12 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
       <StyledColumn
         bodyStyle={{ padding: '0.5rem' }}
         extra={columnButtons}
-        title={<InvisibleInput onInput={updateColumnHandler} defaultValue={title} />}>
+        title={<EditableTitle defaultValue={title} setValueAction={updateColumnHandler} />}>
         <CardsContainer>
-          {tasks?.map((taskData) => (
-            <Task key={taskData.id} {...{ ...taskData, columnId: id, userId }} />
-          ))}
+          {tasks &&
+            [...tasks]
+              .sort((a, b) => a.order - b.order)
+              .map((taskData) => <Task key={taskData.id} {...{ ...taskData, columnId: id }} />)}
         </CardsContainer>
       </StyledColumn>
       <CreateTaskModal
@@ -100,8 +98,14 @@ const StyledColumn = styled(Card)`
     display: flex;
   }
 
-  & .ant-card-head-wrapper > * {
-    padding: 0;
+  & .ant-card-head-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    & > * {
+      padding: 0;
+    }
   }
 
   @media (max-width: 480px) {

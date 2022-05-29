@@ -8,8 +8,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ErrorBoundary } from 'react-error-boundary';
 import './i18n';
 import { Typography } from 'antd';
+import { ErrorFallback } from './components/ErrorBounadary/ErrorFallback';
 
 const { Title } = Typography;
 
@@ -22,9 +24,11 @@ root.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
             <DndProvider backend={HTML5Backend}>
               <App />
             </DndProvider>
+            </ErrorBoundary>
           </BrowserRouter>
         </PersistGate>
       </Provider>
