@@ -54,7 +54,7 @@ function EditableTitle({ defaultValue, setValueAction }: IProps) {
       {value}
     </Text>
   ) : (
-    <InputBlock onBlur={onCancel}>
+    <InputBlock>
       <DesktopButtonsBlock>
         <Button block icon={<CheckSquareOutlined />} onClick={onOk} />
         <Button block icon={<CloseSquareOutlined />} onClick={onCancel} />
