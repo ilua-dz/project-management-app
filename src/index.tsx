@@ -6,9 +6,11 @@ import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import './i18n';
 import { Typography } from 'antd';
+import { ErrorFallback } from './components/ErrorBounadary/ErrorFallback';
 
 const { Title } = Typography;
 
@@ -21,7 +23,9 @@ root.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
-            <App />
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <App />
+            </ErrorBoundary>
           </BrowserRouter>
         </PersistGate>
       </Provider>
