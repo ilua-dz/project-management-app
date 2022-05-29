@@ -35,9 +35,11 @@ function BoardPage() {
       <PageTitle text={activeBoardColumnsData?.title} icon={<AppstoreOutlined />} />
       <Container>
         {!loading &&
-          activeBoardColumnsData?.columns?.map((columnData) => (
-            <ColumnItem key={columnData.id} {...columnData} />
-          ))}
+          activeBoardColumnsData &&
+          activeBoardColumnsData.columns &&
+          [...activeBoardColumnsData.columns]
+            .sort((a, b) => a.order - b.order)
+            .map((columnData) => <ColumnItem key={columnData.id} {...columnData} />)}
         {isEmpty && <CentredEmpty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </Container>
     </>

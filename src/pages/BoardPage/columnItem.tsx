@@ -62,9 +62,10 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
         extra={columnButtons}
         title={<EditableTitle defaultValue={title} setValueAction={updateColumnHandler} />}>
         <CardsContainer>
-          {tasks?.map((taskData) => (
-            <Task key={taskData.id} {...{ ...taskData, columnId: id }} />
-          ))}
+          {tasks &&
+            [...tasks]
+              .sort((a, b) => a.order - b.order)
+              .map((taskData) => <Task key={taskData.id} {...{ ...taskData, columnId: id }} />)}
         </CardsContainer>
       </StyledColumn>
       <CreateTaskModal
