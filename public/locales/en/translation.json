@@ -8,7 +8,7 @@
     "new-board": "New Board",
     "new-column": "New Column",
     "profile": "Profile",
-    "delete-user": "Delete User"
+    "delete-user": "Delete profile"
   },
   "messages": {
     "sign-up-done": "Registration is complete. Sign in with your login and password!",
@@ -57,7 +57,7 @@
       "validate-error-description": "Please input description!",
       "ok-text": "Create"
     },
-    "delete-user": "Do you want to delete User ?"
+    "delete-user": "Do you want to delete profile?"
   },
   "labelOfForms": {
     "password": "Password",
@@ -83,7 +83,7 @@
   "titles": {
     "main-page": "Boards",
     "board-page": "Columns",
-    "title-update-profile": "Change your information..."
+    "title-update-profile": "Edit Profile"
   },
   "tooltips": {
     "delete": "Delete",
