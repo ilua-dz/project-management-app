@@ -22,7 +22,6 @@ function Task(props: TaskType) {
   const { description, title, id, userId, columnId } = props;
   const token = useAppSelector(getApiSignInToken);
   const updateBoard = useUpdateActiveBoard();
-
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
 

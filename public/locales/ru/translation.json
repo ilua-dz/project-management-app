@@ -57,7 +57,8 @@
       "validate-error-description": "Введите описание!",
       "ok-text": "Создать"
     },
-    "delete-user": "Удалить профиль?"
+    "delete-user": "Удалить профиль?",
+    "author": "автор"
   },
   "labelOfForms": {
     "password": "Пароль",

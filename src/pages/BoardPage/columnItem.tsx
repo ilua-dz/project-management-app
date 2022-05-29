@@ -5,11 +5,10 @@ import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
 import Task from './Task/Task';
 import { useParams } from 'react-router-dom';
-import { getApiUserId } from '../../reducer/authorization/authorizationSlice';
 import Colors from '../../enumerations/Colors';
 import { useState } from 'react';
 import CreateTaskModal from './Task/CreateTaskModal';
@@ -20,7 +19,6 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
   const { t } = useTranslation();
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getApiUserId);
   const [isCreateTaskModalVisible, setIsCreateTaskModalVisible] = useState(false);
 
   function closeCreateTaskModal() {
@@ -65,7 +63,7 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
         title={<EditableTitle defaultValue={title} setValueAction={updateColumnHandler} />}>
         <CardsContainer>
           {tasks?.map((taskData) => (
-            <Task key={taskData.id} {...{ ...taskData, columnId: id, userId }} />
+            <Task key={taskData.id} {...{ ...taskData, columnId: id }} />
           ))}
         </CardsContainer>
       </StyledColumn>

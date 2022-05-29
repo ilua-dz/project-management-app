@@ -57,7 +57,8 @@
       "validate-error-description": "Please input description!",
       "ok-text": "Create"
     },
-    "delete-user": "Do you want to delete profile?"
+    "delete-user": "Do you want to delete profile?",
+    "author": "author"
   },
   "labelOfForms": {
     "password": "Password",
