@@ -39,7 +39,7 @@ function Task(props: TaskType) {
   const [, drop] = useDrop(() => ({
     accept: DragTypes.card,
     hover({id: draggableId, columnId, title, description, userId}:Omit<TaskType, 'order'>){
-      console.log('hovered', id, draggableId);
+      console.log(id === draggableId);
       if(id !== draggableId){
         const requestData = {
           columnId,
