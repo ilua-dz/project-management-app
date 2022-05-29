@@ -82,7 +82,7 @@ export async function updateTask({ token, boardId, columnId, taskId, body }: tas
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ ...{ ...body, boardId } })
+    body: JSON.stringify({ ...{ ...body, boardId, columnId } })
   } as Partial<RequestInit>;
   const data = await requestAPI<ITask>({ URL, options });
   return data;
