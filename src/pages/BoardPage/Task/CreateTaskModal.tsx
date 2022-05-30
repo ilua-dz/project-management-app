@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { createTask, taskCreateRequest } from '../../../API/tasks';
 import { useAppSelector } from '../../../app/hooks';
-import { getApiSignInToken, getApiUserId } from '../../../reducer/authorization/authorizationSlice';
+import { getApiUserId } from '../../../reducer/authorization/authorizationSlice';
 import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import UpdateBoardsModal, { UpdateBoardsValues } from '../../MainPage/UpdateBoardsModal';
 import applyToken from '../../../API/applyToken';

@@ -55,15 +55,15 @@ function Task(props: TaskType) {
         if (id !== draggableId && lastDragable !== id) {
           const requestData = {
             columnId: draggableColumnId,
-            taskId: draggableId,
             boardId: `${boardId}`,
+            taskId: draggableId,
             body: {
-              description: draggableDescription,
               title: draggableTitle,
-              userId: draggableId,
+              userId: draggableUserId,
+              description: draggableDescription,
               order
             }
-          };
+          }
           if (columnId === draggableColumnId) {
             dispatch(dragColumnTaskThunk(requestData));
           }
