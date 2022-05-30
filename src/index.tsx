@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store, persistor } from './app/store';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ErrorBoundary } from 'react-error-boundary';
+import './i18n';
+import { Typography } from 'antd';
+import { ErrorFallback } from './components/ErrorBounadary/ErrorFallback';
 
-const container = document.getElementById('root')!;
+const { Title } = Typography;
+
+const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Suspense fallback={<Title level={5}>Загрузка...</Title>}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <DndProvider backend={HTML5Backend}>
+                <App />
+              </DndProvider>
+            </ErrorBoundary>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

@@ -1,0 +1,96 @@
+{
+  "buttons": {
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out",
+    "mainPage": "Main Page",
+    "Submit": "Submit",
+    "new-board": "New Board",
+    "new-column": "New Column",
+    "profile": "Profile",
+    "delete-user": "Delete profile"
+  },
+  "messages": {
+    "sign-up-done": "Registration is complete. Sign in with your login and password!",
+    "sign-up-error": "User login already exists!",
+    "sign-in-done": "Successful Sign In!",
+    "sign-in-error": "Login or password is incorrect!",
+    "-error": "Loading error!",
+    "loading": "Loading...",
+    "profile-done": "User's been deleted!",
+    "profile-error": "User hasn't been deleted!",
+    "profile-update": "Are you sure?",
+    "updateProfile-done": "Information's been changed!",
+    "updateProfile-error": "This user already exists, change information!"
+  },
+  "modals": {
+    "cancel": "Cancel",
+    "delete-board": "Do you want to delete",
+    "delete-task": "Do you want to delete task",
+    "update-board": {
+      "title": "Update board",
+      "input-title": "Title",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
+      "ok-text": "OK"
+    },
+    "create-board": {
+      "title": "New board",
+      "input-title": "Title",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
+      "ok-text": "Create"
+    },
+    "create-column": {
+      "title": "New column",
+      "input-title": "Title",
+      "validate-error-title": "Please input title!",
+      "ok-text": "Create"
+    },
+    "create-task": {
+      "title": "New task",
+      "input-title": "Title",
+      "input-description": "Description",
+      "validate-error-title": "Please input title!",
+      "validate-error-description": "Please input description!",
+      "ok-text": "Create"
+    },
+    "delete-user": "Do you want to delete profile?",
+    "author": "author"
+  },
+  "labelOfForms": {
+    "password": "Password",
+    "name": "Name",
+    "login": "Login",
+    "newPassword": "New Password",
+    "newName": "New Name",
+    "newLogin": "New Login"
+  },
+  "messagesOfAuthForms": {
+    "require": "It's required",
+    "pattern": "At least 3 symbols"
+  },
+  "application-title": "Project Management App",
+  "description1": "This is aimed to facilitate the workflow of a team collaborating on the same project. The software allows to assign and reassign tasks, easily track the deadlines to meet them for sure and control the whole process from the central managing location. ",
+  "our-team": "Our Team",
+  "description2": {
+    "course-link": " \"React Development Course\" ",
+    "school-link": " The Rolling Scopes School ",
+    "start-text": "This app was developed in the course",
+    "middle-text": "at"
+  },
+  "titles": {
+    "main-page": "Boards",
+    "board-page": "Columns",
+    "title-update-profile": "Edit Profile"
+  },
+  "tooltips": {
+    "delete": "Delete",
+    "create-task": "Add task"
+  },
+  "confirm": {
+    "delete": "Confirm deletion"
+  }
+}

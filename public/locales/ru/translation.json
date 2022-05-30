@@ -1,0 +1,96 @@
+{
+  "buttons": {
+    "sign-up": "Регистрация",
+    "sign-in": "Вход",
+    "sign-out": "Выход",
+    "mainPage": "Главная",
+    "Submit": "Подтвердить",
+    "new-board": "Новая доска",
+    "new-column": "Новая колонка",
+    "profile": "Профиль",
+    "delete-user": "Удалить профиль"
+  },
+  "messages": {
+    "sign-up-done": "Регистрация завершена. Войдите под своим именем",
+    "sign-up-error": "Пользователь с таким именем уже существует!",
+    "sign-in-done": "Успешный вход в систему!",
+    "sign-in-error": "Неправильное имя пользователя или пароль",
+    "-error": "Ошибка загрузки!",
+    "loading": "Загрузка...",
+    "profile-done": "Профиль удален!",
+    "profile-error": "Профиль не удален!",
+    "profile-update": "Вы уверены?",
+    "updateProfile-done": "Данные изменены!",
+    "updateProfile-error": "Пользователь с такими данными уже существует, измените данные!"
+  },
+  "modals": {
+    "cancel": "Отмена",
+    "delete-board": "Удалить доску",
+    "delete-task": "Удалить задачу",
+    "update-board": {
+      "title": "Редактирование доски",
+      "input-title": "Имя",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
+      "ok-text": "ОК"
+    },
+    "create-board": {
+      "title": "Новая доска",
+      "input-title": "Имя",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
+      "ok-text": "Создать"
+    },
+    "create-column": {
+      "title": "Новая колонка",
+      "input-title": "Имя",
+      "validate-error-title": "Введите имя!",
+      "ok-text": "Создать"
+    },
+    "create-task": {
+      "title": "Новая задача",
+      "input-title": "Имя",
+      "input-description": "Описание",
+      "validate-error-title": "Введите имя!",
+      "validate-error-description": "Введите описание!",
+      "ok-text": "Создать"
+    },
+    "delete-user": "Удалить профиль?",
+    "author": "автор"
+  },
+  "labelOfForms": {
+    "password": "Пароль",
+    "name": "Имя",
+    "login": "Логин",
+    "newPassword": "Новый пароль",
+    "newName": "Новое имя",
+    "newLogin": "Новый логин"
+  },
+  "messagesOfAuthForms": {
+    "require": "Необходимо заполнить",
+    "pattern": "Не менее 3 символов"
+  },
+  "application-title": "Менеджер проектов",
+  "description1": "Программа для управления проектами, которая позволяет централизованно руководить задачами и их своевременным выполнением. Позволяет назначать и переназначать задачи, следить за всеми рабочими процессами и контролировать работу команды.",
+  "our-team": "Наша команда",
+  "description2": {
+    "course-link": " \"Разработка на React\" ",
+    "school-link": " The Rolling Scopes School ",
+    "start-text": "Приложение разработано в процессе обучения на онлайн-курсе",
+    "middle-text": "в школе"
+  },
+  "titles": {
+    "main-page": "Доски",
+    "board-page": "Колонки",
+    "title-update-profile": "Редактирование профиля"
+  },
+  "tooltips": {
+    "delete": "Удалить",
+    "create-task": "Добавить задачу"
+  },
+  "confirm": {
+    "delete": "Подтвердите удаление"
+  }
+}
