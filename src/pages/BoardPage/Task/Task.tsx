@@ -13,10 +13,7 @@ import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import EditTaskModal from './EditTaskModal';
 import { useDrag, useDrop } from 'react-dnd';
 import DragTypes from '../../../enumerations/DragTypes';
-import {
-  replaceColumnTaskThunk,
-  dragColumnTaskThunk
-} from '../../../reducer/columns/userColumnsSlice';
+import { dragColumnTaskThunk } from '../../../reducer/columns/userColumnsSlice';
 import { useAppDispatch } from '../../../app/hooks';
 import {
   setLastDraggableTask,
@@ -63,7 +60,7 @@ function Task(props: TaskType) {
               description: draggableDescription,
               order
             }
-          }
+          };
           if (columnId === draggableColumnId) {
             dispatch(dragColumnTaskThunk(requestData));
           }
