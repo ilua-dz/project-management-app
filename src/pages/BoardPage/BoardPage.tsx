@@ -57,6 +57,7 @@ const Container = styled.div`
   column-gap: 0.5rem;
   overflow-x: scroll;
   padding: 0 0.5rem;
+  height: 0;
 `;
 
 export default BoardPage;

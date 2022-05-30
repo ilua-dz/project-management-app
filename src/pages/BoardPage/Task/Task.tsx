@@ -34,11 +34,14 @@ function Task(props: TaskType) {
   const updateBoard = useUpdateActiveBoard();
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: DragTypes.card,
-    item: { id, columnId, title, description, userId },
-    collect: (monitor) => ({ isDragging: monitor.isDragging() })
-  }));
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: DragTypes.card,
+      item: { id, columnId, title, description, userId },
+      collect: (monitor) => ({ isDragging: monitor.isDragging() })
+    }),
+    [props]
+  );
   const [, drop] = useDrop(
     () => ({
       accept: DragTypes.card,

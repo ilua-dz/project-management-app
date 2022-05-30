@@ -90,7 +90,7 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
     <div
       className="site-card-border-less-wrapper"
       ref={(node) => drag(drop(node))}
-      style={{ opacity }}>
+      style={{ opacity, maxHeight: '100%', overflow: 'auto' }}>
       <StyledColumn
         bodyStyle={{ padding: '0.5rem' }}
         extra={columnButtons}
@@ -113,7 +113,7 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
 
 const CardsContainer = styled.div`
   overflow-y: auto;
-  max-height: 69vh;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 0.2rem;
