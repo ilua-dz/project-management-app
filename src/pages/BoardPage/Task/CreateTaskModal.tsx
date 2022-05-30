@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { createTask } from '../../../API/tasks';
+import { createTask, taskCreateRequest } from '../../../API/tasks';
 import { useAppSelector } from '../../../app/hooks';
 import { getApiSignInToken, getApiUserId } from '../../../reducer/authorization/authorizationSlice';
 import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import UpdateBoardsModal, { UpdateBoardsValues } from '../../MainPage/UpdateBoardsModal';
+import applyToken from '../../../API/applyToken';
 
 interface IProps {
   columnId: string;
@@ -13,12 +14,22 @@ interface IProps {
 
 function CreateTaskModal({ visible, closeModalFn, columnId }: IProps) {
   const { boardId } = useParams();
-  const token = useAppSelector(getApiSignInToken);
+  const state = useAppSelector((state) => state);
   const updateBoard = useUpdateActiveBoard();
   const userId = useAppSelector(getApiUserId);
 
   async function createTaskRequest({ title, description }: UpdateBoardsValues) {
-    await createTask(token, boardId as string, columnId, { title, description, userId });
+    const requestData = {
+      boardId: `${boardId}`,
+      columnId,
+      token: '',
+      body: { title, description, userId }
+    };
+    await applyToken<taskCreateRequest, ReturnType<typeof createTask>>(
+      createTask,
+      requestData,
+      state
+    );
     updateBoard();
     closeModalFn();
   }

@@ -1,8 +1,14 @@
-import { taskDeleteRequest, taskUpdateRequest, updateTask } from './../../API/tasks';
+import {
+  createTask,
+  taskCreateRequest,
+  taskDeleteRequest,
+  taskUpdateRequest,
+  updateTask
+} from './../../API/tasks';
 import { getBoard, IBoard, BoardGetRequest } from './../../API/boards';
 import { ColumnDeleteRequest, ColumnUpdateRequest, ColumnCreateRequest } from '../../API/columns';
 import { RootState } from '../../app/store';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import { updateColumn, createColumn, deleteColumn } from '../../API/columns';
 import { deleteTask } from '../../API/tasks';
 import applyToken from '../../API/applyToken';
@@ -13,11 +19,18 @@ export interface UserColumnsState {
   columnsLoading: boolean;
   columnsError: string;
   activeBoardColumnsData?: IBoard;
+  lastDraggableTask: string;
+}
+
+interface ITaskReplace {
+  deleteRequest: Omit<taskDeleteRequest, 'token'>;
+  createRequest: Omit<taskCreateRequest, 'token'>;
 }
 
 const initialState: UserColumnsState = {
   columnsLoading: false,
-  columnsError: ''
+  columnsError: '',
+  lastDraggableTask: ''
 };
 
 export const getActiveBoardColumnsDataThunk = createAsyncThunk(
@@ -117,7 +130,7 @@ export const createColumnThunk = createAsyncThunk(
         createColumn,
         {
           ...requestData,
-          token: '',
+          token: ''
         },
         getState() as RootState
       );
@@ -128,25 +141,54 @@ export const createColumnThunk = createAsyncThunk(
   }
 );
 
-export const updateColumnTaskThunk = createAsyncThunk(
+export const dragColumnTaskThunk = createAsyncThunk(
   'columns/updateTask',
   async (
     requestData: Omit<taskUpdateRequest, 'token'>,
     { dispatch, getState, rejectWithValue }
   ) => {
     try {
-      // await applyToken<taskUpdateRequest, ReturnType<typeof updateTask>>(
-      //   updateTask,
-      //   {
-      //     ...requestData,
-      //     token: '',
-      //   },
-      //   getState() as RootState
-      // );
-      // dispatch(getActiveBoardColumnsDataThunk());
+      await applyToken<taskUpdateRequest, ReturnType<typeof updateTask>>(
+        updateTask,
+        {
+          ...requestData,
+          token: ''
+        },
+        getState() as RootState
+      );
+      dispatch(getActiveBoardColumnsDataThunk());
     } catch {
       rejectWithValue(`Column task can't be updated`);
-  }});
+    }
+  }
+);
+
+export const replaceColumnTaskThunk = createAsyncThunk(
+  'columns/replaceTask',
+  async (requestData: ITaskReplace, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      applyToken<taskDeleteRequest, ReturnType<typeof deleteTask>>(
+        deleteTask,
+        { ...requestData.deleteRequest, token: '' },
+        state
+      );
+      await applyToken<taskCreateRequest, ReturnType<typeof createTask>>(
+        createTask,
+        { ...requestData.createRequest, token: '' },
+        state
+      );
+    } catch {
+      rejectWithValue(`Column task can't be replaced`);
+    }
+  }
+);
+
+export const setLastDraggableTask = createAction('setLastDraggable', (lastDraggable: string) => {
+  return {
+    payload: lastDraggable
+  };
+});
 
 export const userBoardsSlice = createSlice({
   name: 'userBoards',
@@ -159,7 +201,11 @@ export const userBoardsSlice = createSlice({
 
     builder.addCase(deleteColumnThunk.rejected, setColumnError);
 
-    builder.addCase(updateColumnTaskThunk.rejected, setColumnError);
+    builder.addCase(dragColumnTaskThunk.rejected, setColumnError);
+
+    builder.addCase(setLastDraggableTask, (state, { payload }) => {
+      state.lastDraggableTask = payload;
+    });
 
     builder
       .addCase(getActiveBoardColumnsDataThunk.pending, (state) => {
@@ -185,5 +231,6 @@ export const getAppActiveBoardColumnsData = (state: RootState) =>
   state.userColumns.activeBoardColumnsData;
 export const getAppColumnsError = (state: RootState) => state.userColumns.columnsError;
 export const getAppColumnsLoading = (state: RootState) => state.userColumns.columnsLoading;
+export const getAppLastDraggableTask = (state: RootState) => state.userColumns.lastDraggableTask;
 
 export default userBoardsSlice.reducer;

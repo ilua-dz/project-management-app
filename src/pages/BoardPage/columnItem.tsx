@@ -5,7 +5,7 @@ import { IColumn } from '../../API/columns';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { updateColumnThunk, deleteColumnThunk } from '../../reducer/columns/userColumnsSlice';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CallConfirm from '../../antd/confirmModal';
 import Task from './Task/Task';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,13 @@ import Colors from '../../enumerations/Colors';
 import { useState } from 'react';
 import CreateTaskModal from './Task/CreateTaskModal';
 import EditableTitle from './EditableTitle';
+import { useDrop, useDrag } from 'react-dnd';
+import DragTypes from '../../enumerations/DragTypes';
+import {
+  dragBoardsColumnThunk,
+  getLastDraggableColumn,
+  setLastDraggableColumn
+} from '../../reducer/boards/userBoardsSlice';
 
 function ColumnItem({ title, order, id, tasks }: IColumn) {
   const { boardId } = useParams();
@@ -20,8 +27,31 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
   const confirmMessage = t('confirm.delete');
   const dispatch = useAppDispatch();
   const [isCreateTaskModalVisible, setIsCreateTaskModalVisible] = useState(false);
-
-
+  const lastDraggableColumn = useAppSelector(getLastDraggableColumn);
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: DragTypes.column,
+    item: { id, title },
+    collect: (monitor) => ({ isDragging: monitor.isDragging() })
+  }));
+  const [, drop] = useDrop(
+    () => ({
+      accept: DragTypes.column,
+      hover({ id: draggableId, title: draggableTitle }: { id: string; title: string }) {
+        if (id !== draggableId && lastDraggableColumn !== id) {
+          const requestData = {
+            order,
+            title: draggableTitle,
+            boardId: `${boardId}`,
+            columnId: draggableId
+          };
+          dispatch(dragBoardsColumnThunk(requestData));
+        }
+        dispatch(setLastDraggableColumn(id));
+      }
+    }),
+    [lastDraggableColumn]
+  );
+  const opacity = isDragging ? 0 : 1;
   function closeCreateTaskModal() {
     setIsCreateTaskModalVisible(false);
   }
@@ -57,7 +87,10 @@ function ColumnItem({ title, order, id, tasks }: IColumn) {
   );
 
   return (
-    <div className="site-card-border-less-wrapper">
+    <div
+      className="site-card-border-less-wrapper"
+      ref={(node) => drag(drop(node))}
+      style={{ opacity }}>
       <StyledColumn
         bodyStyle={{ padding: '0.5rem' }}
         extra={columnButtons}

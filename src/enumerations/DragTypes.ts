@@ -1,6 +1,6 @@
 enum DragTypes {
   card = 'card',
-  columns = 'column'
+  column = 'column'
 }
 
-export default DragTypes
+export default DragTypes;

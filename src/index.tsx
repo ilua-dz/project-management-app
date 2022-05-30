@@ -25,9 +25,9 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <DndProvider backend={HTML5Backend}>
-              <App />
-            </DndProvider>
+              <DndProvider backend={HTML5Backend}>
+                <App />
+              </DndProvider>
             </ErrorBoundary>
           </BrowserRouter>
         </PersistGate>

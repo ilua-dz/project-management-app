@@ -1,7 +1,7 @@
 import { useAppDispatch } from './../../app/hooks';
 import { BoardGetRequest } from './../../API/boards';
 import { RootState } from '../../app/store';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import {
   IBoard,
   getBoard,
@@ -16,11 +16,13 @@ import { SerializedError } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import applyToken from '../../API/applyToken';
 import { getActiveBoardColumnsDataThunk } from '../columns/userColumnsSlice';
+import { ColumnUpdateRequest, updateColumn } from '../../API/columns';
 
 export interface UserBoardsState {
   boards: IBoard[];
   boardsLoading: boolean;
   boardsError: string;
+  lastDraggableColumn: string;
 }
 
 export interface BoardRequestData {
@@ -30,12 +32,16 @@ export interface BoardRequestData {
 const initialState: UserBoardsState = {
   boards: [],
   boardsLoading: false,
-  boardsError: ''
+  boardsError: '',
+  lastDraggableColumn: ''
 };
 
 export const deleteBoardThunk = createAsyncThunk(
   'boards/deleteBoard',
-  async (requestData: Omit<BoardDeleteRequest, 'token'>, { dispatch, getState, rejectWithValue }) => {
+  async (
+    requestData: Omit<BoardDeleteRequest, 'token'>,
+    { dispatch, getState, rejectWithValue }
+  ) => {
     try {
       await applyToken<BoardDeleteRequest, ReturnType<typeof deleteBoard>>(
         deleteBoard,
@@ -114,6 +120,34 @@ export const createBoardThunk = createAsyncThunk(
   }
 );
 
+export const dragBoardsColumnThunk = createAsyncThunk(
+  'columns/updateTask',
+  async (
+    requestData: Omit<ColumnUpdateRequest, 'token'>,
+    { dispatch, getState, rejectWithValue }
+  ) => {
+    try {
+      await applyToken<ColumnUpdateRequest, ReturnType<typeof updateColumn>>(
+        updateColumn,
+        {
+          ...requestData,
+          token: ''
+        },
+        getState() as RootState
+      );
+      dispatch(getActiveBoardColumnsDataThunk());
+    } catch {
+      rejectWithValue(`Column task can't be updated`);
+    }
+  }
+);
+
+export const setLastDraggableColumn = createAction('boards/columnDrag', (id: string) => {
+  return {
+    payload: id
+  };
+});
+
 export const userBoardsSlice = createSlice({
   name: 'userBoards',
   initialState,
@@ -124,6 +158,10 @@ export const userBoardsSlice = createSlice({
     builder.addCase(updateBoardThunk.rejected, setBoardError);
 
     builder.addCase(deleteBoardThunk.rejected, setBoardError);
+
+    builder.addCase(setLastDraggableColumn, (state, { payload }) => {
+      state.lastDraggableColumn = payload;
+    });
 
     builder
       .addCase(getBoardThunk.pending, (state) => {
@@ -150,6 +188,7 @@ function setBoardError(
 
 export const getAppBoards = (state: RootState) => state.userBoards.boards;
 export const getAppBoardsLoading = (state: RootState) => state.userBoards.boardsLoading;
+export const getLastDraggableColumn = (state: RootState) => state.userBoards.lastDraggableColumn;
 
 export function useUpdateActiveBoard() {
   const dispatch = useAppDispatch();

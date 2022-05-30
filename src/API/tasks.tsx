@@ -17,14 +17,14 @@ interface ITasksRequest {
   taskId: string;
   body: {
     title: string;
-    order: number;
+    order?: number;
     description: string;
     userId: string;
   };
 }
 
 export type tasksGetRequest = SetOptional<Omit<ITasksRequest, 'body'>, 'taskId'>;
-export type taskCreateRequest = Omit<ITasksRequest, 'taskId'>;
+export type taskCreateRequest = Omit<ITasksRequest, 'taskId' | 'order'>;
 export type taskDeleteRequest = Omit<ITasksRequest, 'body'>;
 export type taskUpdateRequest = ITasksRequest;
 
@@ -41,12 +41,7 @@ export async function getTask({ token, boardId, columnId, taskId }: tasksGetRequ
   return data;
 }
 
-export async function createTask(
-  token: string,
-  boardId: string,
-  columnId: string,
-  task: Pick<ITask, 'description' | 'title' | 'userId'>
-) {
+export async function createTask({ token, boardId, columnId, body }: taskCreateRequest) {
   const URL = `${boardsBaseURL}/${boardId}/columns/${columnId}/tasks`;
   const options = {
     method: Methods.post,
@@ -55,7 +50,7 @@ export async function createTask(
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ ...task })
+    body: JSON.stringify(body)
   } as Partial<RequestInit>;
   const data = await requestAPI<ITask>({ URL, options });
   return data;

@@ -13,8 +13,15 @@ import { useUpdateActiveBoard } from '../../../reducer/boards/userBoardsSlice';
 import EditTaskModal from './EditTaskModal';
 import { useDrag, useDrop } from 'react-dnd';
 import DragTypes from '../../../enumerations/DragTypes';
-import { updateColumnTaskThunk } from '../../../reducer/columns/userColumnsSlice';
+import {
+  replaceColumnTaskThunk,
+  dragColumnTaskThunk
+} from '../../../reducer/columns/userColumnsSlice';
 import { useAppDispatch } from '../../../app/hooks';
+import {
+  setLastDraggableTask,
+  getAppLastDraggableTask
+} from '../../../reducer/columns/userColumnsSlice';
 
 const { Text } = Typography;
 interface TaskType extends ITask {
@@ -26,36 +33,46 @@ function Task(props: TaskType) {
   const dispatch = useAppDispatch();
   const { description, title, id, userId, columnId, order } = props;
   const token = useAppSelector(getApiSignInToken);
+  const lastDragable = useAppSelector(getAppLastDraggableTask);
   const updateBoard = useUpdateActiveBoard();
   const { t } = useTranslation();
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: DragTypes.card,
-      item: {id, columnId, title, description, userId},
-      collect: (monitor) => ({isDragging: monitor.isDragging()}),
-    })
-  );
-  const [, drop] = useDrop(() => ({
-    accept: DragTypes.card,
-    hover({id: draggableId, columnId, title, description, userId}:Omit<TaskType, 'order'>){
-      console.log(id === draggableId);
-      if(id !== draggableId){
-        const requestData = {
-          columnId,
-          taskId: draggableId,
-          boardId: `${boardId}`,
-          body:{
-            description,
-            title,
-            userId,
-            order
-          }
-        };
-        dispatch(updateColumnTaskThunk(requestData));
-      }
-    }
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: DragTypes.card,
+    item: { id, columnId, title, description, userId },
+    collect: (monitor) => ({ isDragging: monitor.isDragging() })
   }));
+  const [, drop] = useDrop(
+    () => ({
+      accept: DragTypes.card,
+      hover({
+        id: draggableId,
+        columnId: draggableColumnId,
+        title: draggableTitle,
+        description: draggableDescription,
+        userId: draggableUserId
+      }: Omit<TaskType, 'order'>) {
+        if (id !== draggableId && lastDragable !== id) {
+          const requestData = {
+            columnId: draggableColumnId,
+            taskId: draggableId,
+            boardId: `${boardId}`,
+            body: {
+              description: draggableDescription,
+              title: draggableTitle,
+              userId: draggableId,
+              order
+            }
+          };
+          if (columnId === draggableColumnId) {
+            dispatch(dragColumnTaskThunk(requestData));
+          }
+        }
+        dispatch(setLastDraggableTask(id));
+      }
+    }),
+    [lastDragable]
+  );
   const opacity = isDragging ? 0 : 1;
 
   function showEditModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -101,7 +118,7 @@ function Task(props: TaskType) {
       </Text>
     ));
   }
-  
+
   return (
     <div ref={(node) => drag(drop(node))}>
       <StyledTask
@@ -125,13 +142,13 @@ function Task(props: TaskType) {
   );
 }
 
-const StyledTask = styled(Card)<{opacity: number}>`
+const StyledTask = styled(Card)<{ opacity: number }>`
   padding: 0;
   border: #389e0d solid 1px;
   background-color: #ddfdd0;
   border-radius: 0.5rem;
   cursor: pointer;
-  opacity: ${props => props.opacity}
+  opacity: ${(props) => props.opacity};
   & * {
     color: #1c5c00;
   }
